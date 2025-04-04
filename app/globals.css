@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@theme {
+	/*colors*/
+	--color-black: #2B2B2B;
+	--color-black-white: #3B3B3B;
+	--color-white: #ffffff;
+	--color-gray: #858584;
+	--color-accent: #A259FF;
+}
+@theme inline {
+	/*fonts*/
+	--font-work-sans: var(--font-work-sans);
+	--font-space-mono: var(--font-space-mono);
+	/*breakpoints*/
+	--breakpoint-xs: 320px;
+}
+
+@layer base {
+	body {
+		@apply font-work-sans bg-black-white text-white;
+	}
+}
+@layer components {
+	/*Fonts*/
+	.h1-sans {
+		@apply font-work-sans font-semibold text-[28px]/[140%] md:text-[67px]/[110%] lg:text-[28px]/[140%];
+	}
+	.h2-sans {
+		@apply font-work-sans font-semibold text-[28px]/[140%] md:text-[28px]/[140%] lg:text-[38px]/[120%];
+	}
+	.h3-sans {
+		@apply font-work-sans font-semibold text-[22px]/[140%]
+	}
+	.p-sans {
+		@apply font-work-sans text-[16px]/[140%] lg:text-[32px]/[160%]
+	}
+	.h1-space {
+		@apply font-space-mono font-semibold text-[28px]/[140%] md:text-[67px]/[110%] lg:text-[28px]/[140%];
+	}
+	.h2-space {
+		@apply font-space-mono font-semibold text-[28px]/[140%] md:text-[28px]/[140%] lg:text-[38px]/[120%];
+	}
+	.h3-space {
+		@apply font-space-mono font-semibold text-[22px]/[140%]
+	}
+	.p-space {
+		@apply font-space-mono text-[16px]/[140%] lg:text-[32px]/[160%]
+	}
+}
+@layer utilities {
+	.container {
+		@apply mx-auto
+	}
+}
