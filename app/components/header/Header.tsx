@@ -14,15 +14,15 @@ export default function Header() {
         <div>
           <Link href="/">
             <Image
-              className="w-[182px] h-[24px] lg:w-auto lg:h-auto"
+              className="w-[182px] h-[24px] lg:w-auto lg:h-auto p-[10px] -m-[10px] box-content"
               src="/logo.svg"
               width={243}
               height={32}
               alt="logo.svg"
+              priority={true}
             ></Image>
           </Link>
         </div>
-
         <div>
           <div className="hidden lg:block">
             <HeaderNav />

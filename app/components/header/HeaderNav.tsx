@@ -1,7 +1,9 @@
 "use client"
 import Link from "next/dist/client/app-dir/link"
+import { usePathname } from "next/navigation"
 
 export default function HeaderNav() {
+  const router = usePathname()
   return (
     <ul className="flex flex-col lg:flex-row lg:items-center gap-y-[25px] gap-x-[50px] ">
       {[
@@ -11,16 +13,23 @@ export default function HeaderNav() {
       ].map(([title, href], i) => {
         return (
           <li
-            className=" font-work-sans font-semibold text-[16px]"
+            className={`w-max font-work-sans font-semibold text-[16px] ${
+              router.includes(href) ? "text-accent pointer-events-none" : ""
+            }`}
             key={i}
           >
-            <Link href={href}>{title}</Link>
+            <Link
+              className="w-max -m-[10px] p-[10px]"
+              href={href}
+            >
+              {title}
+            </Link>
           </li>
         )
       })}
       <li>
         <Link
-          className="button-primary"
+          className="button-primary before:content-[url('/icons/user.svg')] before:w-[20px] before:h-[20px] before:mr-[12px]"
           href="signup"
         >
           sign up
