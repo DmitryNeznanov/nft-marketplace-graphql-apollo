@@ -4,8 +4,7 @@ export default function Footer() {
   return (
     <footer className="py-[40px] bg-black-white">
       <div className="container">
-        {/* w-max */}
-        <section className=" xl:w-auto mx-auto md:mx-0 p-[30px] flex flex-col xl:flex-row xl:justify-between gap-y-[30px]">
+        <section className="xl:w-auto mx-auto md:mx-0 p-[30px] flex flex-col xl:flex-row xl:justify-between gap-y-[30px]">
           <section>
             <article>
               <Link href="/">

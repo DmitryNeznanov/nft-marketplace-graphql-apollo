@@ -26,7 +26,7 @@
 @layer components {
   /* fonts */
   .h1-sans {
-    @apply font-work-sans font-semibold text-[28px]/[140%] md:text-[67px]/[110%] lg:text-[28px]/[140%];
+    @apply font-work-sans font-semibold text-[28px]/[140%] md:text-[38px]/[120%] lg:text-[67px]/[110%];
   }
   .h2-sans {
     @apply font-work-sans font-semibold text-[28px]/[140%] md:text-[28px]/[140%] lg:text-[38px]/[120%];
@@ -38,7 +38,7 @@
     @apply font-work-sans font-normal text-[16px]/[140%];
   }
   .h1-space {
-    @apply font-space-mono font-semibold text-[28px]/[140%] md:text-[67px]/[110%] lg:text-[28px]/[140%];
+    @apply font-space-mono font-semibold text-[28px]/[140%] md:text-[38px]/[120%] lg:text-[67px]/[110%];
   }
   .h2-space {
     @apply font-space-mono font-semibold text-[28px]/[140%] md:text-[28px]/[140%] lg:text-[38px]/[120%];
