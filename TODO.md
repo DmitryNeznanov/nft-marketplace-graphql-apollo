@@ -1,5 +1,9 @@
 ### Tasks
 - button before component dynamic
+
+
+### Questions
 - fonts?
-- px to large sizes in container?/header
 - animations?
+- small size width?
+

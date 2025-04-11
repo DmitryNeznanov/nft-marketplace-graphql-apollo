@@ -5,13 +5,13 @@ export default function Hero() {
     <section className="py-[40px] md:py-[80px]">
       <div className="container">
         {/* large grid */}
-        <div className="xl:px-[150px] flex flex-row justify-between gap-x-[30px]">
+        <div className=" flex flex-row justify-between gap-x-[30px]">
           {/* mobile grid */}
           <div className="max-w-sm mx-auto flex flex-col gap-y-[40px] md:contents">
             <div className="contents md:block max-w-[505px]">
               <article className="order-1 md:order-1">
                 <h1 className="h1-sans">Discover digital art & Collect NFTs</h1>
-                <p className="mt-[10px] md:mt-[20px] font-sans text-[16px]/[140%] lg:text-[22px]/[160%]">
+                <p className="mt-[10px] md:mt-[20px] p-sans ">
                   NFT marketplace UI created with Anima for Figma. Collect, buy
                   and sell art from more than 20k NFT artists.
                 </p>
