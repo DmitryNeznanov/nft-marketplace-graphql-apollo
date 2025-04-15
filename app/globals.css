@@ -50,7 +50,7 @@
     @apply font-space-mono font-semibold text-[22px]/[140%];
   }
   .p-space {
-    @apply font-space-mono font-normal text-[16px]/[140%] lg:text-[22px]/[160%];
+    @apply font-space-mono font-normal text-[16px]/[140%];
   }
   .p-space-xl {
     @apply font-space-mono font-normal text-[16px]/[140%] lg:text-[22px]/[160%];
@@ -58,6 +58,9 @@
   /* buttons */
   .button-primary {
     @apply w-max px-[50px] py-[20px] font-work-sans font-semibold text-[16px] capitalize rounded-[20px] bg-accent flex items-center justify-center hover:cursor-pointer;
+  }
+  .button-transparent {
+    @apply w-max px-[50px] py-[20px] font-work-sans font-semibold text-[16px] capitalize rounded-[20px] bg-transparent border-[2px] border-accent flex items-center justify-center hover:cursor-pointer;
   }
 }
 @utility container {
