@@ -38,7 +38,7 @@ export default function Categories() {
                       </div>
                     </div>
                     <div className="bg-black-white pt-[20px] pb-[25px] md:px-[30px] md:pb-[45px] lg:pb-[25px] px-[20px] lg:px-[30px]">
-                      <h3 className="font-sans font-bold text-[16px]/[140%] lg:text-[22px]/[140%]">
+                      <h3 className="font-work-sans font-bold text-[16px]/[140%] lg:text-[22px]/[140%]">
                         {title}
                       </h3>
                     </div>
