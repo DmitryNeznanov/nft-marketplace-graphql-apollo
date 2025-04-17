@@ -17,12 +17,12 @@ export default function Footer() {
                   priority={true}
                 ></Image>
               </Link>
-              <p className="max-w-[240px] md:max-w-max xl:max-w-[240px] mt-[20px] md:mt-[30px] p-sans text-gray">
+              <p className="max-w-[240px] md:max-w-max xl:max-w-[240px] mt-[20px] md:mt-[30px] font-work text-gray">
                 NFT marketplace UI created with Anima for Figma.
               </p>
             </article>
             <div className="mt-[20px]">
-              <p className="p-sans text-gray">Join our community</p>
+              <p className="font-work text-gray">Join our community</p>
               <ul className="mt-[15px] flex flex-row gap-x-[10px]">
                 {[
                   ["https://discord.com", "discord.svg"],
@@ -62,7 +62,7 @@ export default function Footer() {
               ].map(([href, title], i) => {
                 return (
                   <li
-                    className="w-max p-sans text-gray"
+                    className="w-max font-work text-gray"
                     key={i}
                   >
                     <Link href={href}>{title}</Link>
@@ -72,14 +72,14 @@ export default function Footer() {
             </ul>
           </section>
           <section className="">
-            <h3 className="h3-space">Join our weekly digest</h3>
-            <p className="max-w-[330px] md:max-w-max xl:max-w-[330px] mt-[20px] md:mt-[25px] p-sans text-gray">
+            <h3 className="h3-space capitalize">Join our weekly digest</h3>
+            <p className="max-w-[330px] md:max-w-max xl:max-w-[330px] mt-[20px] md:mt-[25px] font-work text-gray">
               Get exclusive promotions & updates straight to your inbox.
             </p>
             <form className="mt-[20px]">
               <div className="max-w-[420px] flex flex-col sm:flex-row sm:bg-white rounded-[20px]">
                 <input
-                  className="py-[12px] sm:p-[20px] px-[20px] bg-white w-full sm:bg-transparent border border-gray sm:border-0 p-sans text-black outline-none rounded-[20px] sm:rounded-[0]"
+                  className="py-[12px] sm:p-[20px] px-[20px] bg-white w-full sm:bg-transparent border border-gray sm:border-0 font-work text-black outline-none rounded-[20px] sm:rounded-[0]"
                   type="text"
                   placeholder="Enter your email here"
                 />
@@ -91,7 +91,7 @@ export default function Footer() {
           </section>
         </section>
         <hr className="w-full h-[1px] text-gray" />
-        <p className="mt-[20px] p-sans text-gray">
+        <p className="mt-[20px] font-work-sans font-normal text-[12px]/[110%] text-gray">
           Ⓒ NFT Market. Use this template freely.
         </p>
       </div>

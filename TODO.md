@@ -1,8 +1,9 @@
 ### Tasks
 - button before component dynamic
-- fix header container
 - rounded primary
 - fix categories text-overflow
+- input component
+- footer text color
 ### Questions
 - fonts?
 - animations?

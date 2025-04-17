@@ -53,7 +53,7 @@ export default function Hero() {
               </div>
               <div className="p-[21px] bg-black-white">
                 <h3 className="h3-sans">Space Walking</h3>
-                <p className="mt-[10px] flex items-center before:content-[url('/heroAvatar.png')] font-work-sans text-[16px]/[140%] before:w-[24px] before:h-[24px] before:mr-[12px]">
+                <p className="mt-[10px] flex items-center font-work-sans text-[16px]/[140%] before:content-[url('/heroAvatar.png')] before:w-[24px] before:h-[24px] before:mr-[12px]">
                   Animakid
                 </p>
               </div>
