@@ -62,6 +62,9 @@
   .button-transparent {
     @apply w-max px-[50px] py-[20px] font-work-sans font-semibold text-[16px] capitalize rounded-[20px] bg-transparent border-[2px] border-accent flex items-center justify-center hover:cursor-pointer;
   }
+  .button-white {
+    @apply w-max px-[50px] py-[20px] font-work-sans font-semibold text-[16px] text-black capitalize rounded-[20px] bg-white flex items-center justify-center hover:cursor-pointer;
+  }
 }
 @utility container {
   @apply mx-auto px-[5px] max-w-[1050px];
