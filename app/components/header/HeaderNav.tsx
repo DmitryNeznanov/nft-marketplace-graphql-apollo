@@ -13,7 +13,7 @@ export default function HeaderNav() {
       ].map(([title, href], i) => {
         return (
           <li
-            className={`w-max font-work-sans font-semibold text-[16px] ${
+            className={`w-max font-work-sans font-semibold text-[16px] hover:underline decoration-2 underline-offset-4 ${
               router.includes(href) ? "text-accent pointer-events-none" : ""
             }`}
             key={i}
@@ -29,7 +29,7 @@ export default function HeaderNav() {
       })}
       <li>
         <Link
-          className="button-primary before:content-[url('/icons/user.svg')] before:w-[20px] before:h-[20px] before:mr-[12px]"
+          className="button-primary before:content-[url(/icons/user.svg)]"
           href="signup"
         >
           sign up

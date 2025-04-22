@@ -16,6 +16,8 @@
   --breakpoint-xs: 320px;
   --breakpoint-1md: 690px;
   --breakpoint-1lg: 1050px;
+  /* rounded */
+  --radius-primary: 20px;
 }
 
 @layer base {
@@ -57,13 +59,16 @@
   }
   /* buttons */
   .button-primary {
-    @apply w-max px-[50px] py-[20px] font-work-sans font-semibold text-[16px] capitalize rounded-[20px] bg-accent flex items-center justify-center hover:cursor-pointer;
+    @apply w-max px-[50px] py-[20px] font-work-sans font-semibold text-[16px] capitalize rounded-primary bg-accent flex items-center justify-center hover:cursor-pointer before:w-[20px] before:h-[20px] before:mr-[12px];
   }
   .button-transparent {
-    @apply w-max px-[50px] py-[20px] font-work-sans font-semibold text-[16px] capitalize rounded-[20px] bg-transparent border-[2px] border-accent flex items-center justify-center hover:cursor-pointer;
+    @apply w-max px-[50px] py-[20px] font-work-sans font-semibold text-[16px] capitalize rounded-primary bg-transparent border-[2px] border-accent flex items-center justify-center hover:cursor-pointer before:w-[20px] before:h-[20px] before:mr-[12px];
   }
   .button-white {
-    @apply w-max px-[50px] py-[20px] font-work-sans font-semibold text-[16px] text-black capitalize rounded-[20px] bg-white flex items-center justify-center hover:cursor-pointer;
+    @apply w-max px-[50px] py-[20px] font-work-sans font-semibold text-[16px] text-black capitalize rounded-primary bg-white flex items-center justify-center hover:cursor-pointer before:w-[20px] before:h-[20px] before:mr-[12px];
+  }
+  .input-primary {
+    @apply w-full py-[12px] px-[20px] lg:p-[20px] bg-white border border-gray font-work-sans text-black outline-none  rounded-primary;
   }
 }
 @utility container {

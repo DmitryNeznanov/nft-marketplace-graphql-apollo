@@ -3,8 +3,8 @@ import Link from "next/link"
 export default function Hero() {
   return (
     <section className="py-[40px] md:py-[80px]">
-      <div className="container">
-        <div className="max-w-sm md:max-w-full mx-auto flex flex-col md:flex-row gap-x-[30px] gap-y-[40px]">
+      <div className="max-w-sm md:container">
+        <div className="flex flex-col md:flex-row gap-x-[30px] gap-y-[40px]">
           <div className="contents md:max-w-[50%] md:block">
             <article className="order-1 md:order-1">
               <h1 className="h1-sans">Discover Digital Art & Collect NFTs</h1>
@@ -15,7 +15,7 @@ export default function Hero() {
             </article>
             <div className="md:mt-[30px] order-4 md:order-2">
               <Link
-                className="button-primary w-full md:w-max"
+                className="button-primary w-full before:content-[url('/icons/rocketLaunch.svg')] md:w-max"
                 href="/marketplace"
               >
                 get started
@@ -41,7 +41,7 @@ export default function Hero() {
             </div>
           </div>
           <div className="contents md:max-w-[50%] md:block">
-            <article className="order-3 md:order-4 rounded-[20px] overflow-hidden">
+            <article className="order-3 md:order-4 rounded-primary overflow-hidden">
               <div>
                 <Image
                   className="w-screen"
