@@ -1,55 +1,68 @@
 @import "tailwindcss";
 
 @theme {
-	/*colors*/
-	--color-black: #2B2B2B;
-	--color-black-white: #3B3B3B;
-	--color-white: #ffffff;
-	--color-gray: #858584;
-	--color-accent: #A259FF;
+  /* colors */
+  --color-black: #2b2b2b;
+  --color-black-white: #3b3b3b;
+  --color-white: #ffffff;
+  --color-gray: #858584;
+  --color-accent: #a259ff;
 }
 @theme inline {
-	/*fonts*/
-	--font-work-sans: var(--font-work-sans);
-	--font-space-mono: var(--font-space-mono);
-	/*breakpoints*/
-	--breakpoint-xs: 320px;
+  /* fonts */
+  --font-work-sans: var(--font-work-sans);
+  --font-space-mono: var(--font-space-mono);
+  /* breakpoints */
+  --breakpoint-xs: 320px;
+  --breakpoint-1md: 690px;
+  --breakpoint-1lg: 1050px;
 }
 
 @layer base {
-	body {
-		@apply font-work-sans bg-black-white text-white;
-	}
+  body {
+    @apply font-work-sans bg-black text-white;
+  }
 }
 @layer components {
-	/*Fonts*/
-	.h1-sans {
-		@apply font-work-sans font-semibold text-[28px]/[140%] md:text-[67px]/[110%] lg:text-[28px]/[140%];
-	}
-	.h2-sans {
-		@apply font-work-sans font-semibold text-[28px]/[140%] md:text-[28px]/[140%] lg:text-[38px]/[120%];
-	}
-	.h3-sans {
-		@apply font-work-sans font-semibold text-[22px]/[140%]
-	}
-	.p-sans {
-		@apply font-work-sans text-[16px]/[140%] lg:text-[32px]/[160%]
-	}
-	.h1-space {
-		@apply font-space-mono font-semibold text-[28px]/[140%] md:text-[67px]/[110%] lg:text-[28px]/[140%];
-	}
-	.h2-space {
-		@apply font-space-mono font-semibold text-[28px]/[140%] md:text-[28px]/[140%] lg:text-[38px]/[120%];
-	}
-	.h3-space {
-		@apply font-space-mono font-semibold text-[22px]/[140%]
-	}
-	.p-space {
-		@apply font-space-mono text-[16px]/[140%] lg:text-[32px]/[160%]
-	}
+  /* fonts */
+  .h1-sans {
+    @apply font-work-sans font-semibold text-[28px]/[140%] md:text-[38px]/[120%] lg:text-[67px]/[110%];
+  }
+  .h2-sans {
+    @apply font-work-sans font-semibold text-[28px]/[140%] md:text-[28px]/[140%] lg:text-[38px]/[120%];
+  }
+  .h3-sans {
+    @apply font-work-sans font-semibold text-[22px]/[140%];
+  }
+  .p-sans {
+    @apply font-work-sans font-normal text-[16px]/[140%];
+  }
+  .p-sans-xl {
+    @apply font-work-sans font-normal text-[16px]/[140%] lg:text-[22px]/[160%];
+  }
+  .h1-space {
+    @apply font-space-mono font-semibold text-[28px]/[140%] md:text-[38px]/[120%] lg:text-[67px]/[110%];
+  }
+  .h2-space {
+    @apply font-space-mono font-semibold text-[28px]/[140%] md:text-[28px]/[140%] lg:text-[38px]/[120%];
+  }
+  .h3-space {
+    @apply font-space-mono font-semibold text-[22px]/[140%];
+  }
+  .p-space {
+    @apply font-space-mono font-normal text-[16px]/[140%];
+  }
+  .p-space-xl {
+    @apply font-space-mono font-normal text-[16px]/[140%] lg:text-[22px]/[160%];
+  }
+  /* buttons */
+  .button-primary {
+    @apply w-max px-[50px] py-[20px] font-work-sans font-semibold text-[16px] capitalize rounded-[20px] bg-accent flex items-center justify-center hover:cursor-pointer;
+  }
+  .button-transparent {
+    @apply w-max px-[50px] py-[20px] font-work-sans font-semibold text-[16px] capitalize rounded-[20px] bg-transparent border-[2px] border-accent flex items-center justify-center hover:cursor-pointer;
+  }
 }
-@layer utilities {
-	.container {
-		@apply mx-auto
-	}
+@utility container {
+  @apply mx-auto px-[5px] max-w-[1050px];
 }
