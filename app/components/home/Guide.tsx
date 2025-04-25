@@ -3,7 +3,7 @@ import Image from "next/image"
 export default function Guide() {
   return (
     <section className="py-[40px] lg:py-[80px]">
-      <div className="container md:container">
+      <div className="container md:container mx-auto">
         <article>
           <h2 className="h2-sans">How it works</h2>
           <p className="mt-[10px] p-sans capitalize">

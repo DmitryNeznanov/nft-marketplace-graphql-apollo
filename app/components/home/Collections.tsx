@@ -3,7 +3,7 @@ import Image from "next/image"
 export default function Collections() {
   return (
     <section className="py-[40px] lg:py-[80px]">
-      <div className="max-w-sm md:container">
+      <div className="max-w-sm md:container mx-auto">
         <article>
           <h2 className="h2-sans">Trending Collection</h2>
           <p className="mt-[10px] p-sans">

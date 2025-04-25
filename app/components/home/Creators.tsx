@@ -4,7 +4,7 @@ import Link from "next/link"
 export default function Creators() {
   return (
     <section className="py-[40px] md:py-[80px]">
-      <div className="max-w-sm md:container">
+      <div className="max-w-sm md:container mx-auto">
         <article className="flex flex-row justify-between">
           <div>
             <h2 className="h2-sans">Top Creators</h2>

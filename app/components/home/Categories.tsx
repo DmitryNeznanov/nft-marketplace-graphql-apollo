@@ -1,9 +1,14 @@
 import Image from "next/image"
+import { data } from "@/app/mongodb/mongodb"
+
+const posts = await data.findOne({})
+const qwe = await posts
+console.log(qwe)
 
 export default function Categories() {
   return (
     <section className="py-[40px] lg:py-[80px]">
-      <div className="max-w-sm md:container">
+      <div className="max-w-sm md:container mx-auto">
         <div>
           <h2 className="h2-sans">Browse Categories</h2>
         </div>
@@ -25,10 +30,10 @@ export default function Categories() {
                   key={i}
                 >
                   <div className="relative flex items-center justify-center ">
-                    <div className="absolute bg-white/10 w-full h-full"></div>
+                    <div className="w-full h-full absolute bg-white/10"></div>
                     <div className="flex items-center justify-center before:content-[url('/icons/basketball.svg')] before:absolute">
                       <Image
-                        className="blur-[8px] w-full -z-10"
+                        className="w-full blur-[8px] -z-10"
                         src="/categories-1.png"
                         width={240}
                         height={240}

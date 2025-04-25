@@ -1,6 +1,6 @@
 ### Tasks
 - fix categories text-overflow
-- socials svg
+- center content
 ### Questions
 - animations?
 

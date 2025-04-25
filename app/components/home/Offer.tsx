@@ -4,7 +4,7 @@ export default function Offer() {
   return (
     <section className="relative pb-[40px] pt-[120px] md:pt-[360px] md:pb-[60px] bg-gradient-to-b from-white/0 to-accent">
       <div className="absolute left-0 top-0 w-full h-full bg-[url('/offer-mobile.png')] md:bg-[url('/offer-laptop.png')] lg:bg-[url('/offer-desktop.png')] bg-cover bg-center -z-[9999]"></div>
-      <div className="max-w-sm md:container">
+      <div className="max-w-sm md:container mx-auto">
         <article className="flex flex-col gap-[30px] md:flex-row justify-between">
           <div className="contents md:flex flex-col gap-[30px]">
             <div className="w-max py-[10px] px-[20px] bg-black rounded-full order-1">
