@@ -2,6 +2,10 @@
   {
     "name": "",
     "sold": 0,
-    "volume": 0
+    "volume": 0,
+    "followers": 0,
+    "info": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti laboriosam odit minus nulla illo obcaecati, debitis voluptatibus doloremq",
+    "profileImage": "https://drive.usercontent.google.com/download?id=1RTvEXn1riY-sZj3x4Cu05mEHzXaJBLsi",
+    "backgroundImage": ""
   }
 ]

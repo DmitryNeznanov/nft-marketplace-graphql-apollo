@@ -11,4 +11,4 @@ const client = new MongoClient(uri, {
 })
 
 export const db = client.db("nftMarketPlace")
-export const data = db.collection("data")
+export const NTFs = db.collection("NTFs")
