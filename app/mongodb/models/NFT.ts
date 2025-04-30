@@ -1,7 +1,7 @@
-import mongoose from "mongoose"
+import mongoose, { Schema } from "mongoose"
 import { Types } from "mongoose"
-const { Schema } = mongoose
-
+mongoose.connect(process.env.MONGODBURI!)
+mongoose.Promise = global.Promise
 const NFTSchema = new Schema({
   _id: Types.ObjectId,
   title: String,
@@ -14,4 +14,4 @@ const NFTSchema = new Schema({
   image: String,
 })
 
-export default mongoose.models.NFTs || mongoose.model("NFTs", NFTSchema)
+export default mongoose.models.nfts || mongoose.model("nfts", NFTSchema)

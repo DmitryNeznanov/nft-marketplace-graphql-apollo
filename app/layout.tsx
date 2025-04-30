@@ -27,7 +27,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` ${spaceMono.variable} ${workSans.variable}`}>
+      <body
+        className={` ${spaceMono.variable} ${workSans.variable}`}
+      >
         <Header></Header>
         {children}
         <Footer></Footer>

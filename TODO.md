@@ -1,9 +1,9 @@
 ### Tasks
-- fix categories text-overflow
-- center content
+- fix header responsive
+- fix Categories text-overflow
 ### Questions
 - animations?
-
+- export with pure mongodb ?
 
 ### Draft 
 

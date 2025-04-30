@@ -1,9 +1,9 @@
 import Image from "next/image"
-import { data } from "@/app/mongodb/mongodb"
+// import { data } from "@/app/mongodb/mongodb"
 
-const posts = await data.findOne({})
-const qwe = await posts
-console.log(qwe)
+// const posts = await data.findOne({})
+// const qwe = await posts
+// console.log(qwe)
 
 export default function Categories() {
   return (

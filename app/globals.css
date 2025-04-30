@@ -7,17 +7,17 @@
   --color-white: #ffffff;
   --color-gray: #858584;
   --color-accent: #a259ff;
-}
-@theme inline {
-  /* fonts */
-  --font-work-sans: var(--font-work-sans);
-  --font-space-mono: var(--font-space-mono);
   /* breakpoints */
   --breakpoint-xs: 320px;
   --breakpoint-1md: 690px;
   --breakpoint-1lg: 1050px;
   /* rounded */
   --radius-primary: 20px;
+}
+@theme inline {
+  /* fonts */
+  --font-work-sans: var(--font-work-sans);
+  --font-space-mono: var(--font-space-mono);
 }
 
 @layer base {
