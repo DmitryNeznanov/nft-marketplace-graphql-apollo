@@ -74,3 +74,6 @@
 @utility container {
   @apply mx-auto px-[5px] max-w-[1050px];
 }
+@utility underline-primary {
+  @apply underline decoration-2 underline-offset-4;
+}

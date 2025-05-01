@@ -4,7 +4,7 @@ import Link from "next/link"
 export default function Exploring() {
   return (
     <section className="py-[40px] md:py-[80px]">
-      <div className="container md:container mx-auto">
+      <div className="max-w-sm md:container mx-auto">
         <article className="flex flex-row justify-between">
           <div>
             <h2 className="h2-sans">Discover More NFTs</h2>

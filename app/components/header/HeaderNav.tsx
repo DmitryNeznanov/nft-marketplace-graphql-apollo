@@ -1,5 +1,5 @@
 "use client"
-import Link from "next/dist/client/app-dir/link"
+import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 export default function HeaderNav() {
@@ -13,7 +13,7 @@ export default function HeaderNav() {
       ].map(([title, href], i) => {
         return (
           <li
-            className={`w-max font-work-sans font-semibold text-[16px] hover:underline decoration-2 underline-offset-4 ${
+            className={`w-max font-work-sans font-semibold text-[16px] hover:underline-primary ${
               router.includes(href) ? "text-accent pointer-events-none" : ""
             }`}
             key={i}
