@@ -36,6 +36,9 @@
   .h3-sans {
     @apply font-work-sans font-semibold text-[22px]/[140%];
   }
+  .h4-sans {
+    @apply font-space-mono font-semibold text-[16px]/[140%] lg:text-[22px]/[140%];
+  }
   .p-sans {
     @apply font-work-sans font-normal text-[16px]/[140%];
   }
@@ -50,6 +53,9 @@
   }
   .h3-space {
     @apply font-space-mono font-semibold text-[22px]/[140%];
+  }
+  .h4-space {
+    @apply font-space-mono font-semibold text-[16px]/[140%] lg:text-[22px]/[140%];
   }
   .p-space {
     @apply font-space-mono font-normal text-[16px]/[140%];

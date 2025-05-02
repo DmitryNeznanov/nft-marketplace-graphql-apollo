@@ -24,6 +24,7 @@ export default async function MarketPlace() {
           </article>
           <form className="mt-[30px]">
             <div className="pr-[20px] flex flex-row items-center justify-between gap-x-[26px] border border-gray rounded-primary">
+              {/* TODO: search by nfts data */}
               <input
                 className="w-full p-[20px] outline-none p-sans placeholder:text-gray"
                 type="text"
@@ -43,6 +44,7 @@ export default async function MarketPlace() {
       </section>
       <section>
         <div>
+          {/* TODO: tabs with collections */}
           <div className="max-w-sm md:container mx-auto">nft</div>
         </div>
         <div className="bg-black-white">
@@ -77,7 +79,7 @@ export default async function MarketPlace() {
                             </h3>
                           </Link>
                           <Link
-                            className="w-max mt-[5px] flex items-center font-work-sans text-[16px]/[140%] before:content-[url('/heroAvatar.png')] before:w-[24px] before:h-[24px] before:mr-[12px]  hover:underline-primary"
+                            className="w-max mt-[5px] flex items-center font-work-sans text-[16px]/[140%] before:content-[url('/heroAvatar.png')] before:w-[24px] before:h-[24px] before:mr-[12px] hover:underline-primary"
                             href="#"
                           >
                             {nft.author}

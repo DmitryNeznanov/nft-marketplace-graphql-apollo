@@ -24,6 +24,7 @@ export default function Offer() {
               </Link>
             </div>
           </div>
+          {/* // TODO: add dynamic timer */}
           <div className="w-full h-max md:w-max p-[30px] flex flex-col items-center md:items-start self-end rounded-primary bg-black-white/50 overflow-hidden order-3 md:order-3">
             <p className="font-space-mono font-normal text-[12px]/[120%]">
               Auction ends in:

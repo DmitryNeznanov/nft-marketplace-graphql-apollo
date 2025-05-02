@@ -7,7 +7,7 @@ import MobileMenu from "./MobileMenu"
 export default function Header() {
   return (
     <header
-      className="max-w-[1650px] mx-auto px-[30px] md:px-[50px] lg:px-[175px] py-[15px] lg:py-[20px]"
+      className="max-w-[1650px] mx-auto px-[30px] md:px-[50px] 2xl:px-[175px] py-[15px] lg:py-[20px]"
       id="header"
     >
       <nav className="flex justify-between items-center">

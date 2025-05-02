@@ -2,10 +2,14 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-export default function HeaderNav() {
+export default function HeaderNav({
+  closeMobileMenu,
+}: {
+  closeMobileMenu: React.MouseEventHandler
+}) {
   const router = usePathname()
   return (
-    <ul className="flex flex-col lg:flex-row lg:items-center gap-y-[25px] gap-x-[50px] ">
+    <ul className="flex flex-col lg:flex-row lg:items-center gap-y-[25px] gap-x-[50px]">
       {[
         ["Marketplace", "marketplace"],
         ["Rankings", "rankings"],
@@ -21,6 +25,7 @@ export default function HeaderNav() {
             <Link
               className="w-max -m-[10px] p-[10px]"
               href={href}
+              onClick={closeMobileMenu}
             >
               {title}
             </Link>
@@ -31,6 +36,7 @@ export default function HeaderNav() {
         <Link
           className="button-primary before:content-[url(/icons/user.svg)]"
           href="signup"
+          onClick={closeMobileMenu}
         >
           sign up
         </Link>

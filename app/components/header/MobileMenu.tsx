@@ -1,12 +1,17 @@
+"use client"
 import Image from "next/image"
-import Link from "next/dist/client/app-dir/link"
 import CloseMobileMenu from "./CloseMobileMenu"
 import HeaderNav from "./HeaderNav"
+import Link from "next/link"
 
 export default function MobileMenu() {
+  function closeMobileMenu() {
+    const mobileMenu = document.getElementById("mobileMenu")!
+    mobileMenu.style.width = "0%"
+  }
   return (
     <section
-      className="h-screen mx-auto absolute top-0 right-0 transition-[width] duration-[1000ms] overflow-hidden bg-black z-[9999]"
+      className="h-screen mx-auto absolute top-0 right-0 transition-[width] duration-[700ms] overflow-hidden bg-black z-[9999]"
       id="mobileMenu"
       style={{ width: "0%" }}
     >
@@ -26,11 +31,11 @@ export default function MobileMenu() {
             </Link>
           </div>
           <div className="w-max">
-            <CloseMobileMenu />
+            <CloseMobileMenu closeMobileMenu={closeMobileMenu} />
           </div>
         </header>
         <div className="mt-[50px]">
-          <HeaderNav />
+          <HeaderNav closeMobileMenu={closeMobileMenu} />
         </div>
       </div>
     </section>
