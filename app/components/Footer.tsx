@@ -225,7 +225,7 @@ export default function Footer() {
                     type="text"
                     placeholder="Enter your email here"
                   />
-                  <button className="mt-[16px] sm:mt-0 w-full py-[12px] sm:py-0 sm:w-max sm:ml-auto button-primary before:content-[url('/icons/mail.svg')]">
+                  <button className="mt-[16px] sm:mt-0 w-full py-[12px] sm:py-0 sm:w-max sm:ml-auto button-primary before:content-[url('/icons/mail.svg')] hover:scale-[95%]">
                     subscribe
                   </button>
                 </div>

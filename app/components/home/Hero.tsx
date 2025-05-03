@@ -1,6 +1,8 @@
+import NFT from "@/app/mongodb/models/NFT"
 import Image from "next/image"
 import Link from "next/link"
-export default function Hero() {
+export default async function Hero() {
+  const item = await NFT.findOne()
   return (
     <section className="py-[40px] md:py-[80px]">
       <div className="max-w-sm md:container mx-auto">
@@ -17,11 +19,13 @@ export default function Hero() {
               <Link
                 className="button-primary w-full before:content-[url('/icons/rocketLaunch.svg')] md:w-max"
                 href="/marketplace"
+                // TODO: change href to signup
               >
                 get started
               </Link>
             </div>
             <div className="md:mt-[30px] max-w-[90%] flex flex-row justify-between order-4 md:order-3">
+              {/* TODO: dynamic stat? */}
               {[
                 ["240", "Auctions"],
                 ["240", "Total Sale"],
@@ -40,8 +44,10 @@ export default function Hero() {
               })}
             </div>
           </div>
+          {/* FIXME: fix image height */}
+          {/* TODO: 3D nft? */}
           <div className="contents md:max-w-[50%] md:block">
-            <article className="order-3 md:order-4 rounded-primary overflow-hidden">
+            <article className="order-3 md:order-4 rounded-primary overflow-hidden scale-primary">
               <div>
                 <Image
                   className="w-screen"
@@ -52,10 +58,21 @@ export default function Hero() {
                 ></Image>
               </div>
               <div className="p-[21px] bg-black-white">
-                <h3 className="h3-sans">Space Walking</h3>
-                <p className="mt-[10px] flex items-center font-work-sans text-[16px]/[140%] before:content-[url('/heroAvatar.png')] before:w-[24px] before:h-[24px] before:mr-[12px]">
-                  Animakid
-                </p>
+                <Link
+                  className="w-max block"
+                  href={`/marketplace/${item._id}`}
+                >
+                  <h3 className="h3-sans hover:hover:underline-primary">
+                    {item.title}
+                  </h3>
+                </Link>
+                <Link
+                  className="w-max mt-[10px] flex items-center font-work-sans text-[16px]/[140%] before:content-[url('/heroAvatar.png')] before:w-[24px] before:h-[24px] before:mr-[12px] hover:underline-primary"
+                  href="#"
+                >
+                  {/* TODO: add link to author */}
+                  {item.author}
+                </Link>
               </div>
             </article>
           </div>

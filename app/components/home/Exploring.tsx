@@ -1,7 +1,10 @@
+import NFT from "@/app/mongodb/models/NFT"
 import Image from "next/image"
 import Link from "next/link"
 
-export default function Exploring() {
+export default async function Exploring() {
+  const items = await NFT.find()
+
   return (
     <section className="py-[40px] md:py-[80px]">
       <div className="max-w-sm md:container mx-auto">
@@ -15,7 +18,7 @@ export default function Exploring() {
           <div className="hidden md:block self-end">
             <Link
               className="button-transparent before:content-[url('/icons/eye-accent.svg')]"
-              href="rankings"
+              href="marketplace"
             >
               see all
             </Link>
@@ -23,43 +26,53 @@ export default function Exploring() {
         </article>
         <section className="mt-[40px] lg:mt-[60px]">
           <div className="flex flex-col md:flex-row items-center justify-center gap-[20px] md:gap-[30px] md:*:nth-[n+3]:hidden lg:*:nth-[n+3]:block">
-            {[
-              ["Distant Galaxy", "MoonDancer", 1.24, 0.32],
-              ["Life on Edena", "NebulaKid", 1.88, 0.84],
-              ["AstroFiction", "Spaceone", 1.13, 0.33],
-            ].map(([title, author, price, bid], i) => {
+            {items.slice(0, 3).map((item, i) => {
               return (
                 <article
-                  className="rounded-primary w-max overflow-hidden"
+                  className="max-w-[330px] w-full rounded-primary overflow-hidden scale-primary"
                   key={i}
                 >
                   <div>
-                    <Image
-                      className="w-full"
-                      src="/exploring-1.png"
-                      width={420}
-                      height={296}
-                      alt="exploring-1.png"
-                    ></Image>
+                    <Link href={`/marketplace/${item._id}`}>
+                      <Image
+                        className="w-full"
+                        src={item.image}
+                        width={420}
+                        height={296}
+                        alt={`item-${i + 1}`}
+                      ></Image>
+                    </Link>
                   </div>
                   <div className="p-[20px] md:px-[30px] bg-black-white">
                     <div>
-                      <h3 className="h3-sans">{title}</h3>
-                      <p className="mt-[5px] flex items-center font-work-sans text-[16px]/[140%] before:content-[url('/heroAvatar.png')] before:w-[24px] before:h-[24px] before:mr-[12px]">
-                        {author}
-                      </p>
+                      <Link
+                        className="w-max block"
+                        href={`/marketplace/${item._id}`}
+                      >
+                        <h3 className="h3-sans hover:hover:underline-primary">
+                          {item.title}
+                        </h3>
+                      </Link>
+                      <Link
+                        // TODO: add author's image to DB and display it
+                        className="mt-[10px] w-max font-work-sans text-[16px]/[140%] font-normal md:font-semibold flex items-center before:content-[url('/heroAvatar.png')] before:w-[24px] before:h-[24px] before:mr-[12px] hover:underline-primary hover:cursor-pointer"
+                        // TODO: Link to creator pagee
+                        href="#"
+                      >
+                        {item.author}
+                      </Link>
                     </div>
                     <div className="mt-[25px] flex flex-row justify-between items-center">
                       <p className="font-space-mono text-gray font-normal text-[12px]/[110%]">
                         Price
                         <span className="mt-[8px] block font-space-mono font-normal text-white text-[12px]/[140%] md:text-[16px]/[140%]">
-                          {price} ETH
+                          {item.price} ETH
                         </span>
                       </p>
                       <p className="font-space-mono text-gray font-normal text-[12px]/[110%]">
                         Highest Bid
                         <span className="mt-[8px] block font-space-mono font-normal text-white text-[12px]/[140%] md:text-[16px]/[140%]">
-                          {bid} ETH
+                          {item.bid} ETH
                         </span>
                       </p>
                     </div>

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 export default function HeaderNav({
   closeMobileMenu,
 }: {
-  closeMobileMenu: React.MouseEventHandler
+  closeMobileMenu?: React.MouseEventHandler
 }) {
   const router = usePathname()
   return (
@@ -34,7 +34,7 @@ export default function HeaderNav({
       })}
       <li>
         <Link
-          className="button-primary before:content-[url(/icons/user.svg)]"
+          className="px-[30px] button-primary before:content-[url(/icons/user.svg)]"
           href="signup"
           onClick={closeMobileMenu}
         >

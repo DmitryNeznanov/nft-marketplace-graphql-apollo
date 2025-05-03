@@ -16,6 +16,7 @@ export default async function MarketPlace() {
     <>
       <section className="py-[40px] md:py-[60px] lg:py-[80px]">
         <div className="max-w-sm md:container mx-auto">
+          {/* FIXME: fix Responsiveness */}
           <article>
             <h1 className="h1-sans">Browse Marketplace</h1>
             <p className="mt-[10px] p-sans-xl">
@@ -53,49 +54,52 @@ export default async function MarketPlace() {
               <Suspense
                 fallback={<h2 className="h1-sans">Loading marketplace...</h2>}
               >
-                {items.map((nft, i) => {
+                {/* TODO: button to view more or pagination ? */}
+                {items.map((item, i) => {
                   return (
                     <article
-                      className="w-max rounded-primary overflow-hidden"
+                      className="w-full rounded-primary overflow-hidden"
                       key={i}
                     >
-                      <Link href={`/marketplace/${nft._id}`}>
+                      <Link href={`/marketplace/${item._id}`}>
                         <Image
                           className="w-full"
-                          src={nft.image}
+                          src={item.image}
                           width={420}
                           height={296}
-                          alt={`nft-${i + 1}`}
+                          alt={`item-${i + 1}`}
                         ></Image>
                       </Link>
                       <div className="p-[20px] md:px-[30px] bg-black">
                         <div>
                           <Link
                             className="w-max block"
-                            href={`/marketplace/${nft._id}`}
+                            href={`/marketplace/${item._id}`}
                           >
                             <h3 className="h3-sans hover:hover:underline-primary">
-                              {nft.title}
+                              {item.title}
                             </h3>
                           </Link>
                           <Link
                             className="w-max mt-[5px] flex items-center font-work-sans text-[16px]/[140%] before:content-[url('/heroAvatar.png')] before:w-[24px] before:h-[24px] before:mr-[12px] hover:underline-primary"
                             href="#"
                           >
-                            {nft.author}
+                            {/* // TODO: add author's image to DB and display it */}
+                            {/* // TODO: Link to creator pagee */}
+                            {item.author}
                           </Link>
                         </div>
                         <div className="mt-[25px] flex flex-row justify-between items-center">
                           <p className="font-space-mono text-gray font-normal text-[12px]/[110%]">
                             Price
                             <span className="mt-[8px] block font-space-mono font-normal text-white text-[12px]/[140%] md:text-[16px]/[140%]">
-                              {nft.price} ETH
+                              {item.price} ETH
                             </span>
                           </p>
                           <p className="font-space-mono text-gray font-normal text-[12px]/[110%]">
                             Highest Bid
                             <span className="mt-[8px] block font-space-mono font-normal text-white text-[12px]/[140%] md:text-[16px]/[140%]">
-                              {nft.bid} ETH
+                              {item.bid} ETH
                             </span>
                           </p>
                         </div>

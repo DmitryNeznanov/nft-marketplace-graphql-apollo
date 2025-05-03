@@ -27,7 +27,7 @@ export default function CTA() {
                     type="text"
                     placeholder="Enter your email here"
                   />
-                  <button className="w-full lg:w-max mt-[16px] lg:mt-0 py-[12px] lg:py-0 lg:ml-auto button-primary before:content-[url('/icons/mail.svg')]">
+                  <button className="w-full lg:w-max mt-[16px] lg:mt-0 py-[12px] lg:py-0 lg:ml-auto button-primary before:content-[url('/icons/mail.svg')] hover:scale-[95%]">
                     subscribe
                   </button>
                 </div>

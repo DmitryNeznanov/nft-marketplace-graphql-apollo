@@ -1,13 +1,13 @@
 import Image from "next/image"
-import Link from "next/dist/client/app-dir/link"
 import OpenMobileMenu from "./OpenMobileMenu"
 import HeaderNav from "./HeaderNav"
 import MobileMenu from "./MobileMenu"
+import Link from "next/link"
 
 export default function Header() {
   return (
     <header
-      className="max-w-[1650px] mx-auto px-[30px] md:px-[50px] 2xl:px-[175px] py-[15px] lg:py-[20px]"
+      className="max-w-[1650px] mx-auto px-[5px] lg:px-[50px] 2xl:px-[175px] py-[15px] lg:py-[20px]"
       id="header"
     >
       <nav className="flex justify-between items-center">
