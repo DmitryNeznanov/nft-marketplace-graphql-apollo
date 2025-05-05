@@ -74,7 +74,7 @@
     @apply w-max px-[50px] py-[20px] font-work-sans font-semibold text-[16px] text-black capitalize rounded-primary bg-white flex items-center justify-center hover:cursor-pointer before:w-[20px] before:h-[20px] before:mr-[12px] hover:scale-[102.5%] duration-200;
   }
   .input-primary {
-    @apply w-full py-[12px] px-[20px] lg:p-[20px] bg-white border border-gray font-work-sans text-black outline-none  rounded-primary;
+    @apply w-full py-[12px] px-[20px] lg:p-[20px] bg-white border border-gray font-work-sans text-black outline-none rounded-primary placeholder:text-black placeholder:capitalize;
   }
 }
 @utility container {

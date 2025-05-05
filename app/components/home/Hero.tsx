@@ -18,8 +18,7 @@ export default async function Hero() {
             <div className="md:mt-[30px] order-4 md:order-2">
               <Link
                 className="button-primary w-full before:content-[url('/icons/rocketLaunch.svg')] md:w-max"
-                href="/marketplace"
-                // TODO: change href to signup
+                href="/signup"
               >
                 get started
               </Link>

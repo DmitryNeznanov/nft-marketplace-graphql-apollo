@@ -8,7 +8,10 @@ export default function Footer() {
           <section className="xl:w-auto mx-auto md:mx-0 lg:px-[30px] flex flex-col xl:flex-row xl:justify-between gap-y-[30px]">
             <section>
               <article>
-                <Link href="/">
+                <Link
+                  className="w-max block"
+                  href="/"
+                >
                   <Image
                     className="p-[10px] -m-[10px] box-content"
                     src="/logo.svg"
@@ -160,31 +163,6 @@ export default function Footer() {
                       </svg>
                     </Link>
                   </li>
-                  {/* {[
-                    ["https://discord.com", "discord.svg"],
-                    ["https://youtube.com", "youtube.svg"],
-                    ["https://x.com", "x.svg"],
-                    ["https://instagram.com", "instagram.svg"],
-                  ].map(([href, src], i) => {
-                    return (
-                      <li
-                        
-                        
-                      >
-                        <Link
-                          href={href}
-                          target="_blank"
-                        >
-                          <Image
-                            src={`/icons/${src}`}
-                            width={32}
-                            height={32}
-                            alt={src}
-                          ></Image>
-                        </Link>
-                      </li>
-                    )
-                  })} */}
                 </ul>
               </div>
             </section>
