@@ -63,7 +63,7 @@ export default async function MarketPlace() {
                     >
                       <Link href={`/marketplace/${item._id}`}>
                         <Image
-                          className="w-full"
+                          className="w-full max-w-[420px] max-h-[296px]"
                           src={item.image}
                           width={420}
                           height={296}
