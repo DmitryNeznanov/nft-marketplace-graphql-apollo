@@ -18,33 +18,59 @@ export default async function Rankings() {
         </div>
       </section>
       <section>
-        <table>
-          <thead>
-            <th scope="col">Artist</th>
-            <th scope="col">Change</th>
-            <th scope="col">Change</th>
-            <th scope="col">NFTs Sold</th>
-            <th scope="col">Volume</th>
-          </thead>
-          <tbody>
-            {users.map((user, i) => {
-              return (
-                <tr key={i}>
-                  <th
-                    className={`flex items-center  before:w-[60px] before:h-[60px]`}
-                    // before:content-[url('${user.profileImage}')]
-                    scope="row"
+        <div className="max-w-sm md:container mx-auto">
+          <table className="w-full border-spacing-y-[20px] border-separate">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Artist</th>
+                <th
+                  className="hidden md:table-cell"
+                  scope="col"
+                >
+                  Change
+                </th>
+                <th
+                  className="hidden lg:table-cell"
+                  scope="col"
+                >
+                  NFTs Sold
+                </th>
+                <th scope="col">Volume</th>
+              </tr>
+            </thead>
+            <tbody className="">
+              {users.map((user, i) => {
+                return (
+                  <tr
+                    className=" bg-black-white *:first:rounded-l-primary *:last:rounded-r-primary [&>th,td]:py-[14.5px]"
+                    key={i}
                   >
-                    {user.name}
-                  </th>
-                  <td>+1.41</td>
-                  <td>{user.sold}</td>
-                  <td>{user.volume} ETH</td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
+                    <th className="rounded-tl-primary rounded-l-primary">
+                      {i + 1}
+                    </th>
+                    <td
+                      className="flex items-center"
+                      scope="row"
+                    >
+                      <Image
+                        className="rounded-full"
+                        src={user.profileImage}
+                        width={60}
+                        height={60}
+                        alt={user.profileImage}
+                      ></Image>
+                      {user.name}
+                    </td>
+                    <td className="hidden md:table-cell">+1.41</td>
+                    <td className="hidden lg:table-cell ">{user.sold}</td>
+                    <td className="">{user.volume} ETH</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
       </section>
     </>
   )
