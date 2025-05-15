@@ -1,6 +1,12 @@
 import Image from "next/image"
+import type { Metadata } from "next"
 
-export default function signup() {
+export const metadata: Metadata = {
+  title: "NFT Marketplace | Signup",
+  description: "NFT Marketplace Signup page",
+}
+
+export default function Signup() {
   return (
     // TODO: image height screen for hide footer ?
     <section>

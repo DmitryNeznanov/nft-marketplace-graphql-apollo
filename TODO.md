@@ -1,5 +1,6 @@
 ### Tasks
-- upload images with larger sizes
+- card component
+- https://nextjs.org/docs/pages/api-reference/components/image#fill
 ### Questions
 - export with pure mongodb ?
 - marketplace rename ?

@@ -44,8 +44,10 @@ export default async function MarketPlaceItem({
           ></Image>
         </div>
         <div className="max-w-sm md:container mx-auto">
-          <Suspense fallback={<h2 className="h1-sans">Loading NFT item...</h2>}>
-            <div className="max-w-[605px] py-[40px] flex flex-col gap-y-[20px] md:gap-y-[30px]">
+          <div className="max-w-[605px] py-[40px] flex flex-col gap-y-[20px] md:gap-y-[30px]">
+            <Suspense
+              fallback={<h2 className="h1-sans">Loading NFT item...</h2>}
+            >
               <div>
                 <h2 className="h2-sans">{item.title}</h2>
                 <p className="mt-[10px] p-sans-xl text-gray">
@@ -156,8 +158,8 @@ export default async function MarketPlaceItem({
                   })}
                 </ul>
               </div>
-            </div>
-          </Suspense>
+            </Suspense>
+          </div>
         </div>
       </section>
       <section className="py-[40px] lg:py-[80px]">
