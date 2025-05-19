@@ -3,6 +3,7 @@ import User from "../mongodb/models/User"
 
 import type { Metadata } from "next"
 import { Suspense } from "react"
+import Link from "next/link"
 export const metadata: Metadata = {
   title: "NFT Marketplace | Rankings",
   description: "NFT Marketplace Rankings page",
@@ -88,10 +89,15 @@ export default async function Rankings() {
                           height={60}
                           alt={user.profileImage}
                         ></Image>
-                        <div className="ml-[12px] lg:ml-[20px] p-sans-xl font-normal md:font-semibold">
+                        <Link
+                          href={`/users/${user._id}`}
+                          className="block ml-[12px] lg:ml-[20px]"
+                        >
                           {/* TODO: link to profile  */}
-                          {user.name}
-                        </div>
+                          <h2 className="p-sans-xl font-normal md:font-semibold">
+                            {user.name}
+                          </h2>
+                        </Link>
                       </td>
                       <td className="hidden md:table-cell p-space text-[#00AC4F]">
                         +1.41%

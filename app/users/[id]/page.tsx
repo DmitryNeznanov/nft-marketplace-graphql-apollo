@@ -11,8 +11,8 @@ export async function generateMetadata({
   const user = await User.findById(id)
 
   return {
-    title: "NFT Marketplace",
-    description: `Page with information about NFT with name "${user.title}" and ID "${user._id}" `,
+    title: `NFT Marketplace | ${user.name}`,
+    description: `Page with information about User with name "${user.name}" and ID "${user._id}"`,
   }
 }
 export async function generateStaticParams() {
@@ -33,22 +33,26 @@ export default async function UserPage({
       <section>
         <div>
           <Image
+            className="max-h-[250px] md:max-h-[280px] lg:md:max-h-[320px]"
             src={user.backgroundImage}
-            fill
+            width={1980}
+            height={320}
             alt={user.backgroundImage}
           ></Image>
         </div>
         <div className="max-w-sm md:container mx-auto">
           <article>
             <Image
+              className="max-w-[120px] max-h-[120px] rounded-full"
+              width={120}
+              height={120}
               src={user.profileImage}
-              fill
               alt={user.profileImage}
             ></Image>
             <h2>{user.name}</h2>
             <div>
               <button className="button-primary before:content-[url('/icons/copy.svg')]">
-                {user._id}
+                {user._id.toString()}
               </button>
               <button className="button-transparent before:content-[url('/icons/plus-accent.svg')]">
                 Follow
