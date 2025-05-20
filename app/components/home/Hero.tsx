@@ -44,18 +44,18 @@ export default async function Hero() {
             </div>
           </div>
           {/* FIXME: fix image height */}
-          {/* TODO: 3D nft? */}
+          {/* ISSUE: 3D nft? */}
           <div className="contents md:max-w-[50%] md:block">
             <article className="order-3 md:order-4 rounded-primary overflow-hidden scale-primary">
-              <div>
+              <Link href={`/marketplace/${item._id}`}>
                 <Image
                   className="w-screen"
                   src="/hero.png"
                   width={510}
                   height={400}
-                  alt=""
+                  alt="hero.png"
                 ></Image>
-              </div>
+              </Link>
               <div className="p-[21px] bg-black-white">
                 <Link
                   className="w-max block"

@@ -54,11 +54,11 @@ export default async function MarketPlace() {
               <Suspense
                 fallback={<h2 className="h1-sans">Loading marketplace...</h2>}
               >
-                {/* TODO: button to view more or pagination ? */}
+                {/* ISSUE: button to view more or pagination ? */}
                 {items.map((item, i) => {
                   return (
                     <article
-                      className="w-full rounded-primary overflow-hidden"
+                      className="w-full rounded-primary overflow-hidden hover:scale-primary"
                       key={i}
                     >
                       <Link href={`/marketplace/${item._id}`}>

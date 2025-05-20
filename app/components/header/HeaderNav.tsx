@@ -24,7 +24,7 @@ export default function HeaderNav({
           >
             <Link
               className="w-max -m-[10px] p-[10px]"
-              href={href}
+              href={`/${href}`}
               onClick={closeMobileMenu}
             >
               {title}

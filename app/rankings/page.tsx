@@ -11,7 +11,10 @@ export const metadata: Metadata = {
 
 export default async function Rankings() {
   const users = await User.find()
-
+  const test = users.reverse().sort((a, b) => {
+    return a.volume - b.volume
+  })
+  console.log(test)
   return (
     <>
       <section className="py-[40px] md:py-[60px] lg:py-[80px]">
@@ -33,7 +36,7 @@ export default async function Rankings() {
           <Suspense fallback={<h2 className="h1-sans">Loading NFT item...</h2>}>
             <table className="w-full border-spacing-y-[20px] border-separate last:-m-[20px]">
               <thead>
-                <tr className="*:first:pl-[20px] [&>th,td]:text-start [&>th,td]:py-[12px] text-gray [&>th,td]:first:border [&>th,td]:last:border [&>th,td]:first:border-r-0 [&>th,td]:last:border-l-0 [&>th,td]:border-black-white [&>th,td]:not-first:not-last:border-t [&>th,td]:not-first:not-last:border-b *:first:rounded-l-primary *:last:rounded-r-primary">
+                <tr className="text-gray *:first:pl-[20px] *:first:rounded-l-primary *:last:rounded-r-primary [&>th,td]:border-black-white [&>th,td]:text-start [&>th,td]:py-[12px] [&>th,td]:first:border [&>th,td]:last:border [&>th,td]:first:border-r-0 [&>th,td]:last:border-l-0 [&>th,td]:not-first:not-last:border-t [&>th,td]:not-first:not-last:border-b ">
                   <th
                     className="p-space"
                     scope="col"
@@ -70,7 +73,7 @@ export default async function Rankings() {
                 {users.map((user, i) => {
                   return (
                     <tr
-                      className="bg-black-white *:first:rounded-l-primary *:last:rounded-r-primary *:first:pl-[20px] [&>th,td]:py-[13px] md:[&>th,td]:py-[14.5px] lg:[&>th,td]:py-[12px] [&>th,td]:text-start"
+                      className="bg-black-white *:first:rounded-l-primary *:last:rounded-r-primary *:first:pl-[20px] [&>th,td]:py-[13px] md:[&>th,td]:py-[14.5px] lg:[&>th,td]:py-[12px] [&>th,td]:text-start hover:scale-[99%] transition duration-350"
                       key={i}
                     >
                       <th className="p-space text-gray">
@@ -82,19 +85,18 @@ export default async function Rankings() {
                         className="flex items-center"
                         scope="row"
                       >
-                        <Image
-                          className="max-w-[24px] max-h-[24px] lg:max-w-[60px] lg:max-h-[60px] rounded-full"
-                          src={user.profileImage}
-                          width={60}
-                          height={60}
-                          alt={user.profileImage}
-                        ></Image>
                         <Link
                           href={`/users/${user._id}`}
-                          className="block ml-[12px] lg:ml-[20px]"
+                          className="flex items-center hover:underline-primary"
                         >
-                          {/* TODO: link to profile  */}
-                          <h2 className="p-sans-xl font-normal md:font-semibold">
+                          <Image
+                            className="max-w-[24px] max-h-[24px] lg:max-w-[60px] lg:max-h-[60px] rounded-full"
+                            src={user.profileImage}
+                            width={60}
+                            height={60}
+                            alt={user.profileImage}
+                          ></Image>
+                          <h2 className="ml-[12px] lg:ml-[20px] p-sans-xl font-normal md:font-semibold">
                             {user.name}
                           </h2>
                         </Link>
