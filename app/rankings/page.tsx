@@ -1,5 +1,5 @@
 import Image from "next/image"
-import User from "../mongodb/models/User"
+import User from "../models/User"
 
 import type { Metadata } from "next"
 import { Suspense } from "react"
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 }
 
 export default async function Rankings() {
-  const users = await User.find()
+  const users = (await User.find()) as User[]
   const test = users.reverse().sort((a, b) => {
     return a.volume - b.volume
   })
@@ -69,8 +69,8 @@ export default async function Rankings() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="">
-                {users.map((user, i) => {
+              <tbody>
+                {users.map((user: User, i) => {
                   return (
                     <tr
                       className="bg-black-white *:first:rounded-l-primary *:last:rounded-r-primary *:first:pl-[20px] [&>th,td]:py-[13px] md:[&>th,td]:py-[14.5px] lg:[&>th,td]:py-[12px] [&>th,td]:text-start hover:scale-[99%] transition duration-350"

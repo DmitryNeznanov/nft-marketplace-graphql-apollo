@@ -1,5 +1,5 @@
 import Image from "next/image"
-import NFT from "../mongodb/models/NFT"
+import NFT from "../models/NFT"
 import { Suspense } from "react"
 import Link from "next/link"
 import { Metadata } from "next"
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 }
 
 export default async function MarketPlace() {
-  const items = await NFT.find()
+  const items = (await NFT.find()) as NFT[]
 
   return (
     <>
@@ -55,7 +55,7 @@ export default async function MarketPlace() {
                 fallback={<h2 className="h1-sans">Loading marketplace...</h2>}
               >
                 {/* ISSUE: button to view more or pagination ? */}
-                {items.map((item, i) => {
+                {items.map((item: NFT, i) => {
                   return (
                     <article
                       className="w-full rounded-primary overflow-hidden hover:scale-primary"

@@ -1,9 +1,9 @@
-import NFT from "@/app/mongodb/models/NFT"
+import NFT from "@/app/models/NFT"
 import Image from "next/image"
 import Link from "next/link"
 
 export default async function Exploring() {
-  const items = await NFT.find()
+  const items: NFT[] = (await NFT.find()) as NFT[]
 
   return (
     <section className="py-[40px] md:py-[80px]">
@@ -26,7 +26,7 @@ export default async function Exploring() {
         </article>
         <section className="mt-[40px] lg:mt-[60px]">
           <div className="flex flex-col md:flex-row items-center justify-center gap-[20px] md:gap-[30px] md:*:nth-[n+3]:hidden lg:*:nth-[n+3]:block">
-            {items.slice(0, 3).map((item, i) => {
+            {items.slice(0, 3).map((item: NFT, i) => {
               return (
                 <article
                   className="max-w-[330px] w-full rounded-primary overflow-hidden scale-primary"

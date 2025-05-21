@@ -1,9 +1,9 @@
-import User from "@/app/mongodb/models/User"
+import User from "@/app/models/User"
 import Image from "next/image"
 import Link from "next/link"
 
 export default async function Creators() {
-  const users = await User.find()
+  const users = await User.find() as User[]
 
   return (
     <section className="py-[40px] md:py-[80px]">
@@ -26,7 +26,7 @@ export default async function Creators() {
         </article>
         <section className="mt-[40px] lg:mt-[60px]">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[20px] lg:gap-[25px] *:[&:nth-child(n+6)]:hidden md:*:[&:nth-child(n+6)]:flex md:*:[&:nth-child(n+7)]:hidden lg:md:*:[&:nth-child(n+7)]:flex lg:*:[&:nth-child(n+1)]:flex">
-            {users.map((user, i) => {
+            {users.map((user: User, i) => {
               return (
                 <article
                   className="w-full p-[20px] flex flex-row lg:flex-col items-center bg-black-white rounded-primary relative hover:scale-primary"

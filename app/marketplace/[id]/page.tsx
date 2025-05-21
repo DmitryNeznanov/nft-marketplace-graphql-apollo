@@ -1,4 +1,4 @@
-import NFT from "@/app/mongodb/models/NFT"
+import NFT from "@/app/models/NFT"
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
@@ -10,7 +10,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>
 }): Promise<Metadata> {
   const { id } = await params
-  const item = await NFT.findById(id)
+  const item = await NFT.findById(id) as NFT
 
   return {
     title: "NFT Marketplace",
@@ -18,8 +18,8 @@ export async function generateMetadata({
   }
 }
 export async function generateStaticParams() {
-  const items = await NFT.find()
-  return items.map((item) => ({
+  const items = await NFT.find() as NFT[]
+  return items.map((item: NFT) => ({
     id: String(item._id),
   }))
 }
@@ -29,7 +29,7 @@ export default async function MarketPlaceItem({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const item = await NFT.findById(id)
+  const item = (await NFT.findById(id)) as NFT
   return (
     <>
       <section>

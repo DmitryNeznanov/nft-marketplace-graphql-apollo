@@ -1,8 +1,8 @@
-import NFT from "@/app/mongodb/models/NFT"
+import NFT from "@/app/models/NFT"
 import Image from "next/image"
 import Link from "next/link"
 export default async function Hero() {
-  const item = await NFT.findOne()
+  const item = await NFT.findOne() as NFT
   return (
     <section className="py-[40px] md:py-[80px]">
       <div className="max-w-sm md:container mx-auto">
