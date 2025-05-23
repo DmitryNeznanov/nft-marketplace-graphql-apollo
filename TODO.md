@@ -1,10 +1,5 @@
 ### Tasks
-- card component
-- https://nextjs.org/docs/pages/api-reference/components/image#fill
+- add author to item, then get author and _id for card link
+- export all files in mongoDB
 ### Questions
-- export with pure mongodb ?
-- marketplace rename ?
-- fonts ?
-- max-w-sm md:container mx-auto ?
 ### Draft 
-

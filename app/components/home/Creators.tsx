@@ -3,7 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 export default async function Creators() {
-  const users = await User.find() as User[]
+  const users = (await User.find()) as User[]
 
   return (
     <section className="py-[40px] md:py-[80px]">
@@ -37,11 +37,11 @@ export default async function Creators() {
                   </div>
                   <Link href={`/users/${user._id}`}>
                     <Image
-                      className="max-w-[60px] max-h-[60px] lg:max-w-max lg:max-h-max lg:mx-auto"
-                      src="/creators-1.png"
+                      className="max-w-[60px] max-h-[60px] lg:max-w-max lg:max-h-max lg:mx-auto rounded-full"
+                      src={user.profileImage}
                       width={120}
                       height={120}
-                      alt="creators-1.png"
+                      alt={user.profileImage}
                     ></Image>
                   </Link>
                   <div className="h-full ml-[20px] lg:ml-0 lg:mt-[20px] flex flex-col lg:items-center justify-between">

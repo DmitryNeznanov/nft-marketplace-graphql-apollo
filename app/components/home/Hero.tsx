@@ -2,15 +2,15 @@ import NFT from "@/app/models/NFT"
 import Image from "next/image"
 import Link from "next/link"
 export default async function Hero() {
-  const item = await NFT.findOne() as NFT
+  const item = (await NFT.findOne()) as NFT
   return (
     <section className="py-[40px] md:py-[80px]">
       <div className="max-w-sm md:container mx-auto">
         <div className="flex flex-col md:flex-row gap-x-[30px] gap-y-[40px]">
-          <div className="contents md:max-w-[50%] md:block">
+          <div className="contents w-full md:max-w-[50%] md:block">
             <article className="order-1 md:order-1">
               <h1 className="h1-sans">Discover Digital Art & Collect NFTs</h1>
-              <p className="mt-[10px] md:mt-[20px] p-sans-lg capitalize">
+              <p className="mt-[10px] md:mt-[20px] p-sans-xl capitalize">
                 NFT Marketplace UI created with Anima for Figma. Collect, buy
                 and sell art from more than 20k NFT artists.
               </p>
@@ -24,7 +24,7 @@ export default async function Hero() {
               </Link>
             </div>
             <div className="md:mt-[30px] max-w-[90%] flex flex-row justify-between order-4 md:order-3">
-              {/* TODO: dynamic stat? */}
+              {/* ISSUE: dynamic stat? */}
               {[
                 ["240", "Auctions"],
                 ["240", "Total Sale"],
@@ -43,13 +43,11 @@ export default async function Hero() {
               })}
             </div>
           </div>
-          {/* FIXME: fix image height */}
           {/* ISSUE: 3D nft? */}
-          <div className="contents md:max-w-[50%] md:block">
+          <div className="contents md:block w-full md:max-w-[50%]">
             <article className="order-3 md:order-4 rounded-primary overflow-hidden scale-primary">
               <Link href={`/marketplace/${item._id}`}>
                 <Image
-                  className="w-screen"
                   src="/hero.png"
                   width={510}
                   height={400}

@@ -25,7 +25,6 @@ export default function Categories() {
               ["Virtual Worlds"],
             ].map(([title], i) => {
               return (
-                // FIXME: fix text overflow
                 <article
                   className="rounded-primary overflow-hidden"
                   key={i}

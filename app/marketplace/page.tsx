@@ -16,7 +16,6 @@ export default async function MarketPlace() {
     <>
       <section className="py-[40px] md:py-[60px] lg:py-[80px]">
         <div className="max-w-sm md:container mx-auto">
-          {/* FIXME: fix Responsiveness */}
           <article>
             <h1 className="h1-sans">Browse Marketplace</h1>
             <p className="mt-[10px] p-sans-xl">

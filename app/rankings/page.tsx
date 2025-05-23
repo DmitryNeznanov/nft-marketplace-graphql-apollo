@@ -19,7 +19,6 @@ export default async function Rankings() {
     <>
       <section className="py-[40px] md:py-[60px] lg:py-[80px]">
         <div className="max-w-sm md:container mx-auto">
-          {/* FIXME: fix Responsiveness */}
           <article>
             <h1 className="h1-sans">Top Creators</h1>
             <p className="mt-[10px] p-sans-xl">
@@ -30,11 +29,10 @@ export default async function Rankings() {
       </section>
       <section className="pb-[40px]">
         <div className="max-w-sm md:container mx-auto">
-          {/* FIXME: Table width */}
           {/* TODO: Sort by value */}
           {/* ISSUE: data by date  ?  */}
           <Suspense fallback={<h2 className="h1-sans">Loading NFT item...</h2>}>
-            <table className="w-full border-spacing-y-[20px] border-separate last:-m-[20px]">
+            <table className="w-full border-spacing-y-[20px] border-separate -mb-[20px]">
               <thead>
                 <tr className="text-gray *:first:pl-[20px] *:first:rounded-l-primary *:last:rounded-r-primary [&>th,td]:border-black-white [&>th,td]:text-start [&>th,td]:py-[12px] [&>th,td]:first:border [&>th,td]:last:border [&>th,td]:first:border-r-0 [&>th,td]:last:border-l-0 [&>th,td]:not-first:not-last:border-t [&>th,td]:not-first:not-last:border-b ">
                   <th

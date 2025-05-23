@@ -8,7 +8,6 @@ export const metadata: Metadata = {
 
 export default function Signup() {
   return (
-    // TODO: image height screen for hide footer ?
     <section>
       <div className="flex flex-col md:flex-row md:items-center md:gap-x-[40px] lg:gap-x-[60px]">
         <div className="md:max-w-[50%]">
