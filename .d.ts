@@ -4,6 +4,7 @@ interface User {
   sold: number
   volume: number
   followers: number
+  change: number
   info: string
   profileImage: string
   backgroundImage: string

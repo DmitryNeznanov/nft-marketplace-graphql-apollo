@@ -11,7 +11,6 @@ export const metadata: Metadata = {
 
 export default async function MarketPlace() {
   const items = (await NFT.find()) as NFT[]
-
   return (
     <>
       <section className="py-[40px] md:py-[60px] lg:py-[80px]">
@@ -22,6 +21,7 @@ export default async function MarketPlace() {
               Browse through more than 50k NFTs on the NFT Marketplace.
             </p>
           </article>
+
           <form className="mt-[30px]">
             <div className="pr-[20px] flex flex-row items-center justify-between gap-x-[26px] border border-gray rounded-primary">
               {/* TODO: search by nfts data */}

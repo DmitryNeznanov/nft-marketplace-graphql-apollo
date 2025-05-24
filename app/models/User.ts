@@ -9,6 +9,7 @@ const userSchema = new Schema<User>({
   sold: Number,
   volume: Number,
   followers: Number,
+  change: Number,
   info: String,
   profileImage: String,
   backgroundImage: String,

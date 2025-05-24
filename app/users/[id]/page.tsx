@@ -1,3 +1,4 @@
+import NFT from "@/app/models/NFT"
 import User from "@/app/models/User"
 import type { Metadata } from "next"
 import Image from "next/image"
@@ -29,6 +30,9 @@ export default async function UserPage({
 }) {
   const { id } = await params
   const user = (await User.findById(id)) as User
+  const userNFTs = await NFT.find({ author: user._id })
+  console.log(userNFTs)
+
   return (
     <>
       <section>
@@ -273,9 +277,7 @@ export default async function UserPage({
         </Suspense>
       </section>
       <section>
-        <div className="max-w-sm md:container mx-auto">
-          {/* TODO: User nfts */}
-        </div>
+        <div className="max-w-sm md:container mx-auto">{}</div>
       </section>
     </>
   )

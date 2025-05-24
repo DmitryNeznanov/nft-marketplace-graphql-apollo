@@ -11,10 +11,10 @@ export const metadata: Metadata = {
 
 export default async function Rankings() {
   const users = (await User.find()) as User[]
-  const test = users.reverse().sort((a, b) => {
-    return a.volume - b.volume
-  })
-  console.log(test)
+  // const test = users.reverse().sort((a, b) => {
+  //   return a.volume - b.volume
+  // })
+  // console.log(test)
   return (
     <>
       <section className="py-[40px] md:py-[60px] lg:py-[80px]">
@@ -99,8 +99,12 @@ export default async function Rankings() {
                           </h2>
                         </Link>
                       </td>
-                      <td className="hidden md:table-cell p-space text-[#00AC4F]">
-                        +1.41%
+                      <td
+                        className={`hidden md:table-cell p-space ${
+                          user.change < 0 ? "text-red-700" : "text-[#00AC4F]"
+                        }`}
+                      >
+                        {user.change}%
                       </td>
                       <td className="hidden lg:table-cell p-space">
                         {user.sold}
