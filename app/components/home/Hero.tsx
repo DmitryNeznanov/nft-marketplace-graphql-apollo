@@ -1,8 +1,10 @@
 import NFT from "@/app/models/NFT"
+import User from "@/app/models/User"
 import Image from "next/image"
 import Link from "next/link"
 export default async function Hero() {
   const item = (await NFT.findOne()) as NFT
+  const itemUser = await User.findById(item.author)
   return (
     <section className="py-[40px] md:py-[80px]">
       <div className="max-w-sm md:container mx-auto">
@@ -64,11 +66,17 @@ export default async function Hero() {
                   </h3>
                 </Link>
                 <Link
-                  className="w-max mt-[10px] flex items-center font-work-sans text-[16px]/[140%] before:content-[url('/heroAvatar.png')] before:w-[24px] before:h-[24px] before:mr-[12px] hover:underline-primary"
-                  href="#"
+                  className={`w-max mt-[5px] flex items-center font-work-sans text-[16px]/[140%] hover:underline-primary`}
+                  href={`/users/${item.author}`}
                 >
-                  {/* TODO: add link to author */}
-                  {item.author}
+                  <Image
+                    className="mr-[12px] rounded-full"
+                    src={itemUser.profileImage}
+                    width={24}
+                    height={24}
+                    alt="userProfileImage"
+                  ></Image>
+                  <p className="p-space">{itemUser.name}</p>
                 </Link>
               </div>
             </article>

@@ -3,7 +3,7 @@ import NFT from "../models/NFT"
 import { Suspense } from "react"
 import Link from "next/link"
 import { Metadata } from "next"
-
+import User from "../models/User"
 export const metadata: Metadata = {
   title: "NFT Marketplace | Marketplace",
   description: "Page on which NFT is sold",
@@ -54,7 +54,8 @@ export default async function MarketPlace() {
                 fallback={<h2 className="h1-sans">Loading marketplace...</h2>}
               >
                 {/* ISSUE: button to view more or pagination ? */}
-                {items.map((item: NFT, i) => {
+                {items.map(async (item: NFT, i) => {
+                  const itemUser = (await User.findById(item.author)) as User
                   return (
                     <article
                       className="w-full rounded-primary overflow-hidden hover:scale-primary"
@@ -80,12 +81,17 @@ export default async function MarketPlace() {
                             </h3>
                           </Link>
                           <Link
-                            className="w-max mt-[5px] flex items-center font-work-sans text-[16px]/[140%] before:content-[url('/heroAvatar.png')] before:w-[24px] before:h-[24px] before:mr-[12px] hover:underline-primary"
-                            href="#"
+                            className={`w-max mt-[5px] flex items-center font-work-sans text-[16px]/[140%] hover:underline-primary`}
+                            href={`/users/${item.author}`}
                           >
-                            {/* // TODO: add author's image to DB and display it */}
-                            {/* // TODO: Link to creator pagee */}
-                            {item.author}
+                            <Image
+                              className="mr-[12px] rounded-full"
+                              src={itemUser.profileImage}
+                              width={24}
+                              height={24}
+                              alt="userProfileImage"
+                            ></Image>
+                            <p className="p-space">{itemUser.name}</p>
                           </Link>
                         </div>
                         <div className="mt-[25px] flex flex-row justify-between items-center">

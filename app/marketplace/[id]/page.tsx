@@ -1,4 +1,5 @@
 import NFT from "@/app/models/NFT"
+import User from "@/app/models/User"
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
@@ -30,6 +31,7 @@ export default async function MarketPlaceItem({
 }) {
   const { id } = await params
   const item = (await NFT.findById(id)) as NFT
+  const itemUser = await User.findById(item.author)
   return (
     <>
       <section>
@@ -54,19 +56,26 @@ export default async function MarketPlaceItem({
                     <p className="mt-[10px] p-sans-xl text-gray">
                       {/* // TODO: corrent date value in DB */}
                       {/* // TODO: format date to normal */}
-                      Minted On <data value="">{item.postTime}</data>
+                      Minted On <data value="">{item.postTime.toString()}</data>
                     </p>
                   </div>
                   {/* // TODO: add dynamic timer */}
                   <div>
                     <h4 className="h4-space text-gray">Created By</h4>
                     <Link
-                      // TODO: add author's image to DB and display it
-                      className="mt-[10px] w-max font-work-sans text-[16px]/[140%] font-normal md:font-semibold flex items-center before:content-[url('/heroAvatar.png')] before:w-[24px] before:h-[24px] before:mr-[12px] hover:underline-primary hover:cursor-pointer"
-                      // TODO: Link to creator pagee
-                      href="#"
+                      className="mt-[10px] w-max flex items-center hover:underline-primary hover:cursor-pointer"
+                      href={`/users/${itemUser._id}`}
                     >
-                      {item.author}
+                      <Image
+                        className="mr-[12px] rounded-full"
+                        src={itemUser.profileImage}
+                        width={24}
+                        height={24}
+                        alt="userProfileImage"
+                      ></Image>
+                      <p className="font-work-sans text-[16px]/[140%] font-normal md:font-semibold">
+                        {itemUser.name}
+                      </p>
                     </Link>
                   </div>
                   <div>
@@ -100,6 +109,7 @@ export default async function MarketPlaceItem({
                   <div>
                     <h4 className="h4-space text-gray">Tags</h4>
                     <ul className="mt-[20px] flex flex-col lg:flex-row gap-[20px]">
+                      {/* FIXME: fix grid */}
                       {item.tags.map((tag: string, i: number) => {
                         return (
                           <li
@@ -184,8 +194,9 @@ export default async function MarketPlaceItem({
                 {/* TODO: add author post to db and render it */}
               </Suspense>
               <Link
+                // FIXME: bug
                 className="w-full md:w-max md:hidden button-transparent before:content-[url('/icons/arrow-right-accent.svg')]"
-                href="#"
+                href={`/users/${itemUser._id}`}
               >
                 go to artist page
               </Link>

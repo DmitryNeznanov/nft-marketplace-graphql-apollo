@@ -1,10 +1,10 @@
 import NFT from "@/app/models/NFT"
+import User from "@/app/models/User"
 import Image from "next/image"
 import Link from "next/link"
 
 export default async function Exploring() {
   const items: NFT[] = (await NFT.find()) as NFT[]
-
   return (
     <section className="py-[40px] md:py-[80px]">
       <div className="max-w-sm md:container mx-auto">
@@ -26,7 +26,8 @@ export default async function Exploring() {
         </article>
         <section className="mt-[40px] lg:mt-[60px]">
           <div className="flex flex-col md:flex-row items-center justify-center gap-[20px] md:gap-[30px] md:*:nth-[n+3]:hidden lg:*:nth-[n+3]:block">
-            {items.slice(0, 3).map((item: NFT, i) => {
+            {items.slice(0, 3).map(async (item: NFT, i) => {
+              const itemUser = (await User.findById(item.author)) as User
               return (
                 <article
                   className="max-w-[330px] w-full rounded-primary overflow-hidden scale-primary"
@@ -54,12 +55,17 @@ export default async function Exploring() {
                         </h3>
                       </Link>
                       <Link
-                        // TODO: add author's image to DB and display it
-                        className="mt-[10px] w-max font-work-sans text-[16px]/[140%] font-normal md:font-semibold flex items-center before:content-[url('/heroAvatar.png')] before:w-[24px] before:h-[24px] before:mr-[12px] hover:underline-primary hover:cursor-pointer"
-                        // TODO: Link to creator pagee
-                        href="#"
+                        className={`w-max mt-[5px] flex items-center font-work-sans text-[16px]/[140%] hover:underline-primary`}
+                        href={`/users/${item.author}`}
                       >
-                        {item.author}
+                        <Image
+                          className="mr-[12px] rounded-full"
+                          src={itemUser.profileImage}
+                          width={24}
+                          height={24}
+                          alt="userProfileImage"
+                        ></Image>
+                        <p className="p-space">{itemUser.name}</p>
                       </Link>
                     </div>
                     <div className="mt-[25px] flex flex-row justify-between items-center">
