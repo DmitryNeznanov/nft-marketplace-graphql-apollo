@@ -30,7 +30,7 @@ export default async function MarketPlace() {
                 type="text"
                 placeholder="Search your favourite NFTs"
               />
-              <button className="block hover:cursor-pointer -m-[10px] p-[10px]">
+              <button className="-m-[10px] p-[10px] block hover:cursor-pointer">
                 <Image
                   src="/icons/search.svg"
                   width={24}

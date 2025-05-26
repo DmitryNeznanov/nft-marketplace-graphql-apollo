@@ -31,7 +31,11 @@ export default async function MarketPlaceItem({
 }) {
   const { id } = await params
   const item = (await NFT.findById(id)) as NFT
-  const itemUser = await User.findById(item.author)
+  const itemUser = (await User.findById(item.author)) as User
+  const itemsUser = (await NFT.find({
+    $nor: [{ title: item.title }],
+    author: item.author,
+  })) as NFT[]
   return (
     <>
       <section>
@@ -54,9 +58,14 @@ export default async function MarketPlaceItem({
                   <div>
                     <h2 className="h2-sans">{item.title}</h2>
                     <p className="mt-[10px] p-sans-xl text-gray">
-                      {/* // TODO: corrent date value in DB */}
-                      {/* // TODO: format date to normal */}
-                      Minted On <data value="">{item.postTime.toString()}</data>
+                      Minted On{" "}
+                      <data value={item.postTime}>
+                        {new Date(item.postTime).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        })}
+                      </data>
                     </p>
                   </div>
                   {/* // TODO: add dynamic timer */}
@@ -179,28 +188,84 @@ export default async function MarketPlaceItem({
           <div className="max-w-sm md:container mx-auto">
             <div className="flex justify-between">
               <h2 className="h2-sans capitalize">More from this artist</h2>
-              {/* TODO: link to author page */}
               <Link
                 className="hidden md:flex button-transparent before:content-[url('/icons/arrow-right-accent.svg')]"
-                href="#"
-              >
-                go to artist page
-              </Link>
-            </div>
-            <div className="mt-[30px] md:mt-[60px]">
-              <Suspense
-                fallback={<h2 className="h1-sans">Loading author NFTs...</h2>}
-              >
-                {/* TODO: add author post to db and render it */}
-              </Suspense>
-              <Link
-                // FIXME: bug
-                className="w-full md:w-max md:hidden button-transparent before:content-[url('/icons/arrow-right-accent.svg')]"
                 href={`/users/${itemUser._id}`}
               >
                 go to artist page
               </Link>
             </div>
+            <div className="mt-[30px] md:mt-[60px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
+              <Suspense
+                fallback={<h2 className="h1-sans">Loading author NFTs...</h2>}
+              >
+                {itemsUser.map(async (item: NFT, i) => {
+                  return (
+                    <article
+                      className="max-w-[330px] w-full rounded-primary overflow-hidden scale-primary"
+                      key={i}
+                    >
+                      <div>
+                        <Link href={`/marketplace/${item._id}`}>
+                          <Image
+                            className="w-full"
+                            src={item.image}
+                            width={420}
+                            height={296}
+                            alt={`item-${i + 1}`}
+                          ></Image>
+                        </Link>
+                      </div>
+                      <div className="p-[20px] md:px-[30px] bg-black-white">
+                        <div>
+                          <Link
+                            className="w-max block"
+                            href={`/marketplace/${item._id}`}
+                          >
+                            <h3 className="h3-sans hover:hover:underline-primary">
+                              {item.title}
+                            </h3>
+                          </Link>
+                          <Link
+                            className={`w-max mt-[5px] flex items-center font-work-sans text-[16px]/[140%] hover:underline-primary`}
+                            href={`/users/${item.author}`}
+                          >
+                            <Image
+                              className="mr-[12px] rounded-full"
+                              src={itemUser.profileImage}
+                              width={24}
+                              height={24}
+                              alt="userProfileImage"
+                            ></Image>
+                            <p className="p-space">{itemUser.name}</p>
+                          </Link>
+                        </div>
+                        <div className="mt-[25px] flex flex-row justify-between items-center">
+                          <p className="font-space-mono text-gray font-normal text-[12px]/[110%]">
+                            Price
+                            <span className="mt-[8px] block font-space-mono font-normal text-white text-[12px]/[140%] md:text-[16px]/[140%]">
+                              {item.price} ETH
+                            </span>
+                          </p>
+                          <p className="font-space-mono text-gray font-normal text-[12px]/[110%]">
+                            Highest Bid
+                            <span className="mt-[8px] block font-space-mono font-normal text-white text-[12px]/[140%] md:text-[16px]/[140%]">
+                              {item.bid} ETH
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+                    </article>
+                  )
+                })}
+              </Suspense>
+            </div>
+            <Link
+              className="w-full md:w-max md:hidden button-transparent before:content-[url('/icons/arrow-right-accent.svg')]"
+              href={`/users/${itemUser._id}`}
+            >
+              go to artist page
+            </Link>
           </div>
         </div>
       </section>
