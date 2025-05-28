@@ -1,3 +1,4 @@
+import Timer from "@/app/components/Timer"
 import NFT from "@/app/models/NFT"
 import User from "@/app/models/User"
 import type { Metadata } from "next"
@@ -59,13 +60,13 @@ export default async function MarketPlaceItem({
                     <h2 className="h2-sans">{item.title}</h2>
                     <p className="mt-[10px] p-sans-xl text-gray">
                       Minted On{" "}
-                      <data value={item.postTime}>
+                      <time dateTime={item.postTime}>
                         {new Date(item.postTime).toLocaleDateString("en-US", {
                           year: "numeric",
                           month: "short",
                           day: "numeric",
                         })}
-                      </data>
+                      </time>
                     </p>
                   </div>
                   {/* // TODO: add dynamic timer */}
@@ -139,46 +140,8 @@ export default async function MarketPlaceItem({
                   </div>
                 </Suspense>
               </div>
-              <div className="w-full h-max md:w-max mt-[20px] md:mt-0 p-[30px] flex flex-col items-center md:items-start rounded-primary bg-black-white/50 overflow-hidden">
-                <p className="font-space-mono font-normal text-[12px]/[120%]">
-                  Auction ends in:
-                </p>
-                <div className="mt-[10px] flex flex-row gap-x-[8px]">
-                  <div className="flex flex-col gap-y-[5px]">
-                    <p className="font-space-mono font-bold text-[38px]/[120%]">
-                      59
-                    </p>
-                    <p className="font-space-mono font-normal text-[12px]/[120%]">
-                      Hours
-                    </p>
-                  </div>
-                  <span className="font-space-mono font-bold text-[28px]/[140%]">
-                    :
-                  </span>
-                  <div className="flex flex-col gap-y-[5px]">
-                    <p className="font-space-mono font-bold text-[38px]/[120%]">
-                      59
-                    </p>
-                    <p className="font-space-mono font-normal text-[12px]/[120%]">
-                      Minutes
-                    </p>
-                  </div>
-                  <span className="font-space-mono font-bold text-[28px]/[140%]">
-                    :
-                  </span>
-                  <div className="flex flex-col gap-y-[5px]">
-                    <p className="font-space-mono font-bold text-[38px]/[120%]">
-                      59
-                    </p>
-                    <p className="font-space-mono font-normal text-[12px]/[120%]">
-                      Seconds
-                    </p>
-                  </div>
-                </div>
-                <button className="mt-[30px] w-full button-primary before:hidden">
-                  place bid
-                </button>
-              </div>
+              {/* FIXME: fix timer grid */}
+              <Timer expiredAt={item.postTime}></Timer>
             </div>
           </div>
         </div>

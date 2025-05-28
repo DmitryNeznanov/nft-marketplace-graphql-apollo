@@ -15,11 +15,13 @@ export default function Table({ users }: { users: User[] }) {
   }
 
   return (
+    // TODO: underline active
+    // TODO: reversed sorting on second click
     <table className="w-full border-spacing-y-[20px] border-separate -mb-[20px]">
       <thead>
-        <tr className="text-gray *:first:pl-[20px] *:first:rounded-l-primary *:last:rounded-r-primary [&>th,td]:border-black-white [&>th,td]:text-start [&>th,td]:py-[12px] [&>th,td]:first:border [&>th,td]:last:border [&>th,td]:first:border-r-0 [&>th,td]:last:border-l-0 [&>th,td]:not-first:not-last:border-t [&>th,td]:not-first:not-last:border-b ">
+        <tr className="text-gray *:first:pl-[20px] *:first:rounded-l-primary *:last:rounded-r-primary [&>th,td]:border-black-white [&>th,td]:text-start [&>th,td]:py-[12px] [&>th,td]:first:border [&>th,td]:last:border [&>th,td]:first:border-r-0 [&>th,td]:last:border-l-0 [&>th,td]:not-first:not-last:border-t [&>th,td]:not-first:not-last:border-b">
           <th
-            className="p-space"
+            className={`p-space`}
             scope="col"
           >
             <span className="lg:py-[4px] lg:px-[10px]">#</span>
@@ -27,50 +29,38 @@ export default function Table({ users }: { users: User[] }) {
           <th
             className="p-space"
             scope="col"
+            onClick={() => {
+              sortByValue("name")
+            }}
           >
-            <button
-              onClick={() => {
-                sortByValue("name")
-              }}
-            >
-              Artist
-            </button>
+            <button className="">Artist</button>
           </th>
           <th
             className="p-space hidden md:table-cell"
             scope="col"
+            onClick={() => {
+              sortByValue("change")
+            }}
           >
-            <button
-              onClick={() => {
-                sortByValue("change")
-              }}
-            >
-              Change
-            </button>
+            <button className="">Change</button>
           </th>
           <th
             className="p-space hidden lg:table-cell"
             scope="col"
+            onClick={() => {
+              sortByValue("sold")
+            }}
           >
-            <button
-              onClick={() => {
-                sortByValue("sold")
-              }}
-            >
-              NFTs Sold
-            </button>
+            <button className="">NFTs Sold</button>
           </th>
           <th
             className="p-space"
             scope="col"
+            onClick={() => {
+              sortByValue("volume")
+            }}
           >
-            <button
-              onClick={() => {
-                sortByValue("volume")
-              }}
-            >
-              Volume
-            </button>
+            <button className="">Volume</button>
           </th>
         </tr>
       </thead>

@@ -1,67 +1,56 @@
 import Link from "next/link"
+import Timer from "../Timer"
+import NFT from "@/app/models/NFT"
+import User from "@/app/models/User"
+import Image from "next/image"
 
-export default function Offer() {
+export default async function Offer() {
+  const item = (await NFT.findOne()) as NFT
+  const itemAuthor = (await User.findById(item.author)) as User
+
   return (
     <section className="relative pb-[40px] pt-[120px] md:pt-[360px] md:pb-[60px] bg-gradient-to-b from-white/0 to-accent">
-      <div className="absolute left-0 top-0 w-full h-full bg-[url('/offer-mobile.png')] md:bg-[url('/offer-laptop.png')] lg:bg-[url('/offer-desktop.png')] bg-cover bg-center -z-[9999]"></div>
+      <Image
+        className="absolute left-0 top-0 w-full h-full -z-[9999]"
+        src={item.image}
+        fill
+        alt="nftImage"
+      ></Image>
+      {/* <div className="absolute left-0 top-0 w-full h-full bg-[url('/offer-mobile.png')] md:bg-[url('/offer-laptop.png')] lg:bg-[url('/offer-desktop.png')] bg-cover bg-center -z-[9999]"></div> */}
       <div className="max-w-sm md:container mx-auto">
         <article className="flex flex-col gap-[30px] md:flex-row justify-between">
           <div className="contents md:flex flex-col gap-[30px]">
             <div className="w-max py-[10px] px-[20px] bg-black rounded-full order-1">
-              <p className="flex items-center p-sans before:content-[url('/heroAvatar.png')] before:w-[24px] before:h-[24px] before:mr-[12px]">
-                Shroomie
-              </p>
+              <Link
+                className="flex flex-row hover:underline-primary"
+                href={`/users/${itemAuthor._id}`}
+              >
+                <Image
+                  className="rounded-full"
+                  src={itemAuthor.profileImage}
+                  width={24}
+                  height={24}
+                  alt="profile image"
+                ></Image>
+                <p className="ml-[12px] flex items-center p-sans">
+                  {itemAuthor.name}
+                </p>
+              </Link>
             </div>
             <h2 className="font-work-sans font-semibold text-[38px]/[120%] lg:text-[51px]/[110%] order-2">
-              Magic Mashrooms
+              {item.title}
             </h2>
             <div className="order-4 md:order-3">
               <Link
                 className="w-full md:w-max button-white before:content-[url('/icons/eye-accent.svg')]"
-                href="#"
+                href={`/marketplace/${item._id}`}
               >
                 see NFT
               </Link>
             </div>
           </div>
           {/* // TODO: add dynamic timer */}
-          <div className="w-full h-max md:w-max p-[30px] flex flex-col items-center md:items-start self-end rounded-primary bg-black-white/50 overflow-hidden order-3 md:order-3">
-            <p className="font-space-mono font-normal text-[12px]/[120%]">
-              Auction ends in:
-            </p>
-            <div className="mt-[10px] flex flex-row gap-x-[8px]">
-              <div className="flex flex-col gap-y-[5px]">
-                <p className="font-space-mono font-bold text-[38px]/[120%]">
-                  59
-                </p>
-                <p className="font-space-mono font-normal text-[12px]/[120%]">
-                  Hours
-                </p>
-              </div>
-              <span className="font-space-mono font-bold text-[28px]/[140%]">
-                :
-              </span>
-              <div className="flex flex-col gap-y-[5px]">
-                <p className="font-space-mono font-bold text-[38px]/[120%]">
-                  59
-                </p>
-                <p className="font-space-mono font-normal text-[12px]/[120%]">
-                  Minutes
-                </p>
-              </div>
-              <span className="font-space-mono font-bold text-[28px]/[140%]">
-                :
-              </span>
-              <div className="flex flex-col gap-y-[5px]">
-                <p className="font-space-mono font-bold text-[38px]/[120%]">
-                  59
-                </p>
-                <p className="font-space-mono font-normal text-[12px]/[120%]">
-                  Seconds
-                </p>
-              </div>
-            </div>
-          </div>
+          <Timer expiredAt={item.postTime}></Timer>
         </article>
       </div>
     </section>
