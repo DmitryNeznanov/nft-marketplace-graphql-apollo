@@ -69,7 +69,6 @@ export default async function MarketPlaceItem({
                       </time>
                     </p>
                   </div>
-                  {/* // TODO: add dynamic timer */}
                   <div>
                     <h4 className="h4-space text-gray">Created By</h4>
                     <Link

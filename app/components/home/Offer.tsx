@@ -49,7 +49,6 @@ export default async function Offer() {
               </Link>
             </div>
           </div>
-          {/* // TODO: add dynamic timer */}
           <Timer expiredAt={item.postTime}></Timer>
         </article>
       </div>
