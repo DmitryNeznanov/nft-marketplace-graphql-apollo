@@ -117,8 +117,7 @@ export default async function MarketPlaceItem({
                   </div>
                   <div>
                     <h4 className="h4-space text-gray">Tags</h4>
-                    <ul className="mt-[20px] flex flex-col lg:flex-row gap-[20px]">
-                      {/* FIXME: fix grid */}
+                    <ul className="mt-[20px] flex-wrap flex flex-col lg:flex-row gap-x-[20px] gap-y-[10px]">
                       {item.tags.map((tag: string, i: number) => {
                         return (
                           <li
@@ -139,8 +138,9 @@ export default async function MarketPlaceItem({
                   </div>
                 </Suspense>
               </div>
-              {/* FIXME: fix timer grid */}
-              <Timer expiredAt={item.postTime}></Timer>
+              <div className="mt-[20px] order-3">
+                <Timer expiredAt={item.postTime}></Timer>
+              </div>
             </div>
           </div>
         </div>
