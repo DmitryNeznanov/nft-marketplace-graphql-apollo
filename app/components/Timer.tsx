@@ -13,7 +13,6 @@ export default function Timer({ expiredAt }: { expiredAt: string }) {
 
     function updateTimer() {
       const now = new Date().getTime()
-
       const distance = countDownDate - now
 
       const hours = Math.floor(

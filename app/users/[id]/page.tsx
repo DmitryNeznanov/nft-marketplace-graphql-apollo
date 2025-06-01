@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { Suspense } from "react"
+import CopyIdButton from "./components/CopyIdButton"
 export async function generateMetadata({
   params,
 }: {
@@ -57,12 +58,7 @@ export default async function UserPage({
               ></Image>
               <h2 className="h2-sans">{user.name}</h2>
               <div className="flex flex-col md:flex-row gap-[20px]">
-                <button className="w-full md:w-max button-primary before:content-[url('/icons/copy.svg')]">
-                  <span className="max-w-[115px] text-ellipsis overflow-hidden">
-                    {user._id.toString()}
-                    {/* TODO: copy ID on click */}
-                  </span>
-                </button>
+                <CopyIdButton userId={user._id.toString()}></CopyIdButton>
                 <button className="w-full md:w-max button-transparent before:content-[url('/icons/plus-accent.svg')]">
                   {/* ISSUE: follow ? */}
                   Follow
