@@ -4,13 +4,41 @@ import { Suspense } from "react"
 import Link from "next/link"
 import { Metadata } from "next"
 import User from "../models/User"
+import Search from "./components/Search"
 export const metadata: Metadata = {
   title: "NFT Marketplace | Marketplace",
   description: "Page on which NFT is sold",
 }
 
-export default async function MarketPlace() {
+export default async function MarketPlace(props: {
+  searchParams?: Promise<{
+    q?: string
+  }>
+}) {
+  const searchParams = await props.searchParams
+
   const items = (await NFT.find()) as NFT[]
+  const uniqueAuthorIds = Array.from(
+    new Set(items.map((item) => item.author.toString()))
+  )
+  const authors = await User.find({ _id: { $in: uniqueAuthorIds } })
+  const authorMap = new Map(
+    authors.map((author) => [author._id.toString(), author.name.toLowerCase()])
+  )
+
+  const filteredData = [...items].filter((item) => {
+    const q = searchParams?.q || ""
+    const authorName = authorMap.get(item.author.toString()) || ""
+    return (
+      // ISSUE add more rules ?
+      item.title.toLowerCase().includes(q) ||
+      item.content.toLowerCase().includes(q) ||
+      item.tags.some((tag) => tag.toLowerCase().includes(q)) ||
+      uniqueAuthorIds.some((id) => id.includes(q)) ||
+      authorName.includes(q)
+    )
+  })
+
   return (
     <>
       <section className="py-[40px] md:py-[60px] lg:py-[80px]">
@@ -21,25 +49,9 @@ export default async function MarketPlace() {
               Browse through more than 50k NFTs on the NFT Marketplace.
             </p>
           </article>
-
-          <form className="mt-[30px]">
-            <div className="pr-[20px] flex flex-row items-center justify-between gap-x-[26px] border border-gray rounded-primary">
-              {/* TODO: search by nfts data */}
-              <input
-                className="w-full p-[20px] outline-none p-sans placeholder:text-gray"
-                type="text"
-                placeholder="Search your favourite NFTs"
-              />
-              <button className="-m-[10px] p-[10px] block hover:cursor-pointer">
-                <Image
-                  src="/icons/search.svg"
-                  width={24}
-                  height={24}
-                  alt="search.svg"
-                />
-              </button>
-            </div>
-          </form>
+          <div className="mt-[30px]">
+            <Search></Search>
+          </div>
         </div>
       </section>
       <section>
@@ -54,7 +66,7 @@ export default async function MarketPlace() {
                 fallback={<h2 className="h1-sans">Loading marketplace...</h2>}
               >
                 {/* ISSUE: button to view more or pagination ? */}
-                {items.map(async (item: NFT, i) => {
+                {filteredData.map(async (item: NFT, i) => {
                   const itemUser = (await User.findById(item.author)) as User
                   return (
                     <article
