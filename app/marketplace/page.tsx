@@ -15,6 +15,7 @@ export default async function MarketPlace(props: {
     q?: string
   }>
 }) {
+  //FIXME: q
   const searchParams = await props.searchParams
 
   const items = (await NFT.find()) as NFT[]
