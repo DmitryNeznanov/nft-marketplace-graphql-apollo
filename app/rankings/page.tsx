@@ -1,15 +1,39 @@
 import User from "../models/User"
-
+import { gql } from "graphql-tag"
 import type { Metadata } from "next"
 import { Suspense } from "react"
 import Table from "./components/Table"
+import { ApolloClient, InMemoryCache } from "@apollo/client"
 export const metadata: Metadata = {
   title: "NFT Marketplace | Rankings",
   description: "NFT Marketplace Rankings page",
 }
 
+const GET_USERS = gql`
+  query {
+    users {
+      id
+      name
+      sold
+      volume
+      followers
+      change
+      info
+      profileImage
+      backgroundImage
+    }
+  }
+`
+
 export default async function Rankings() {
   const users = (await User.find()) as User[]
+  const client = new ApolloClient({
+    uri: `${process.env.API_URL}/api/graphql`, // ← обязательно полный URL
+    cache: new InMemoryCache(),
+  })
+
+  const { data } = await client.query({ query: GET_USERS })
+  console.log(data)
 
   return (
     <>
@@ -26,7 +50,7 @@ export default async function Rankings() {
       <section className="pb-[40px]">
         <div className="max-w-sm md:container mx-auto">
           <Suspense fallback={<h2 className="h1-sans">Loading NFT item...</h2>}>
-            <Table users={await JSON.parse(JSON.stringify(users))}></Table>
+            <Table users={await JSON.parse(JSON.stringify(data))}></Table>
           </Suspense>
         </div>
       </section>
