@@ -7,15 +7,17 @@
   --color-white: #ffffff;
   --color-gray: #858584;
   --color-accent: #a259ff;
+  /* breakpoints */
+  --breakpoint-xs: 320px;
+  --breakpoint-1md: 690px;
+  --breakpoint-1lg: 1050px;
+  /* rounded */
+  --radius-primary: 20px;
 }
 @theme inline {
   /* fonts */
   --font-work-sans: var(--font-work-sans);
   --font-space-mono: var(--font-space-mono);
-  /* breakpoints */
-  --breakpoint-xs: 320px;
-  --breakpoint-1md: 690px;
-  --breakpoint-1lg: 1050px;
 }
 
 @layer base {
@@ -34,6 +36,9 @@
   .h3-sans {
     @apply font-work-sans font-semibold text-[22px]/[140%];
   }
+  .h4-sans {
+    @apply font-space-mono font-semibold text-[16px]/[140%] lg:text-[22px]/[140%];
+  }
   .p-sans {
     @apply font-work-sans font-normal text-[16px]/[140%];
   }
@@ -49,6 +54,9 @@
   .h3-space {
     @apply font-space-mono font-semibold text-[22px]/[140%];
   }
+  .h4-space {
+    @apply font-space-mono font-semibold text-[16px]/[140%] lg:text-[22px]/[140%];
+  }
   .p-space {
     @apply font-space-mono font-normal text-[16px]/[140%];
   }
@@ -57,12 +65,24 @@
   }
   /* buttons */
   .button-primary {
-    @apply w-max px-[50px] py-[20px] font-work-sans font-semibold text-[16px] capitalize rounded-[20px] bg-accent flex items-center justify-center hover:cursor-pointer;
+    @apply w-max px-[50px] py-[20px] font-work-sans font-semibold text-[16px] capitalize rounded-primary bg-accent flex items-center justify-center hover:cursor-pointer before:w-[20px] before:h-[20px] before:mr-[12px] hover:scale-[102.5%] duration-200;
   }
   .button-transparent {
-    @apply w-max px-[50px] py-[20px] font-work-sans font-semibold text-[16px] capitalize rounded-[20px] bg-transparent border-[2px] border-accent flex items-center justify-center hover:cursor-pointer;
+    @apply w-max px-[50px] py-[20px] font-work-sans font-semibold text-[16px] capitalize rounded-primary bg-transparent border-[2px] border-accent flex items-center justify-center hover:cursor-pointer before:w-[20px] before:h-[20px] before:mr-[12px] hover:scale-[102.5%] duration-200;
+  }
+  .button-white {
+    @apply w-max px-[50px] py-[20px] font-work-sans font-semibold text-[16px] text-black capitalize rounded-primary bg-white flex items-center justify-center hover:cursor-pointer before:w-[20px] before:h-[20px] before:mr-[12px] hover:scale-[102.5%] duration-200;
+  }
+  .input-primary {
+    @apply w-full py-[12px] px-[20px] lg:p-[20px] bg-white border border-gray font-work-sans text-black outline-none rounded-primary placeholder:text-black placeholder:capitalize;
   }
 }
 @utility container {
   @apply mx-auto px-[5px] max-w-[1050px];
+}
+@utility underline-primary {
+  @apply underline decoration-2 underline-offset-4;
+}
+@utility scale-primary {
+  @apply hover:scale-[95%] duration-350;
 }

@@ -1,11 +1,15 @@
 "use client"
-import Link from "next/dist/client/app-dir/link"
+import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-export default function HeaderNav() {
+export default function HeaderNav({
+  closeMobileMenu,
+}: {
+  closeMobileMenu?: React.MouseEventHandler
+}) {
   const router = usePathname()
   return (
-    <ul className="flex flex-col lg:flex-row lg:items-center gap-y-[25px] gap-x-[50px] ">
+    <ul className="flex flex-col lg:flex-row lg:items-center gap-y-[25px] gap-x-[50px]">
       {[
         ["Marketplace", "marketplace"],
         ["Rankings", "rankings"],
@@ -13,14 +17,15 @@ export default function HeaderNav() {
       ].map(([title, href], i) => {
         return (
           <li
-            className={`w-max font-work-sans font-semibold text-[16px] ${
+            className={`w-max font-work-sans font-semibold text-[16px] hover:underline-primary ${
               router.includes(href) ? "text-accent pointer-events-none" : ""
             }`}
             key={i}
           >
             <Link
               className="w-max -m-[10px] p-[10px]"
-              href={href}
+              href={`/${href}`}
+              onClick={closeMobileMenu}
             >
               {title}
             </Link>
@@ -29,8 +34,9 @@ export default function HeaderNav() {
       })}
       <li>
         <Link
-          className="button-primary before:content-[url('/icons/user.svg')] before:w-[20px] before:h-[20px] before:mr-[12px]"
+          className="px-[30px] button-primary before:content-[url(/icons/user.svg)]"
           href="signup"
+          onClick={closeMobileMenu}
         >
           sign up
         </Link>

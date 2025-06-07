@@ -1,11 +1,4 @@
 ### Tasks
-- button before component dynamic
-- fix header container
-- rounded primary
-- fix categories text-overflow
+- suspence for main page
 ### Questions
-- fonts?
-- animations?
-- max-w-sm md:max-w-full mx-auto ?
-
-
+### Draft 

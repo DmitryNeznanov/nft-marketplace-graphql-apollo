@@ -1,11 +1,11 @@
 "use client"
 import Image from "next/image"
 
-export default function closeMobileMenu() {
-  function closeMobileMenu() {
-    const mobileMenu = document.getElementById("mobileMenu")!
-    mobileMenu.style.width = "0%"
-  }
+export default function closeMobileMenu({
+  closeMobileMenu,
+}: {
+  closeMobileMenu: React.MouseEventHandler
+}) {
   return (
     <button
       className="block hover:cursor-pointer"
