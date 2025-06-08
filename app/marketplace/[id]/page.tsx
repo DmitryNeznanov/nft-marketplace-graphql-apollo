@@ -127,7 +127,10 @@ export default async function MarketPlaceItem({
                             <Link
                               className="block py-[12px] px-[20px] rounded-primary bg-black-white uppercase hover:text-accent"
                               // TODO: link to sorted NFTs with current tags
-                              href="#"
+                              href={`/marketplace/q=${tag
+                                .toString()
+                                .toLowerCase()}}
+`}
                             >
                               {tag}
                             </Link>
