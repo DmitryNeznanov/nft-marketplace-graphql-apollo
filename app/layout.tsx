@@ -3,6 +3,7 @@ import { Space_Mono, Work_Sans } from "next/font/google"
 import "./globals.css"
 import Footer from "@/app/components/Footer"
 import Header from "@/app/components/header/Header"
+import ApolloProviderWrapper from "./ApolloProviderWrapper"
 
 const workSans = Work_Sans({
   variable: "--font-work-sans",
@@ -28,9 +29,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={` ${spaceMono.variable} ${workSans.variable}`}>
-        <Header></Header>
-        {children}
-        <Footer></Footer>
+        <ApolloProviderWrapper>
+          <Header></Header>
+          {children}
+          <Footer></Footer>
+        </ApolloProviderWrapper>
       </body>
     </html>
   )
