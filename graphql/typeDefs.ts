@@ -12,14 +12,23 @@ const typeDefs = gql`
     profileImage: String!
     backgroundImage: String!
   }
-
-  type Query {
-    users: [User!]!
+  type Item {
+    _id: ID!
+    title: String!
+    author: String!
+    price: Float!
+    bid: Float!
+    content: String!
+    tags: [String!]!
+    postTime: String!
+    image: String!
   }
-
-  type Mutation {
-    createUser(name: String!, email: String!): User
+  type Query {
+    users(limit: Int): [User!]!
+    user(id: ID): User
+    items(limit: Int): [Item!]!
+    item(id: ID): Item
   }
 `
-
+// TODO: scalar value for Date?
 export default typeDefs
