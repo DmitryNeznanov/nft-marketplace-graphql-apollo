@@ -22,6 +22,7 @@ const typeDefs = gql`
     tags: [String!]!
     postTime: String!
     image: String!
+    itemAuthor: User!
   }
   type Query {
     users(limit: Int): [User!]!

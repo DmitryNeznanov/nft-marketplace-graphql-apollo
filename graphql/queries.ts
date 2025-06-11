@@ -3,9 +3,13 @@ import { ITEM_FIELDS, USER_FIELDS } from "./fragments"
 
 export const GET_ITEMS = gql`
   ${ITEM_FIELDS}
+  ${USER_FIELDS}
   query getItems($limit: Int) {
     items(limit: $limit) {
       ...ItemFields
+      itemAuthor {
+        ...UserFields
+      }
     }
   }
 `
