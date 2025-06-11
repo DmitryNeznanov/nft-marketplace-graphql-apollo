@@ -5,6 +5,7 @@ const apolloServer = new ApolloClient({
     uri: process.env.API_URL + "/api/graphql",
   }),
   cache: new InMemoryCache(),
+  ssrMode: true,
 })
 
 export default apolloServer
