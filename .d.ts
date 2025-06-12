@@ -1,12 +1,12 @@
 interface User {
   _id: Types.ObjectId
   name: string
+  profileImage: string
   sold: number
   volume: number
   followers: number
   change: number
   info: string
-  profileImage: string
   backgroundImage: string
 }
 interface NFT {
@@ -19,4 +19,5 @@ interface NFT {
   tags: [string]
   postTime: string
   image: string
+  itemAuthor: User
 }

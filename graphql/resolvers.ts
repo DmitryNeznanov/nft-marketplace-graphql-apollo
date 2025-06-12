@@ -3,28 +3,30 @@ import User from "@/app/models/User"
 import dbConnect from "@/lib/mongoose"
 const resolvers = {
   Query: {
-    users: async (_: any, { limit }: { limit?: number }) => {
+    users: async (_: unknown, { limit }: { limit?: number }) => {
       await dbConnect()
       return typeof limit === "number" ? User.find().limit(limit) : User.find()
     },
-
-    user: async (_: any, { id }: { id: string }) => {
+    userById: async (_: unknown, { id }: { id: string }) => {
       await dbConnect()
       return User.findById(id)
     },
-
-    items: async (_: any, { limit }: { limit?: number }) => {
+    item: async () => {
+      await dbConnect()
+      return NFT.findOne()
+    },
+    items: async (_: unknown, { limit }: { limit?: number }) => {
       await dbConnect()
       return typeof limit === "number" ? NFT.find().limit(limit) : NFT.find()
     },
 
-    item: async (_: any, { id }: { id: string }) => {
+    itemById: async (_: unknown, { id }: { id: string }) => {
       await dbConnect()
       return NFT.findById(id)
     },
   },
   Item: {
-    itemAuthor: async (parent: any) => {
+    itemAuthor: async (parent: NFT) => {
       await dbConnect()
       return User.findById(parent.author)
     },

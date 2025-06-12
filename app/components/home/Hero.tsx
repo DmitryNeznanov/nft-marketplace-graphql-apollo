@@ -1,10 +1,12 @@
-import NFT from "@/app/models/NFT"
-import User from "@/app/models/User"
+import { GET_ITEM_WITH_AUTHOR } from "@/graphql/queries"
+import apolloServer from "@/lib/apolloServer"
 import Image from "next/image"
 import Link from "next/link"
 export default async function Hero() {
-  const item = (await NFT.findOne()) as NFT
-  const itemUser = await User.findById(item.author)
+  const { data } = await apolloServer.query({
+    query: GET_ITEM_WITH_AUTHOR,
+  })
+
   return (
     <section className="py-[40px] md:py-[80px]">
       <div className="max-w-sm md:container mx-auto">
@@ -48,7 +50,7 @@ export default async function Hero() {
           {/* ISSUE: 3D nft? */}
           <div className="contents md:block w-full md:max-w-[50%]">
             <article className="order-3 md:order-4 rounded-primary overflow-hidden scale-primary">
-              <Link href={`/marketplace/${item._id}`}>
+              <Link href={`/marketplace/${data.item.id}`}>
                 <Image
                   src="/hero.png"
                   width={510}
@@ -59,24 +61,24 @@ export default async function Hero() {
               <div className="p-[21px] bg-black-white">
                 <Link
                   className="w-max block"
-                  href={`/marketplace/${item._id}`}
+                  href={`/marketplace/${data.item.id}`}
                 >
                   <h3 className="h3-sans hover:hover:underline-primary">
-                    {item.title}
+                    {data.item.title}
                   </h3>
                 </Link>
                 <Link
                   className={`w-max mt-[5px] flex items-center font-work-sans text-[16px]/[140%] hover:underline-primary`}
-                  href={`/users/${item.author}`}
+                  href={`/users/${data.item.author}`}
                 >
                   <Image
                     className="mr-[12px] rounded-full"
-                    src={itemUser.profileImage}
+                    src={data.item.itemAuthor.profileImage}
                     width={24}
                     height={24}
                     alt="userProfileImage"
                   ></Image>
-                  <p className="p-space">{itemUser.name}</p>
+                  <p className="p-space">{data.item.itemAuthor.name}</p>
                 </Link>
               </div>
             </article>

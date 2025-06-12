@@ -2,7 +2,7 @@ import { gql } from "graphql-tag"
 
 const typeDefs = gql`
   type User {
-    _id: ID!
+    id: ID!
     name: String!
     sold: Int!
     volume: Float!
@@ -13,7 +13,7 @@ const typeDefs = gql`
     backgroundImage: String!
   }
   type Item {
-    _id: ID!
+    id: ID!
     title: String!
     author: String!
     price: Float!
@@ -22,13 +22,14 @@ const typeDefs = gql`
     tags: [String!]!
     postTime: String!
     image: String!
-    itemAuthor: User!
+    itemAuthor: User
   }
   type Query {
     users(limit: Int): [User!]!
-    user(id: ID): User
+    userById(id: ID): User
+    item: Item!
     items(limit: Int): [Item!]!
-    item(id: ID): Item
+    itemById(id: ID): Item
   }
 `
 // TODO: scalar value for Date?

@@ -1,11 +1,11 @@
-import { GET_ITEMS } from "@/graphql/queries"
+import { GET_ITEMS_WITH_AUTHOR } from "@/graphql/queries"
 import apolloServer from "@/lib/apolloServer"
 import Image from "next/image"
 import Link from "next/link"
 
 export default async function Exploring() {
   const { data } = await apolloServer.query({
-    query: GET_ITEMS,
+    query: GET_ITEMS_WITH_AUTHOR,
     variables: { limit: 3 },
   })
 
@@ -30,7 +30,7 @@ export default async function Exploring() {
         </article>
         <section className="mt-[40px] lg:mt-[60px]">
           <div className="flex flex-col md:flex-row items-center justify-center gap-[20px] md:gap-[30px] md:*:nth-[n+3]:hidden lg:*:nth-[n+3]:block">
-            {data.items.map((item: NFT, i) => {
+            {data.items.map((item: NFT, i: number) => {
               return (
                 <article
                   className="max-w-[330px] w-full rounded-primary overflow-hidden scale-primary"

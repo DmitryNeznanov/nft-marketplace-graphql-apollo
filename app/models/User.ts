@@ -7,11 +7,11 @@ const userSchema = new Schema<User>({
   _id: Types.ObjectId,
   name: String,
   sold: Number,
+  profileImage: String,
   volume: Number,
   followers: Number,
   change: Number,
   info: String,
-  profileImage: String,
   backgroundImage: String,
 })
 
