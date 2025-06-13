@@ -1,4 +1,4 @@
-import { GET_ITEMS_WITH_AUTHOR } from "@/graphql/queries"
+import { GET_ITEMS_WITH_AUTHOR } from "@/graphql/queries/items/getItemsWithAuthor"
 import apolloServer from "@/lib/apolloServer"
 import Image from "next/image"
 import Link from "next/link"
@@ -37,7 +37,7 @@ export default async function Exploring() {
                   key={i}
                 >
                   <div>
-                    <Link href={`/marketplace/${item._id}`}>
+                    <Link href={`/marketplace/${item.id}`}>
                       <Image
                         className="w-full"
                         src={item.image}
@@ -51,7 +51,7 @@ export default async function Exploring() {
                     <div>
                       <Link
                         className="w-max block"
-                        href={`/marketplace/${item._id}`}
+                        href={`/marketplace/${item.id}`}
                       >
                         <h3 className="h3-sans hover:hover:underline-primary">
                           {item.title}

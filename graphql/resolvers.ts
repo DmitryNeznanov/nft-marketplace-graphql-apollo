@@ -15,9 +15,25 @@ const resolvers = {
       await dbConnect()
       return NFT.findOne()
     },
-    items: async (_: unknown, { limit }: { limit?: number }) => {
+    items: async (_: unknown, { q, limit }: { q?: string; limit?: number }) => {
       await dbConnect()
-      return typeof limit === "number" ? NFT.find().limit(limit) : NFT.find()
+      const filter = q
+        ? {
+            $or: [
+              // TODO: add more
+              // FIXME: mongodb cant find userHalfFiels 
+              { title: { $regex: q, $options: "i" } },
+              { content: { $regex: q, $options: "i" } },
+              { postTime: { $regex: q, $options: "i" } },
+              { name: { $regex: q, $options: "i" } },
+              { tags: { $elemMatch: { $regex: q, $options: "i" } } },
+            ],
+          }
+        : {}
+
+      return typeof limit === "number"
+        ? await NFT.find(filter).limit(limit)
+        : NFT.find(filter)
     },
 
     itemById: async (_: unknown, { id }: { id: string }) => {

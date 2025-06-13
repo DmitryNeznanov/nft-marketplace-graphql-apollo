@@ -65,7 +65,7 @@ export default function Table({ users }: { users: User[] }) {
         </tr>
       </thead>
       <tbody>
-        {data.map((user: User, i) => {
+        {data.users.map((user: User, i: number) => {
           return (
             <tr
               className="bg-black-white *:first:rounded-l-primary *:last:rounded-r-primary *:first:pl-[20px] [&>th,td]:py-[13px] md:[&>th,td]:py-[14.5px] lg:[&>th,td]:py-[12px] [&>th,td]:text-start hover:scale-[99%] transition duration-350"

@@ -1,5 +1,5 @@
 interface User {
-  _id: Types.ObjectId
+  id: Types.ObjectId
   name: string
   profileImage: string
   sold: number
@@ -10,7 +10,7 @@ interface User {
   backgroundImage: string
 }
 interface NFT {
-  _id: Types.ObjectId
+  id: Types.ObjectId
   title: string
   author: string
   price: number

@@ -16,7 +16,7 @@ export default function Search() {
         params.delete("q")
       }
       replace(`${pathname}?${params.toString()}`)
-    }, 300) // ⏱ 500 мс задержка
+    }, 150)
 
     return () => clearTimeout(delayDebounce)
   }, [term, pathname, replace, searchParams])

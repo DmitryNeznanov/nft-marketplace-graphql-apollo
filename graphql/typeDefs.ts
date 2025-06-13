@@ -28,7 +28,7 @@ const typeDefs = gql`
     users(limit: Int): [User!]!
     userById(id: ID): User
     item: Item!
-    items(limit: Int): [Item!]!
+    items(q: String, limit: Int): [Item!]!
     itemById(id: ID): Item
   }
 `
