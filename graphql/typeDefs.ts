@@ -26,10 +26,10 @@ const typeDefs = gql`
   }
   type Query {
     users(limit: Int): [User!]!
-    userById(id: ID): User
+    userById(id: ID): User!
     item: Item!
     items(q: String, limit: Int): [Item!]!
-    itemById(id: ID): Item
+    itemById(id: ID): Item!
   }
 `
 // TODO: scalar value for Date?

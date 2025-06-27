@@ -15,13 +15,13 @@ export async function generateMetadata({
 
   return {
     title: `NFT Marketplace | ${user.name}`,
-    description: `Page with information about User with name "${user.name}" and ID "${user._id}"`,
+    description: `Page with information about User with name "${user.name}" and ID "${user.id}"`,
   }
 }
 export async function generateStaticParams() {
   const items = (await User.find()) as User[]
   return items.map((user) => ({
-    id: String(user._id),
+    id: String(user.id),
   }))
 }
 export default async function UserPage({
@@ -31,7 +31,7 @@ export default async function UserPage({
 }) {
   const { id } = await params
   const user = (await User.findById(id)) as User
-  const userNFTs = await NFT.find({ author: user._id })
+  const userNFTs = await NFT.find({ author: user.id })
 
   return (
     <>
@@ -58,7 +58,7 @@ export default async function UserPage({
               ></Image>
               <h2 className="h2-sans">{user.name}</h2>
               <div className="flex flex-col md:flex-row gap-[20px]">
-                <CopyIdButton userId={user._id.toString()}></CopyIdButton>
+                <CopyIdButton userId={user.id.toString()}></CopyIdButton>
                 <button className="w-full md:w-max button-transparent before:content-[url('/icons/plus-accent.svg')]">
                   {/* ISSUE: follow ? */}
                   Follow
@@ -284,7 +284,7 @@ export default async function UserPage({
                       key={i}
                     >
                       <div>
-                        <Link href={`/marketplace/${item._id}`}>
+                        <Link href={`/marketplace/${item.id}`}>
                           <Image
                             className="w-full"
                             src={item.image}
@@ -298,7 +298,7 @@ export default async function UserPage({
                         <div>
                           <Link
                             className="w-max block"
-                            href={`/marketplace/${item._id}`}
+                            href={`/marketplace/${item.id}`}
                           >
                             <h3 className="h3-sans hover:hover:underline-primary">
                               {item.title}

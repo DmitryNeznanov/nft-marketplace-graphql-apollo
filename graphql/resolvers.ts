@@ -21,7 +21,7 @@ const resolvers = {
         ? {
             $or: [
               // TODO: add more
-              // FIXME: mongodb cant find userHalfFiels 
+              // FIXME: mongodb cant find userHalfFiels
               { title: { $regex: q, $options: "i" } },
               { content: { $regex: q, $options: "i" } },
               { postTime: { $regex: q, $options: "i" } },
