@@ -1,6 +1,7 @@
 import Timer from "@/app/components/Timer"
 import NFT from "@/app/models/NFT"
 import { GET_ITEM_BY_ID_WITH_AUTHOR } from "@/graphql/queries/items/getItemByIdWithAuthor"
+import { GET_ITEMS_BY_AUTHOR_ID_WITH_AUTHOR } from "@/graphql/queries/items/getItemsByAuthorIdWithAuthor"
 import apolloServer from "@/lib/apolloServer"
 import type { Metadata } from "next"
 import Image from "next/image"
@@ -30,12 +31,21 @@ export default async function MarketPlaceItem({
   params: { id: string }
 }) {
   const { id } = await Promise.resolve(params)
-  const { data } = await apolloServer.query({
+  const { data: itemData } = await apolloServer.query({
     query: GET_ITEM_BY_ID_WITH_AUTHOR,
     variables: { id: id },
   })
-  const { itemAuthor: author, ...item } = data.itemById
+  const { itemAuthor: author, ...item } = itemData.itemById
 
+  const { data: itemsData } = await apolloServer.query({
+    query: GET_ITEMS_BY_AUTHOR_ID_WITH_AUTHOR,
+    variables: { authorId: author.id },
+  })
+  const items = (itemsData.itemsByAuthorId as NFT[]).map(
+    ({ itemAuthor: author, ...item }) => {
+      return { item, author }
+    }
+  )
   return (
     <>
       <section>
@@ -157,7 +167,7 @@ export default async function MarketPlaceItem({
               </Link>
             </div>
             <div className="mt-[30px] md:mt-[60px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
-              {/* {data.map(async (item: NFT, i: number) => {
+              {items.map(({ item, author }, i) => {
                 return (
                   <article
                     className="max-w-[330px] w-full rounded-primary overflow-hidden scale-primary"
@@ -195,7 +205,7 @@ export default async function MarketPlaceItem({
                             height={24}
                             alt="userProfileImage"
                           ></Image>
-                          <p className="p-space">{data.title}</p>
+                          <p className="p-space">{item.title}</p>
                         </Link>
                       </div>
                       <div className="mt-[25px] flex flex-row justify-between items-center">
@@ -215,7 +225,7 @@ export default async function MarketPlaceItem({
                     </div>
                   </article>
                 )
-              })} */}
+              })}
             </div>
             <Link
               className="w-full md:w-max md:hidden button-transparent before:content-[url('/icons/arrow-right-accent.svg')]"

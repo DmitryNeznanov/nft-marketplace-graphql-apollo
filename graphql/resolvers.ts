@@ -40,6 +40,10 @@ const resolvers = {
       await dbConnect()
       return NFT.findById(id)
     },
+    itemsByAuthorId: async (_: unknown, { authorId }: { authorId: string }) => {
+      await dbConnect()
+      return NFT.find({ author: authorId })
+    },
   },
   Item: {
     itemAuthor: async (parent: NFT) => {

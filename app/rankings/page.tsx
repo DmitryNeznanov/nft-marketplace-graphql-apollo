@@ -19,7 +19,7 @@ export default async function Rankings() {
             Check out top ranking NFT artists on the NFT Marketplace.
           </p>
         </article>
-        <Table users={data} />
+        <Table users={data.users} />
       </div>
     </section>
   )
