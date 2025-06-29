@@ -30,7 +30,7 @@ const typeDefs = gql`
     item: Item!
     items(q: String, limit: Int): [Item!]!
     itemById(id: ID!): Item!
-    itemsByAuthorId(authorId: ID): [Item!]!
+    itemsByAuthorId(id: ID!): [Item!]!
   }
 `
 // TODO: scalar value for Date?

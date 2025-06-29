@@ -3,7 +3,7 @@ import { gql } from "graphql-tag"
 export const GET_USER_BY_ID = gql`
   ${USER_FIELDS}
   query getUserById($id: ID!) {
-    user(id: $id) {
+    userById(id: $id) {
       ...UserFields
     }
   }

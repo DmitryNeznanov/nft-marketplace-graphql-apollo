@@ -3,8 +3,8 @@ import { gql } from "graphql-tag"
 export const GET_ITEMS_BY_AUTHOR_ID_WITH_AUTHOR = gql`
   ${ITEM_FIELDS}
   ${USER_HALF_FIELDS}
-  query getItemsByAuthorIdWithAuthor($authorId: ID) {
-    itemsByAuthorId(authorId: $authorId) {
+  query getItemsByAuthorIdWithAuthor($id: ID!) {
+    itemsByAuthorId(id: $id) {
       ...ItemFields
       itemAuthor {
         ...UserHalfFields
