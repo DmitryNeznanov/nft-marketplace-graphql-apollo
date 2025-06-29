@@ -57,7 +57,7 @@ export default async function UserPage({
           ></Image>
         </div>
         <div className="max-w-sm md:container mx-auto">
-          <article className="pb-[30px] lg:pb-[40px] flex flex-col gap-y-[30px]">
+          <div className="pb-[30px] lg:pb-[40px] flex flex-col gap-y-[30px]">
             <Image
               className="-mt-[75px] max-w-[120px] max-h-[120px] rounded-primary border-[2px] border-black"
               width={120}
@@ -274,14 +274,23 @@ export default async function UserPage({
                 </li>
               </ul>
             </div>
-          </article>
+          </div>
+        </div>
+        <div className="border-t border-black-white">
+          <div className="max-w-sm md:container mx-auto">
+            <p className="w-full pb-[14px] pt-[24px] h4-sans text-center border-b-[2px] border-gray text-white">
+              Created
+              <span className="ml-[16px] px-[10px] py-[5px] p-space text-white rounded-full bg-gray">
+                {items.length}
+              </span>
+            </p>
+          </div>
         </div>
       </section>
       <section className="bg-black-white">
-        {/* TODO: tabs */}
-        <div className="max-w-sm md:container mx-auto">
+        <div className="pt-[80px] max-w-sm md:container mx-auto">
           {
-            <div className="mt-[30px] md:mt-[60px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
+            <div className="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
               {items.map((item: NFT, i: number) => {
                 return (
                   <article

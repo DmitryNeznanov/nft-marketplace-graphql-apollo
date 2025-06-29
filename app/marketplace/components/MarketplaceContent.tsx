@@ -42,9 +42,15 @@ export default function MarketplaceContent({
         </div>
       </section>
       <section>
-        <div>
-          {/* TODO: tabs with collections */}
-          <div className="max-w-sm md:container mx-auto">nft</div>
+        <div className="border-t border-black-white">
+          <div className="max-w-sm md:container mx-auto">
+            <p className="w-full pb-[14px] pt-[24px] h4-sans text-center border-b-[2px] border-gray text-white">
+              NFTs
+              <span className="ml-[16px] px-[10px] py-[5px] p-space text-white rounded-full bg-gray">
+                {items.length}
+              </span>
+            </p>
+          </div>
         </div>
         <div className="bg-black-white">
           <div className="pt-[40px] md:pt-[60px] pb-[40px] md:pb-[80px] max-w-sm md:container mx-auto">

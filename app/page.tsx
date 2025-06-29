@@ -1,5 +1,5 @@
 import Hero from "@/app/components/home/Hero";
-import Collections from "@/app/components/home/Collections";
+// import Collections from "@/app/components/home/Collections";
 import Creators from "@/app/components/home/Creators";
 import Categories from "@/app/components/home/Categories";
 import Exploring from "@/app/components/home/Exploring";
@@ -17,7 +17,7 @@ export default function Home() {
 	return (
 		<>
 			<Hero></Hero>
-			<Collections></Collections>
+			{/* <Collections></Collections> */}
 			<Creators></Creators>
 			<Categories></Categories>
 			<Exploring></Exploring>
