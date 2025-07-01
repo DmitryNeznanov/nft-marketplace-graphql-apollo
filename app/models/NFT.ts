@@ -1,9 +1,7 @@
 import mongoose, { Schema } from "mongoose"
-import { Types } from "mongoose"
 mongoose.connect(process.env.MONGODBURI!)
 mongoose.Promise = global.Promise
 const NFTSchema = new Schema<NFT>({
-  _id: Types.ObjectId,
   title: String,
   author: String,
   price: Number,

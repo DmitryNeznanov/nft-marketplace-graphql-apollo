@@ -288,7 +288,7 @@ export default async function UserPage({
         </div>
       </section>
       <section className="bg-black-white">
-        <div className="pt-[80px] max-w-sm md:container mx-auto">
+        <div className="py-[80px] max-w-sm md:container mx-auto">
           {
             <div className="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
               {items.map((item: NFT, i: number) => {

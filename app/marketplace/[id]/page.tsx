@@ -39,7 +39,7 @@ export default async function MarketPlaceItem({
 
   const { data: itemsData } = await apolloServer.query({
     query: GET_ITEMS_BY_AUTHOR_ID_WITH_AUTHOR,
-    variables: { authorId: author.id },
+    variables: { id: author.id },
   })
   const items = (itemsData.itemsByAuthorId as NFT[]).map(
     ({ itemAuthor: author, ...item }) => {
@@ -132,10 +132,9 @@ export default async function MarketPlaceItem({
                         >
                           <Link
                             className="block py-[12px] px-[20px] rounded-primary bg-black-white uppercase hover:text-accent"
-                            // TODO: link to sorted NFTs with current tags
-                            href={`/marketplace/q=${tag
+                            href={`/marketplace?q=${tag
                               .toString()
-                              .toLowerCase()}}
+                              .toLowerCase()}
     `}
                           >
                             {tag}
@@ -205,7 +204,7 @@ export default async function MarketPlaceItem({
                             height={24}
                             alt="userProfileImage"
                           ></Image>
-                          <p className="p-space">{item.title}</p>
+                          <p className="p-space">{author.name}</p>
                         </Link>
                       </div>
                       <div className="mt-[25px] flex flex-row justify-between items-center">

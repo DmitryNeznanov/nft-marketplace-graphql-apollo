@@ -2,19 +2,18 @@
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { useSearchParams } from "next/navigation"
 import { useQuery } from "@apollo/client"
 import { GET_FILTERED_ITEMS_WITH_AUTHOR } from "@/graphql/queries/items/getFilteredItemsWithAuthor"
 import Search from "./Search"
 
 export default function MarketplaceContent({
   defaultData,
+  q,
 }: {
   defaultData: NFT[]
+  q: string
 }) {
   const [items, setItems] = useState(defaultData)
-  const searchParams = useSearchParams()
-  const q = searchParams.get("q") || ""
 
   const { data, loading, error } = useQuery(GET_FILTERED_ITEMS_WITH_AUTHOR, {
     variables: { q: q },
@@ -24,7 +23,10 @@ export default function MarketplaceContent({
     if (q && data?.items) {
       setItems(data.items)
     }
-  }, [q, data])
+    if (!q) {
+      setItems(defaultData)
+    }
+  }, [q, data, defaultData])
 
   return (
     <>
@@ -55,6 +57,9 @@ export default function MarketplaceContent({
         <div className="bg-black-white">
           <div className="pt-[40px] md:pt-[60px] pb-[40px] md:pb-[80px] max-w-sm md:container mx-auto">
             {loading && <h2 className="h1-sans">Loading items...</h2>}
+            {items.length === 0 && !loading && (
+              <h2 className="h1-sans">Nothing was found...</h2>
+            )}
             {error && <h2 className="h1-sans">Error: {error.message}</h2>}
 
             {!loading && (

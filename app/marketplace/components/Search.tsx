@@ -28,7 +28,7 @@ export default function Search() {
           type="text"
           placeholder="Search your favourite NFTs"
           onChange={(e) => setTerm(e.target.value)}
-          defaultValue={searchParams.get("q")?.toString()}
+          value={term}
         />
         {/* ISSUE: sort on button click ? */}
         <button className="-m-[10px] p-[10px] block hover:cursor-pointer">
