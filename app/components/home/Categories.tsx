@@ -1,9 +1,5 @@
 import Image from "next/image"
-// import { data } from "@/app/mongodb/mongodb"
-
-// const posts = await data.findOne({})
-// const qwe = await posts
-// console.log(qwe)
+import Link from "next/link"
 
 export default function Categories() {
   return (
@@ -25,28 +21,38 @@ export default function Categories() {
               ["Virtual Worlds"],
             ].map(([title], i) => {
               return (
-                <article
-                  className="rounded-primary overflow-hidden"
+                <Link
+                  className="group hover:scale-primary"
+                  href={`/marketplace?q=${title.toLowerCase()}`}
                   key={i}
                 >
-                  <div className="relative flex items-center justify-center ">
-                    <div className="w-full h-full absolute bg-white/10"></div>
-                    <div className="flex items-center justify-center before:content-[url('/icons/basketball.svg')] before:absolute">
-                      <Image
-                        className="w-full blur-[8px] -z-10"
-                        src="/categories-1.png"
-                        width={240}
-                        height={240}
-                        alt="categories-1.png"
-                      ></Image>
+                  <article className="rounded-primary overflow-hidden">
+                    <div className="relative flex items-center justify-center ">
+                      <div className="w-full h-full absolute bg-white/10"></div>
+                      <div className="flex items-center justify-center relative">
+                        <Image
+                          className="absolute"
+                          src={`/icons/categories-${i + 1}.svg`}
+                          width={100}
+                          height={100}
+                          alt={`categories-${i + 1}.svg`}
+                        ></Image>
+                        <Image
+                          className="w-full blur-[8px] -z-10"
+                          src={`/categories-${i + 1}.png`}
+                          width={240}
+                          height={240}
+                          alt={`categories-${i + 1}.png`}
+                        ></Image>
+                      </div>
                     </div>
-                  </div>
-                  <div className="bg-black-white pt-[20px] pb-[25px] md:px-[30px] md:pb-[45px] lg:pb-[25px] px-[20px] lg:px-[30px]">
-                    <h3 className="font-work-sans font-bold text-[16px]/[140%] lg:text-[22px]/[140%]">
-                      {title}
-                    </h3>
-                  </div>
-                </article>
+                    <div className="bg-black-white pt-[20px] pb-[25px] md:px-[30px] md:pb-[45px] lg:pb-[25px] px-[20px] lg:px-[30px]">
+                      <h3 className="font-work-sans font-bold text-[16px]/[140%] lg:text-[22px]/[140%] group-hover:underline-primary">
+                        {title}
+                      </h3>
+                    </div>
+                  </article>
+                </Link>
               )
             })}
           </div>
