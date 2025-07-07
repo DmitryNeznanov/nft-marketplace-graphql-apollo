@@ -6,7 +6,6 @@ import apolloServer from "@/lib/apolloServer"
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-
 export async function generateStaticParams() {
   const items = (await NFT.find()) as NFT[]
   return items.map((item: NFT) => ({
@@ -15,8 +14,11 @@ export async function generateStaticParams() {
 }
 export async function generateMetadata({
   params,
-}: PageParams): Promise<Metadata> {
-  const { id } = params
+}: {
+  params: { id: string }
+}): Promise<Metadata> {
+  const { id } = await Promise.resolve(params)
+
   const item = (await NFT.findById(id)) as NFT
 
   return {
@@ -24,8 +26,12 @@ export async function generateMetadata({
     description: `Page with information about NFT with name "${item.title}" and ID "${item.id}"`,
   }
 }
-export default async function MarketPlaceItem({ params }: PageParams) {
-  const { id } = params
+export default async function MarketPlaceItem({
+  params,
+}: {
+  params: { id: string }
+}) {
+  const { id } = await Promise.resolve(params)
   const { data: itemData } = await apolloServer.query({
     query: GET_ITEM_BY_ID_WITH_AUTHOR,
     variables: { id: id },
@@ -142,7 +148,10 @@ export default async function MarketPlaceItem({ params }: PageParams) {
               </div>
               <div className="mt-[20px] md:mt-0 order-3">
                 {/* // TODO: add place bid button */}
-                <Timer expiredAt={item.postTime}></Timer>
+                <Timer
+                  expiredAt={item.postTime}
+                  button={true}
+                ></Timer>
               </div>
             </div>
           </div>

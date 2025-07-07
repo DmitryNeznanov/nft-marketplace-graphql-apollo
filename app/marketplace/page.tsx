@@ -16,7 +16,7 @@ export default async function Marketplace({
   const q = params?.q || ""
 
   const { data } = await apolloServer.query({ query: GET_ITEMS_WITH_AUTHOR })
-  // TODO: add cache ?
+  // ISSUE: add cache ?
   // TODO: search on button click
   // TODO: search more adaptive to ui with empty "q" and tldr
   return (
