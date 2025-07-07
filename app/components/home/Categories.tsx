@@ -31,7 +31,7 @@ export default function Categories() {
                       <div className="w-full h-full absolute bg-white/10"></div>
                       <div className="flex items-center justify-center relative">
                         <Image
-                          className="absolute"
+                          className="absolute w-[80px] h-[80px] lg:w-auto lg:h-auto"
                           src={`/icons/categories-${i + 1}.svg`}
                           width={100}
                           height={100}

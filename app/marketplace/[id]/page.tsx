@@ -6,6 +6,7 @@ import apolloServer from "@/lib/apolloServer"
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
+
 export async function generateStaticParams() {
   const items = (await NFT.find()) as NFT[]
   return items.map((item: NFT) => ({
@@ -14,10 +15,8 @@ export async function generateStaticParams() {
 }
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{ id: string }>
-}): Promise<Metadata> {
-  const { id } = await params
+}: PageParams): Promise<Metadata> {
+  const { id } = params
   const item = (await NFT.findById(id)) as NFT
 
   return {
@@ -25,12 +24,8 @@ export async function generateMetadata({
     description: `Page with information about NFT with name "${item.title}" and ID "${item.id}"`,
   }
 }
-export default async function MarketPlaceItem({
-  params,
-}: {
-  params: { id: string }
-}) {
-  const { id } = await Promise.resolve(params)
+export default async function MarketPlaceItem({ params }: PageParams) {
+  const { id } = params
   const { data: itemData } = await apolloServer.query({
     query: GET_ITEM_BY_ID_WITH_AUTHOR,
     variables: { id: id },
