@@ -1,4 +1,8 @@
 ### Tasks
-- suspence for main page
+ - mail subscribers
+ - col rangkings filter
+ - filter search by name. find users and items then filter
+ - pagination ?
+ - cleanup for build
 ### Questions
 ### Draft 
