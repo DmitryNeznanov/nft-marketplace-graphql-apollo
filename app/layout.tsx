@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { Space_Mono, Work_Sans } from "next/font/google"
 import "./globals.css"
-import Footer from "@/app/components/Footer"
+import Footer from "@/app/components/footer/Footer"
 import Header from "@/app/components/header/Header"
 import ApolloProviderWrapper from "./ApolloProviderWrapper"
 

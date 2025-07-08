@@ -1,5 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
+import EmailForm from "./EmailForm"
 export default function Footer() {
   return (
     <footer className="py-[40px] bg-black-white">
@@ -195,19 +196,9 @@ export default function Footer() {
               <p className="max-w-[330px] md:max-w-max xl:max-w-[330px] mt-[20px] md:mt-[25px] font-work-sans text-[#ccc]">
                 Get exclusive promotions & updates straight to your inbox.
               </p>
-              <form className="mt-[20px]">
-                <div className="max-w-[420px] flex flex-col sm:flex-row sm:bg-white rounded-primary">
-                  {/* // TODO: add logic to add email  in db */}
-                  <input
-                    className="w-full  py-[12px] sm:p-[20px] px-[20px] bg-white sm:bg-transparent border border-gray sm:border-0 font-work-sans text-black outline-none rounded-primary sm:rounded-[0] placeholder:text-black"
-                    type="text"
-                    placeholder="Enter your email here"
-                  />
-                  <button className="mt-[16px] sm:mt-0 w-full py-[12px] sm:py-0 sm:w-max sm:ml-auto button-primary before:content-[url('/icons/mail.svg')] hover:scale-[95%]">
-                    subscribe
-                  </button>
-                </div>
-              </form>
+              <div>
+                <EmailForm></EmailForm>
+              </div>
             </section>
           </section>
           <hr className="w-full mt-[30px] md:mt-[50px] lg:mt-[30px] h-[1px] text-gray" />

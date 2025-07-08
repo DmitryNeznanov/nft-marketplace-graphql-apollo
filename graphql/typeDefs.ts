@@ -24,6 +24,10 @@ const typeDefs = gql`
     image: String!
     itemAuthor: User
   }
+  type Email {
+    id: ID!
+    email: String!
+  }
   type Query {
     users(limit: Int): [User!]!
     userById(id: ID!): User!
@@ -31,6 +35,10 @@ const typeDefs = gql`
     items(q: String, limit: Int): [Item!]!
     itemById(id: ID!): Item!
     itemsByAuthorId(id: ID!): [Item!]!
+    checkSubscriberByEmail(email: String!): Email!
+  }
+  type Mutation {
+    addEmail(email: String!): Email!
   }
 `
 // TODO: scalar value for Date?

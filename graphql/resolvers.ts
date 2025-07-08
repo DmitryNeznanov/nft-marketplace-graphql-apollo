@@ -1,4 +1,5 @@
 import NFT from "@/app/models/NFT"
+import Subscribe from "@/app/models/Subscribe"
 import User from "@/app/models/User"
 import dbConnect from "@/lib/mongoose"
 const resolvers = {
@@ -43,6 +44,20 @@ const resolvers = {
     itemsByAuthorId: async (_: unknown, { id }: { id: string }) => {
       await dbConnect()
       return NFT.find({ author: id })
+    },
+    checkSubscriberByEmail: async (
+      _: unknown,
+      { email }: { email: string }
+    ) => {
+      await dbConnect()
+      const subscriber = await Subscribe.findOne({ email: email })
+      return subscriber !== null
+    },
+  },
+  Mutation: {
+    addEmail: async (_: unknown, { email }: { email: string }) => {
+      await dbConnect()
+      return Subscribe.create({ email })
     },
   },
   Item: {

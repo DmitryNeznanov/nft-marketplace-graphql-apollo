@@ -21,3 +21,7 @@ interface NFT {
   image: string
   itemAuthor: User
 }
+interface Subscribe {
+  id: Types.ObjectId
+  email: string
+}
