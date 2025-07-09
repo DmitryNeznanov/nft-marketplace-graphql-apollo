@@ -16,7 +16,10 @@ const resolvers = {
       await dbConnect()
       return NFT.findOne()
     },
-    items: async (_: unknown, { q, limit }: { q?: string; limit?: number }) => {
+    items: async (
+      _: unknown,
+      { q, limit, offset = 0 }: { q?: string; limit?: number; offset?: number }
+    ) => {
       await dbConnect()
       const filter = q
         ? {
@@ -33,8 +36,8 @@ const resolvers = {
         : {}
 
       return typeof limit === "number"
-        ? await NFT.find(filter).limit(limit)
-        : NFT.find(filter)
+        ? await NFT.find(filter).skip(offset).limit(limit)
+        : NFT.find(filter).skip(offset)
     },
 
     itemById: async (_: unknown, { id }: { id: string }) => {

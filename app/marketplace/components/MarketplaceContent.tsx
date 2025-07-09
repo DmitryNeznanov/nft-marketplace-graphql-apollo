@@ -1,33 +1,65 @@
 "use client"
-import Image from "next/image"
-import { useEffect, useState } from "react"
-import Link from "next/link"
+
+import { useEffect, useRef, useState } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useQuery } from "@apollo/client"
 import { GET_FILTERED_ITEMS_WITH_AUTHOR } from "@/graphql/queries/items/getFilteredItemsWithAuthor"
+import Image from "next/image"
+import Link from "next/link"
 import Search from "./Search"
 
 export default function MarketplaceContent({
   defaultData,
-  q,
 }: {
   defaultData: NFT[]
-  q: string
 }) {
   const [items, setItems] = useState(defaultData)
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const q = searchParams.get("q") || ""
+  const page = parseInt(searchParams.get("page") || "1")
+  const prevQRef = useRef("")
+
+  const itemsPerPage = 9
+  const offset = (page - 1) * itemsPerPage
 
   const { data, loading, error } = useQuery(GET_FILTERED_ITEMS_WITH_AUTHOR, {
-    variables: { q: q },
+    variables: { q, offset, limit: itemsPerPage },
     skip: !q,
   })
+
+  // 🔁 Обновляем items при изменении данных
   useEffect(() => {
     if (q && data?.items) {
       setItems(data.items)
-    }
-    if (!q) {
+    } else if (!q) {
       setItems(defaultData)
     }
-  }, [q, data, defaultData])
+  }, [data, defaultData, q])
 
+  // 🔁 Сброс page = 1 при новом q
+  useEffect(() => {
+    const currentQ = searchParams.get("q") || ""
+    const currentPage = parseInt(searchParams.get("page") || "1")
+
+    if (prevQRef.current !== currentQ) {
+      prevQRef.current = currentQ
+
+      if (currentPage !== 1) {
+        const params = new URLSearchParams(searchParams)
+        params.set("q", currentQ)
+        params.set("page", "1")
+        router.replace(`/marketplace?${params.toString()}`)
+      }
+    }
+  }, [searchParams, router])
+
+  function changePage(newPage: number) {
+    const params = new URLSearchParams(searchParams)
+    params.set("page", newPage.toString())
+    if (q) params.set("q", q)
+    router.push(`/marketplace?${params.toString()}`)
+  }
   return (
     <>
       <section className="py-[40px] md:py-[60px] lg:py-[80px]">
@@ -124,6 +156,22 @@ export default function MarketplaceContent({
                 })}
               </div>
             )}
+            <div className="flex justify-between mt-6">
+              <button
+                className="button-primary before:hidden"
+                disabled={Number(page) <= 1}
+                onClick={() => changePage(Number(page) - 1)}
+              >
+                prev
+              </button>
+              <button
+                className="button-primary before:hidden"
+                disabled={items.length < itemsPerPage}
+                onClick={() => changePage(Number(page) + 1)}
+              >
+                next
+              </button>
+            </div>
           </div>
         </div>
       </section>

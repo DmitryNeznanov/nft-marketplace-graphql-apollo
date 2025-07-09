@@ -32,7 +32,7 @@ const typeDefs = gql`
     users(limit: Int): [User!]!
     userById(id: ID!): User!
     item: Item!
-    items(q: String, limit: Int): [Item!]!
+    items(q: String, limit: Int, offset: Int): [Item!]!
     itemById(id: ID!): Item!
     itemsByAuthorId(id: ID!): [Item!]!
     checkSubscriberByEmail(email: String!): Email!

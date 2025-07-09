@@ -3,8 +3,8 @@ import { gql } from "graphql-tag"
 export const GET_FILTERED_ITEMS_WITH_AUTHOR = gql`
   ${ITEM_FIELDS}
   ${USER_HALF_FIELDS}
-  query getFilteredItemsWithAuthor($q: String, $limit: Int) {
-    items(q: $q, limit: $limit) {
+  query getFilteredItemsWithAuthor($q: String, $offset: Int, $limit: Int) {
+    items(q: $q, offset: $offset, limit: $limit) {
       ...ItemFields
       itemAuthor {
         ...UserHalfFields
