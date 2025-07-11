@@ -1,65 +1,55 @@
 "use client"
-
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useQuery } from "@apollo/client"
 import { GET_FILTERED_ITEMS_WITH_AUTHOR } from "@/graphql/queries/items/getFilteredItemsWithAuthor"
 import Image from "next/image"
 import Link from "next/link"
 import Search from "./Search"
-
 export default function MarketplaceContent({
-  defaultData,
+  initialData,
+  offset,
+  itemsPerPage,
+  dataLenght,
 }: {
-  defaultData: NFT[]
+  initialData: NFT[]
+  offset: number
+  itemsPerPage: number
+  dataLenght: number
 }) {
-  const [items, setItems] = useState(defaultData)
+  const [items, setItems] = useState(initialData)
+
   const router = useRouter()
   const searchParams = useSearchParams()
+  const currentPage = Number(searchParams.get("page")) || 1
   const q = searchParams.get("q") || ""
-  const page = parseInt(searchParams.get("page") || "1")
-  const prevQRef = useRef("")
 
-  const itemsPerPage = 9
-  const offset = (page - 1) * itemsPerPage
-
-  const { data, loading, error } = useQuery(GET_FILTERED_ITEMS_WITH_AUTHOR, {
+  const {
+    data: itemsData,
+    loading,
+    error,
+  } = useQuery(GET_FILTERED_ITEMS_WITH_AUTHOR, {
     variables: { q, offset, limit: itemsPerPage },
     skip: !q,
   })
 
-  // 🔁 Обновляем items при изменении данных
-  useEffect(() => {
-    if (q && data?.items) {
-      setItems(data.items)
-    } else if (!q) {
-      setItems(defaultData)
-    }
-  }, [data, defaultData, q])
-
-  // 🔁 Сброс page = 1 при новом q
-  useEffect(() => {
-    const currentQ = searchParams.get("q") || ""
-    const currentPage = parseInt(searchParams.get("page") || "1")
-
-    if (prevQRef.current !== currentQ) {
-      prevQRef.current = currentQ
-
-      if (currentPage !== 1) {
-        const params = new URLSearchParams(searchParams)
-        params.set("q", currentQ)
-        params.set("page", "1")
-        router.replace(`/marketplace?${params.toString()}`)
-      }
-    }
-  }, [searchParams, router])
-
+  const totalPages = Math.ceil(dataLenght / itemsPerPage)
+  // FIXME: fix grid
   function changePage(newPage: number) {
     const params = new URLSearchParams(searchParams)
     params.set("page", newPage.toString())
     if (q) params.set("q", q)
     router.push(`/marketplace?${params.toString()}`)
   }
+
+  useEffect(() => {
+    if (q && itemsData?.items) {
+      setItems(itemsData.items)
+    } else if (!q) {
+      setItems(initialData)
+    }
+  }, [itemsData, initialData, q])
+
   return (
     <>
       <section className="py-[40px] md:py-[60px] lg:py-[80px]">
@@ -81,7 +71,7 @@ export default function MarketplaceContent({
             <p className="w-full pb-[14px] pt-[24px] h4-sans text-center border-b-[2px] border-gray text-white">
               NFTs
               <span className="ml-[16px] px-[10px] py-[5px] p-space text-white rounded-full bg-gray">
-                {items.length}
+                {dataLenght}
               </span>
             </p>
           </div>
@@ -96,11 +86,10 @@ export default function MarketplaceContent({
 
             {!loading && (
               <div className="w-max mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
-                {/* ISSUE: button to view more or pagination ? */}
                 {items.map((item: NFT, i: number) => {
                   return (
                     <article
-                      className="w-full rounded-primary overflow-hidden hover:scale-primary"
+                      className="w-max rounded-primary overflow-hidden hover:scale-primary"
                       key={i}
                     >
                       <Link href={`/marketplace/${item.id}`}>
@@ -156,21 +145,96 @@ export default function MarketplaceContent({
                 })}
               </div>
             )}
-            <div className="flex justify-between mt-6">
-              <button
-                className="button-primary before:hidden"
-                disabled={Number(page) <= 1}
-                onClick={() => changePage(Number(page) - 1)}
-              >
-                prev
-              </button>
-              <button
-                className="button-primary before:hidden"
-                disabled={items.length < itemsPerPage}
-                onClick={() => changePage(Number(page) + 1)}
-              >
-                next
-              </button>
+            <div className="max-w-sm md:container mx-auto">
+              <div className="mt-[25px] md:mt-[45px] flex flex-col xl:flex-row gap-[16px] justify-center">
+                <div className="flex flex-row justify-evenly items-center">
+                  <button
+                    className={`block before:hidden ${
+                      currentPage === 1
+                        ? "button-transparent pointer-events-none"
+                        : "button-primary"
+                    }`}
+                    disabled={currentPage === 1}
+                    onClick={() => changePage(currentPage - 1)}
+                  >
+                    prev
+                  </button>
+                  <button
+                    className={`block xl:hidden before:hidden ${
+                      currentPage === totalPages
+                        ? "button-transparent pointer-events-none"
+                        : "button-primary"
+                    }`}
+                    disabled={currentPage === totalPages}
+                    onClick={() => changePage(currentPage + 1)}
+                  >
+                    next
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-x-[16px] gap-y-[8px] items-center justify-center">
+                  <div
+                    className={`contents ${
+                      currentPage <= 4 ? "hidden" : "block"
+                    }`}
+                  >
+                    <button
+                      className="w-[38px] h-[38px] p-space rounded-full hover:cursor-pointer bg-black"
+                      onClick={() => {
+                        changePage(1)
+                      }}
+                      disabled={currentPage === 1}
+                    >
+                      1
+                    </button>
+                    <span>...</span>
+                  </div>
+                  {Array.from({ length: totalPages }).map((_, i) => {
+                    const page = i + 1
+                    return (
+                      <button
+                        className={` w-[38px] h-[38px] p-space rounded-full hover:cursor-pointer ${
+                          currentPage === i + 1 ? "bg-accent" : "bg-black"
+                        }
+                      ${
+                        Math.abs(currentPage - page) >= 4 ? "hidden" : "block"
+                      }`}
+                        key={i}
+                        onClick={() => {
+                          changePage(i + 1)
+                        }}
+                      >
+                        {i + 1}
+                      </button>
+                    )
+                  })}
+                  <div
+                    className={`contents ${
+                      currentPage > totalPages - 4 ? "hidden" : "block"
+                    }`}
+                  >
+                    <span>...</span>
+                    <button
+                      className="w-[38px] h-[38px] p-space rounded-full hover:cursor-pointer bg-black"
+                      onClick={() => {
+                        changePage(totalPages)
+                      }}
+                    >
+                      {totalPages}
+                    </button>
+                  </div>
+                </div>
+                <button
+                  className={`hidden xl:block before:hidden ${
+                    currentPage === totalPages
+                      ? "button-transparent pointer-events-none"
+                      : "button-primary"
+                  }`}
+                  disabled={currentPage === totalPages}
+                  onClick={() => changePage(currentPage + 1)}
+                >
+                  next
+                </button>
+              </div>
             </div>
           </div>
         </div>

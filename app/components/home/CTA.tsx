@@ -1,4 +1,5 @@
 import Image from "next/image"
+import EmailForm from "../EmailForm"
 
 export default function CTA() {
   return (
@@ -20,18 +21,9 @@ export default function CTA() {
               <p className="mt-[10px] p-sans-xl">
                 Get exclusive promotions & updates straight to your inbox.
               </p>
-              <form className="mt-[40px]">
-                <div className="flex flex-col lg:flex-row lg:bg-white rounded-primary">
-                  <input
-                    className="w-full py-[12px] lg:p-[20px] px-[20px] bg-white lg:bg-transparent border border-gray lg:border-0 font-work-sans text-black outline-none placeholder:text-black rounded-primary lg:rounded-[0]"
-                    type="text"
-                    placeholder="Enter your email here"
-                  />
-                  <button className="w-full lg:w-max mt-[16px] lg:mt-0 py-[12px] lg:py-0 lg:ml-auto button-primary before:content-[url('/icons/mail.svg')] hover:scale-[95%]">
-                    subscribe
-                  </button>
-                </div>
-              </form>
+              <div className="mt-[40px]">
+                <EmailForm />
+              </div>
             </div>
           </div>
         </article>

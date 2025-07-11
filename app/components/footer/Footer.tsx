@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import EmailForm from "./EmailForm"
+import EmailForm from "../EmailForm"
 export default function Footer() {
   return (
     <footer className="py-[40px] bg-black-white">

@@ -56,6 +56,13 @@ const resolvers = {
       const subscriber = await Subscribe.findOne({ email: email })
       return subscriber !== null
     },
+    totalCount: async (_: unknown, { q }: { q?: string }) => {
+      await dbConnect()
+      if (q) {
+        return NFT.countDocuments({ title: { $regex: q, $options: "i" } })
+      }
+      return NFT.countDocuments()
+    },
   },
   Mutation: {
     addEmail: async (_: unknown, { email }: { email: string }) => {

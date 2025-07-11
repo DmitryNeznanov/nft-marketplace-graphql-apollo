@@ -2,12 +2,14 @@ import { Metadata } from "next"
 import MarketplaceContent from "./components/MarketplaceContent"
 import apolloServer from "@/lib/apolloServer"
 import { GET_FILTERED_ITEMS_WITH_AUTHOR } from "@/graphql/queries/items/getFilteredItemsWithAuthor"
+import { GET_TOTAL_COUNT } from "@/graphql/queries/getTotalCount"
 import { redirect } from "next/navigation"
 
 export const metadata: Metadata = {
   title: "NFT Marketplace | Marketplace",
   description: "Page on which NFT is sold",
 }
+
 export default async function Marketplace({
   searchParams,
 }: {
@@ -15,26 +17,34 @@ export default async function Marketplace({
 }) {
   const params = await Promise.resolve(searchParams)
   const q = params?.q || ""
-  const limit = 9
-  const page = parseInt(params?.page) || "1"
-  const offset = (page - 1) * limit
-  const { data } = await apolloServer.query({
+
+  if (params?.page === undefined) {
+    const query = new URLSearchParams()
+    if (q) query.set("q", q)
+    query.set("page", "1")
+    redirect(`/marketplace?${query.toString()}`)
+  }
+
+  const currentPage = Number(params.page)
+  const itemsPerPage = 9
+  const offset = (currentPage - 1) * itemsPerPage
+
+  const { data: initialData } = await apolloServer.query({
     query: GET_FILTERED_ITEMS_WITH_AUTHOR,
-    variables: { q, offset, limit },
+    variables: { q, offset, limit: itemsPerPage },
+  })
+  const { data: countData } = await apolloServer.query({
+    query: GET_TOTAL_COUNT,
+    variables: { q },
   })
 
-  if (!params?.page) {
-    const params = await Promise.resolve(new URLSearchParams())
-    if (q) params.set("q", q)
-    params.set("page", "1")
-    redirect(`/marketplace?${params.toString()}`)
-  }
-  // ISSUE: add cache ?
-  // TODO: search on button click
-  // TODO: search more adaptive to ui with empty "q" and tldr
+  const dataLenght = countData?.totalCount || 0
   return (
-    <>
-      <MarketplaceContent defaultData={data.items}></MarketplaceContent>
-    </>
+    <MarketplaceContent
+      initialData={initialData.items}
+      offset={offset}
+      itemsPerPage={itemsPerPage}
+      dataLenght={dataLenght}
+    />
   )
 }
