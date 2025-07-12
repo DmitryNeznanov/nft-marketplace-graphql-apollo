@@ -147,7 +147,6 @@ export default async function MarketPlaceItem({
                 </div>
               </div>
               <div className="mt-[20px] md:mt-0 order-3">
-                {/* // TODO: add place bid button */}
                 <Timer
                   expiredAt={item.postTime}
                   button={true}
