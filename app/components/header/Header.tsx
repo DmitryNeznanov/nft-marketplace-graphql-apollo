@@ -7,7 +7,7 @@ import Link from "next/link"
 export default function Header() {
   return (
     <header
-      className="max-w-[1650px] mx-auto px-[5px] lg:px-[50px] 2xl:px-[175px] py-[15px] lg:py-[20px]"
+      className="w-full max-w-[1650px] mx-auto px-[5px] lg:px-[50px] 2xl:px-[175px] py-[15px] lg:py-[20px]"
       id="header"
     >
       <nav className="flex justify-between items-center">

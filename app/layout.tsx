@@ -28,11 +28,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` ${spaceMono.variable} ${workSans.variable}`}>
+      <body className={`${spaceMono.variable} ${workSans.variable}`}>
         <ApolloProviderWrapper>
-          <Header></Header>
-          {children}
-          <Footer></Footer>
+          <div className="min-h-screen flex flex-col">
+            <Header></Header>
+            <div className="flex-1">{children}</div>
+            <Footer></Footer>
+          </div>
         </ApolloProviderWrapper>
       </body>
     </html>

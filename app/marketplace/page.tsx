@@ -3,7 +3,6 @@ import MarketplaceContent from "./components/MarketplaceContent"
 import apolloServer from "@/lib/apolloServer"
 import { GET_FILTERED_ITEMS_WITH_AUTHOR } from "@/graphql/queries/items/getFilteredItemsWithAuthor"
 import { GET_TOTAL_COUNT } from "@/graphql/queries/getTotalCount"
-import { redirect } from "next/navigation"
 
 export const metadata: Metadata = {
   title: "NFT Marketplace | Marketplace",
@@ -18,14 +17,7 @@ export default async function Marketplace({
   const params = await Promise.resolve(searchParams)
   const q = params?.q || ""
 
-  if (params?.page === undefined) {
-    const query = new URLSearchParams()
-    if (q) query.set("q", q)
-    query.set("page", "1")
-    redirect(`/marketplace?${query.toString()}`)
-  }
-
-  const currentPage = Number(params.page)
+  const currentPage = Number(params?.page)
   const itemsPerPage = 9
   const offset = (currentPage - 1) * itemsPerPage
 
