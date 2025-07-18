@@ -34,7 +34,7 @@ const typeDefs = gql`
     item: Item!
     items(q: String, limit: Int, offset: Int): [Item!]!
     itemById(id: ID!): Item!
-    itemsByAuthorId(id: ID!): [Item!]!
+    itemsByAuthorId(id: ID!, offset: Int): [Item!]!
     checkSubscriberByEmail(email: String!): Email!
     totalCount(q: String): Int!
   }

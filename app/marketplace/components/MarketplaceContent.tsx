@@ -138,7 +138,9 @@ export default function MarketplaceContent({
                     )
                   })}
                 </div>
-                <Pagination totalPages={totalPages}></Pagination>
+                <div className="mt-[25px] md:mt-[45px]">
+                  <Pagination totalPages={totalPages}></Pagination>
+                </div>
               </div>
             )}
           </div>

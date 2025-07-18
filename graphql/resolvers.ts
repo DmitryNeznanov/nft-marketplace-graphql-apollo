@@ -44,9 +44,12 @@ const resolvers = {
       await dbConnect()
       return NFT.findById(id)
     },
-    itemsByAuthorId: async (_: unknown, { id }: { id: string }) => {
+    itemsByAuthorId: async (
+      _: unknown,
+      { id, offset = 0 }: { id: string; offset?: number }
+    ) => {
       await dbConnect()
-      return NFT.find({ author: id })
+      return NFT.find({ author: id }).skip(offset)
     },
     checkSubscriberByEmail: async (
       _: unknown,

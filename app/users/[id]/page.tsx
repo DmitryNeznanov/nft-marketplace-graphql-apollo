@@ -1,4 +1,3 @@
-import NFT from "@/app/models/NFT"
 import User from "@/app/models/User"
 import type { Metadata } from "next"
 import Image from "next/image"
@@ -7,6 +6,8 @@ import CopyIdButton from "./components/CopyIdButton"
 import apolloServer from "@/lib/apolloServer"
 import { GET_USER_BY_ID } from "@/graphql/queries/user/getUserById"
 import { GET_ITEMS_BY_AUTHOR_ID_WITH_AUTHOR } from "@/graphql/queries/items/getItemsByAuthorIdWithAuthor"
+import UserContent from "./components/UserContent"
+import { GET_TOTAL_COUNT } from "@/graphql/queries/getTotalCount"
 export async function generateMetadata({
   params,
 }: {
@@ -29,7 +30,7 @@ export async function generateStaticParams() {
 export default async function UserPage({
   params,
 }: {
-  params: Promise<{ id: string }>
+  params: { id: string; page: string }
 }) {
   const { id } = await params
   const { data: userData } = await apolloServer.query({
@@ -42,7 +43,14 @@ export default async function UserPage({
     variables: { id: user.id },
   })
   const items = itemsData.itemsByAuthorId
-
+  const { data: countData } = await apolloServer.query({
+    query: GET_TOTAL_COUNT,
+    variables: { q: user.id },
+  })
+  const currentPage = Number(params?.page)
+  const itemsPerPage = 9
+  const offset = (currentPage - 1) * itemsPerPage
+  const dataLenght = countData?.totalCount || 0
   return (
     <>
       <section>
@@ -287,73 +295,11 @@ export default async function UserPage({
           </div>
         </div>
       </section>
-      <section className="bg-black-white">
-        <div className="py-[80px] max-w-sm md:container mx-auto">
-          {
-            <div className="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
-              {items.map((item: NFT, i: number) => {
-                return (
-                  <article
-                    className="max-w-[330px] w-full rounded-primary overflow-hidden scale-primary"
-                    key={i}
-                  >
-                    <div>
-                      <Link href={`/marketplace/${item.id}`}>
-                        <Image
-                          className="w-full"
-                          src={item.image}
-                          width={420}
-                          height={296}
-                          alt={`item-${i + 1}`}
-                        ></Image>
-                      </Link>
-                    </div>
-                    <div className="p-[20px] md:px-[30px] bg-black">
-                      <div>
-                        <Link
-                          className="w-max block"
-                          href={`/marketplace/${item.id}`}
-                        >
-                          <h3 className="h3-sans hover:hover:underline-primary">
-                            {item.title}
-                          </h3>
-                        </Link>
-                        <Link
-                          className={`w-max mt-[5px] flex items-center font-work-sans text-[16px]/[140%] hover:underline-primary`}
-                          href={`/users/${item.author}`}
-                        >
-                          <Image
-                            className="mr-[12px] rounded-full"
-                            src={user.profileImage}
-                            width={24}
-                            height={24}
-                            alt="userProfileImage"
-                          ></Image>
-                          <p className="p-space">{user.name}</p>
-                        </Link>
-                      </div>
-                      <div className="mt-[25px] flex flex-row justify-between items-center">
-                        <p className="font-space-mono text-gray font-normal text-[12px]/[110%]">
-                          Price
-                          <span className="mt-[8px] block font-space-mono font-normal text-white text-[12px]/[140%] md:text-[16px]/[140%]">
-                            {item.price} ETH
-                          </span>
-                        </p>
-                        <p className="font-space-mono text-gray font-normal text-[12px]/[110%]">
-                          Highest Bid
-                          <span className="mt-[8px] block font-space-mono font-normal text-white text-[12px]/[140%] md:text-[16px]/[140%]">
-                            {item.bid} ETH
-                          </span>
-                        </p>
-                      </div>
-                    </div>
-                  </article>
-                )
-              })}
-            </div>
-          }
-        </div>
-      </section>
+      <UserContent
+        offset={offset}
+        dataLenght={dataLenght}
+        itemsPerPage={itemsPerPage}
+      ></UserContent>
     </>
   )
 }

@@ -8,7 +8,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
   const router = useRouter()
 
   const q = searchParams.get("q") || ""
-  const currentPage = Number(searchParams.get("page")) || 0
+  const currentPage = Number(searchParams.get("page"))
   const params = new URLSearchParams(searchParams)
   const pathName = usePathname()
   function changePage(newPage: number) {
@@ -19,14 +19,14 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
 
   useEffect(() => {
     if (!currentPage) {
-      const params = new URLSearchParams(searchParams.toString())
+      const params = new URLSearchParams(searchParams)
       params.set("page", "1")
       router.replace(`${pathName}?${params.toString()}`)
     }
   }, [searchParams, router, pathName, currentPage])
   return (
     <div className="max-w-sm md:container mx-auto">
-      <div className="mt-[25px] md:mt-[45px] flex flex-col xl:flex-row gap-[16px] justify-center">
+      <div className="flex flex-col xl:flex-row gap-[16px] justify-center">
         <div className="flex flex-row justify-evenly items-center">
           <button
             className={`block before:hidden ${
@@ -64,25 +64,27 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
             </button>
             <span>...</span>
           </div>
-          {Array.from({ length: totalPages }).map((_, i) => {
-            const page = i + 1
-            return (
-              <button
-                className={` w-[38px] h-[38px] p-space rounded-full hover:cursor-pointer ${
-                  currentPage === i + 1 ? "bg-accent" : "bg-black"
-                }
+          {Array.from({ length: totalPages > 0 ? totalPages : 1 }).map(
+            (_, i) => {
+              const page = i + 1
+              return (
+                <button
+                  className={` w-[38px] h-[38px] p-space rounded-full hover:cursor-pointer ${
+                    currentPage === i + 1 ? "bg-accent" : "bg-black"
+                  }
                       ${
                         Math.abs(currentPage - page) >= 4 ? "hidden" : "block"
                       }`}
-                key={i}
-                onClick={() => {
-                  changePage(i + 1)
-                }}
-              >
-                {i + 1}
-              </button>
-            )
-          })}
+                  key={i}
+                  onClick={() => {
+                    changePage(i + 1)
+                  }}
+                >
+                  {i + 1}
+                </button>
+              )
+            }
+          )}
           <div
             className={`contents ${
               currentPage > totalPages - 4 ? "hidden" : "block"
