@@ -2,7 +2,6 @@ import { Metadata } from "next"
 import MarketplaceContent from "./components/MarketplaceContent"
 import apolloServer from "@/lib/apolloServer"
 import { GET_FILTERED_ITEMS_WITH_AUTHOR } from "@/graphql/queries/items/getFilteredItemsWithAuthor"
-import { GET_TOTAL_COUNT } from "@/graphql/queries/getTotalCount"
 
 export const metadata: Metadata = {
   title: "NFT Marketplace | Marketplace",
@@ -25,18 +24,12 @@ export default async function Marketplace({
     query: GET_FILTERED_ITEMS_WITH_AUTHOR,
     variables: { q, offset, limit: itemsPerPage },
   })
-  const { data: countData } = await apolloServer.query({
-    query: GET_TOTAL_COUNT,
-    variables: { q },
-  })
 
-  const dataLenght = countData?.totalCount || 0
   return (
     <MarketplaceContent
       initialData={initialData.items}
       offset={offset}
       itemsPerPage={itemsPerPage}
-      dataLenght={dataLenght}
     />
   )
 }

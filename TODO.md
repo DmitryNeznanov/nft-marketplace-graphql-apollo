@@ -3,5 +3,6 @@
  - pagination to user page
  - cleanup for build
  - loading content main?
+- pagination wrapper for server components?
 ### Questions
 ### Draf

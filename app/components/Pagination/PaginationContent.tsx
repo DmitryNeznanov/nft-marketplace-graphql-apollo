@@ -3,7 +3,13 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect } from "react"
 
-export default function Pagination({ totalPages }: { totalPages: number }) {
+export default function PaginationContent({
+  itemsPerPage,
+  dataLenght,
+}: {
+  itemsPerPage: number
+  dataLenght: number
+}) {
   const searchParams = useSearchParams()
   const router = useRouter()
 
@@ -16,7 +22,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
     if (q) params.set("q", q)
     router.push(`${pathName}?${params.toString()}`)
   }
-
+  const totalPages = Math.ceil(dataLenght / itemsPerPage)
   useEffect(() => {
     if (!currentPage) {
       const params = new URLSearchParams(searchParams)

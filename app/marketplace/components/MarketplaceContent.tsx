@@ -5,18 +5,16 @@ import { GET_FILTERED_ITEMS_WITH_AUTHOR } from "@/graphql/queries/items/getFilte
 import Image from "next/image"
 import Link from "next/link"
 import Search from "./Search"
-import Pagination from "@/app/components/Pagination"
+import Pagination from "@/app/components/Pagination/Pagination"
 import { useSearchParams } from "next/navigation"
 export default function MarketplaceContent({
   initialData,
   offset,
   itemsPerPage,
-  dataLenght,
 }: {
   initialData: NFT[]
   offset: number
   itemsPerPage: number
-  dataLenght: number
 }) {
   const [items, setItems] = useState(initialData)
 
@@ -31,8 +29,8 @@ export default function MarketplaceContent({
     variables: { q, offset, limit: itemsPerPage },
     skip: !q,
   })
-
-  const totalPages = Math.ceil(dataLenght / itemsPerPage)
+  const dataLenght = items.length
+  const totalPages = Math.ceil(items.length / itemsPerPage)
 
   useEffect(() => {
     if (q && itemsData?.items) {

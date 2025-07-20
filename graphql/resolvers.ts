@@ -66,6 +66,13 @@ const resolvers = {
       }
       return NFT.countDocuments()
     },
+    totalCountById: async (_: unknown, { id }: { id?: string }) => {
+      await dbConnect()
+      if (id) {
+        return NFT.countDocuments({ id: { $regex: id, $options: "i" } })
+      }
+      return NFT.countDocuments()
+    },
   },
   Mutation: {
     addEmail: async (_: unknown, { email }: { email: string }) => {

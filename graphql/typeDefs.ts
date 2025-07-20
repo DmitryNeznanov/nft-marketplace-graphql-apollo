@@ -37,6 +37,7 @@ const typeDefs = gql`
     itemsByAuthorId(id: ID!, offset: Int): [Item!]!
     checkSubscriberByEmail(email: String!): Email!
     totalCount(q: String): Int!
+    totalCountById(id: ID!): Int!
   }
   type Mutation {
     addEmail(email: String!): Email!

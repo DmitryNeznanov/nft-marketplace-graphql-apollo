@@ -5,9 +5,7 @@ import Link from "next/link"
 import CopyIdButton from "./components/CopyIdButton"
 import apolloServer from "@/lib/apolloServer"
 import { GET_USER_BY_ID } from "@/graphql/queries/user/getUserById"
-import { GET_ITEMS_BY_AUTHOR_ID_WITH_AUTHOR } from "@/graphql/queries/items/getItemsByAuthorIdWithAuthor"
 import UserContent from "./components/UserContent"
-import { GET_TOTAL_COUNT } from "@/graphql/queries/getTotalCount"
 export async function generateMetadata({
   params,
 }: {
@@ -27,30 +25,14 @@ export async function generateStaticParams() {
     id: user._id.toString(),
   }))
 }
-export default async function UserPage({
-  params,
-}: {
-  params: { id: string; page: string }
-}) {
-  const { id } = await params
+export default async function UserPage({ params }: { params: { id: string } }) {
+  const { id } = await Promise.resolve(params)
   const { data: userData } = await apolloServer.query({
     query: GET_USER_BY_ID,
     variables: { id: id },
   })
   const user = userData.userById
-  const { data: itemsData } = await apolloServer.query({
-    query: GET_ITEMS_BY_AUTHOR_ID_WITH_AUTHOR,
-    variables: { id: user.id },
-  })
-  const items = itemsData.itemsByAuthorId
-  const { data: countData } = await apolloServer.query({
-    query: GET_TOTAL_COUNT,
-    variables: { q: user.id },
-  })
-  const currentPage = Number(params?.page)
-  const itemsPerPage = 9
-  const offset = (currentPage - 1) * itemsPerPage
-  const dataLenght = countData?.totalCount || 0
+
   return (
     <>
       <section>
@@ -284,22 +266,8 @@ export default async function UserPage({
             </div>
           </div>
         </div>
-        <div className="border-t border-black-white">
-          <div className="max-w-sm md:container mx-auto">
-            <p className="w-full pb-[14px] pt-[24px] h4-sans text-center border-b-[2px] border-gray text-white">
-              Created
-              <span className="ml-[16px] px-[10px] py-[5px] p-space text-white rounded-full bg-gray">
-                {items.length}
-              </span>
-            </p>
-          </div>
-        </div>
       </section>
-      <UserContent
-        offset={offset}
-        dataLenght={dataLenght}
-        itemsPerPage={itemsPerPage}
-      ></UserContent>
+      <UserContent></UserContent>
     </>
   )
 }
