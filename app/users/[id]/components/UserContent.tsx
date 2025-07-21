@@ -6,11 +6,16 @@ import { useQuery } from "@apollo/client"
 import Image from "next/image"
 import Link from "next/link"
 import { useParams } from "next/navigation"
-export default function UserContent() {
+export default function UserContent({
+  offset,
+  itemsPerPage,
+  dataLenght,
+}: {
+  offset: number
+  itemsPerPage: number
+  dataLenght: number
+}) {
   const params = useParams()
-  const itemsPerPage = 9
-  const currentPage = Number(params.page)
-  const offset = (currentPage - 1) * itemsPerPage
   const {
     data: itemsData,
     loading,
@@ -18,6 +23,7 @@ export default function UserContent() {
   } = useQuery(GET_ITEMS_BY_AUTHOR_ID_WITH_AUTHOR, {
     variables: { id: params?.id, limit: itemsPerPage, offset: offset },
   })
+
   const items = itemsData?.itemsByAuthorId ?? []
   const totalPages = Math.ceil(items.length / itemsPerPage)
 
@@ -28,7 +34,7 @@ export default function UserContent() {
           <p className="w-full pb-[14px] pt-[24px] h4-sans text-center border-b-[2px] border-gray text-white">
             Created
             <span className="ml-[16px] px-[10px] py-[5px] p-space text-white rounded-full bg-gray">
-              {items.length}
+              {dataLenght}
             </span>
           </p>
         </div>
@@ -37,8 +43,11 @@ export default function UserContent() {
         <div className="py-[80px] max-w-sm md:container mx-auto">
           {loading && <h2 className="h1-sans">Loading items...</h2>}
           {error && <h2 className="h1-sans">Error: {error.message}</h2>}
+          {!loading && dataLenght === 0 && (
+            <h2 className="h1-sans">Items not found!</h2>
+          )}
           <div>
-            {!loading && (
+            {!loading && dataLenght !== 0 && (
               <div className="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
                 {itemsData.itemsByAuthorId.map((item: NFT, i: number) => {
                   return (

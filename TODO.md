@@ -4,5 +4,6 @@
  - cleanup for build
  - loading content main?
 - pagination wrapper for server components?
+- fix marketpalce navigation
 ### Questions
 ### Draf

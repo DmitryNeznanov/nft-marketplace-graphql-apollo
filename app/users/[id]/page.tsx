@@ -6,6 +6,7 @@ import CopyIdButton from "./components/CopyIdButton"
 import apolloServer from "@/lib/apolloServer"
 import { GET_USER_BY_ID } from "@/graphql/queries/user/getUserById"
 import UserContent from "./components/UserContent"
+import { GET_TOTAL_COUNT_BY_AUTHOR_ID } from "@/graphql/queries/count/getCountByAuthorId"
 export async function generateMetadata({
   params,
 }: {
@@ -25,14 +26,25 @@ export async function generateStaticParams() {
     id: user._id.toString(),
   }))
 }
-export default async function UserPage({ params }: { params: { id: string } }) {
-  const { id } = await Promise.resolve(params)
+export default async function UserPage({
+  params,
+}: {
+  params: { id: string; page: number }
+}) {
+  const { id, page } = await Promise.resolve(params)
   const { data: userData } = await apolloServer.query({
     query: GET_USER_BY_ID,
     variables: { id: id },
   })
+  const currentPage = Number(page)
+  const itemsPerPage = 9
+  const offset = (currentPage - 1) * itemsPerPage
   const user = userData.userById
-
+  const { data: countData } = await apolloServer.query({
+    query: GET_TOTAL_COUNT_BY_AUTHOR_ID,
+    variables: { id: id },
+  })
+  const dataLenght = countData?.totalCountByAuthorId || 0
   return (
     <>
       <section>
@@ -267,7 +279,12 @@ export default async function UserPage({ params }: { params: { id: string } }) {
           </div>
         </div>
       </section>
-      <UserContent></UserContent>
+
+      <UserContent
+        offset={offset}
+        itemsPerPage={itemsPerPage}
+        dataLenght={dataLenght}
+      ></UserContent>
     </>
   )
 }

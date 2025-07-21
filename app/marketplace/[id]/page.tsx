@@ -1,11 +1,12 @@
 import Timer from "@/app/components/Timer"
 import NFT from "@/app/models/NFT"
 import { GET_ITEM_BY_ID_WITH_AUTHOR } from "@/graphql/queries/items/getItemByIdWithAuthor"
-import { GET_ITEMS_BY_AUTHOR_ID_WITH_AUTHOR } from "@/graphql/queries/items/getItemsByAuthorIdWithAuthor"
 import apolloServer from "@/lib/apolloServer"
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
+import ItemContent from "./components/ItemContent"
+import { GET_TOTAL_COUNT_BY_AUTHOR_ID } from "@/graphql/queries/count/getCountByAuthorId"
 export async function generateStaticParams() {
   const items = (await NFT.find()) as NFT[]
   return items.map((item: NFT) => ({
@@ -29,24 +30,27 @@ export async function generateMetadata({
 export default async function MarketPlaceItem({
   params,
 }: {
-  params: { id: string }
+  params: { id: string; page: number }
 }) {
-  const { id } = await Promise.resolve(params)
+  const { id, page } = await Promise.resolve(params)
+
+  const currentPage = Number(page)
+  const itemsPerPage = 9
+  const offset = (currentPage - 1) * itemsPerPage
+
   const { data: itemData } = await apolloServer.query({
     query: GET_ITEM_BY_ID_WITH_AUTHOR,
     variables: { id: id },
   })
   const { itemAuthor: author, ...item } = itemData.itemById
+  const itemAuthorId = itemData.itemById.author
 
-  const { data: itemsData } = await apolloServer.query({
-    query: GET_ITEMS_BY_AUTHOR_ID_WITH_AUTHOR,
-    variables: { id: author.id },
+  const { data: countData } = await apolloServer.query({
+    query: GET_TOTAL_COUNT_BY_AUTHOR_ID,
+    variables: { id: itemAuthorId },
   })
-  const items = (itemsData.itemsByAuthorId as NFT[]).map(
-    ({ itemAuthor: author, ...item }) => {
-      return { item, author }
-    }
-  )
+  const dataLenght = countData?.totalCountByAuthorId || 0
+
   return (
     <>
       <section>
@@ -156,6 +160,7 @@ export default async function MarketPlaceItem({
           </div>
         </div>
       </section>
+
       <section className="py-[40px] lg:py-[80px]">
         <div className="container">
           <div className="max-w-sm md:container mx-auto">
@@ -163,78 +168,25 @@ export default async function MarketPlaceItem({
               <h2 className="h2-sans capitalize">More from this artist</h2>
               <Link
                 className="hidden md:flex button-transparent before:content-[url('/icons/arrow-right-accent.svg')]"
-                href={`/users/${author.id}`}
+                href={`/users/${itemAuthorId}`}
               >
                 go to artist page
               </Link>
             </div>
-            <div className="mt-[30px] md:mt-[60px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
-              {items.map(({ item, author }, i) => {
-                return (
-                  <article
-                    className="max-w-[330px] w-full rounded-primary overflow-hidden scale-primary"
-                    key={i}
-                  >
-                    <div>
-                      <Link href={`/marketplace/${item.id}`}>
-                        <Image
-                          className="w-full"
-                          src={item.image}
-                          width={420}
-                          height={296}
-                          alt={`item-${i + 1}`}
-                        ></Image>
-                      </Link>
-                    </div>
-                    <div className="p-[20px] md:px-[30px] bg-black-white">
-                      <div>
-                        <Link
-                          className="w-max block"
-                          href={`/marketplace/${item.id}`}
-                        >
-                          <h3 className="h3-sans hover:hover:underline-primary">
-                            {item.title}
-                          </h3>
-                        </Link>
-                        <Link
-                          className={`w-max mt-[5px] flex items-center font-work-sans text-[16px]/[140%] hover:underline-primary`}
-                          href={`/users/${item.author}`}
-                        >
-                          <Image
-                            className="mr-[12px] rounded-full"
-                            src={author.profileImage}
-                            width={24}
-                            height={24}
-                            alt="userProfileImage"
-                          ></Image>
-                          <p className="p-space">{author.name}</p>
-                        </Link>
-                      </div>
-                      <div className="mt-[25px] flex flex-row justify-between items-center">
-                        <p className="font-space-mono text-gray font-normal text-[12px]/[110%]">
-                          Price
-                          <span className="mt-[8px] block font-space-mono font-normal text-white text-[12px]/[140%] md:text-[16px]/[140%]">
-                            {item.price} ETH
-                          </span>
-                        </p>
-                        <p className="font-space-mono text-gray font-normal text-[12px]/[110%]">
-                          Highest Bid
-                          <span className="mt-[8px] block font-space-mono font-normal text-white text-[12px]/[140%] md:text-[16px]/[140%]">
-                            {item.bid} ETH
-                          </span>
-                        </p>
-                      </div>
-                    </div>
-                  </article>
-                )
-              })}
+            <ItemContent
+              offset={offset}
+              itemsPerPage={itemsPerPage}
+              dataLenght={dataLenght}
+              itemAuthorId={itemAuthorId}
+            ></ItemContent>
+            <div>
+              <Link
+                className="w-full md:w-max md:hidden button-transparent before:content-[url('/icons/arrow-right-accent.svg')]"
+                href={`/users/${itemAuthorId}`}
+              >
+                go to artist page
+              </Link>
             </div>
-            <Link
-              className="w-full md:w-max md:hidden button-transparent before:content-[url('/icons/arrow-right-accent.svg')]"
-              href={`/users/${author.id}`}
-            >
-              go to artist page
-            </Link>
           </div>
         </div>
       </section>

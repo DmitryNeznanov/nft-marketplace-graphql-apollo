@@ -11,10 +11,12 @@ export default function MarketplaceContent({
   initialData,
   offset,
   itemsPerPage,
+  dataLenght,
 }: {
   initialData: NFT[]
   offset: number
   itemsPerPage: number
+  dataLenght: number
 }) {
   const [items, setItems] = useState(initialData)
 
@@ -29,8 +31,8 @@ export default function MarketplaceContent({
     variables: { q, offset, limit: itemsPerPage },
     skip: !q,
   })
-  const dataLenght = items.length
-  const totalPages = Math.ceil(items.length / itemsPerPage)
+
+  const totalPages = Math.ceil(dataLenght / itemsPerPage)
 
   useEffect(() => {
     if (q && itemsData?.items) {
