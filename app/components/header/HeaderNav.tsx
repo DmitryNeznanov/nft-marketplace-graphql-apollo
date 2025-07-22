@@ -18,7 +18,7 @@ export default function HeaderNav({
         return (
           <li
             className={`w-max font-work-sans font-semibold text-[16px] hover:underline-primary ${
-              router.includes(href) ? "text-accent pointer-events-none" : ""
+              router.includes(href) ? "text-accent" : ""
             }`}
             key={i}
           >

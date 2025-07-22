@@ -13,7 +13,6 @@ export default function CopyIdButton({ userId }: { userId: string }) {
   }
 
   return (
-    // TODO: width and icon + flex
     <div className="relative">
       <button
         className="w-full md:w-max button-primary before:content-[url('/icons/copy.svg')]"

@@ -43,5 +43,5 @@ const typeDefs = gql`
     addEmail(email: String!): Email!
   }
 `
-// TODO: scalar value for Date?
+// ISSUE: scalar value for Date?
 export default typeDefs

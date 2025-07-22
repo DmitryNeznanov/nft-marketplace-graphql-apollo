@@ -29,7 +29,6 @@ const resolvers = {
               { title: { $regex: q, $options: "i" } },
               { content: { $regex: q, $options: "i" } },
               { postTime: { $regex: q, $options: "i" } },
-              { name: { $regex: q, $options: "i" } },
               { tags: { $elemMatch: { $regex: q, $options: "i" } } },
             ],
           }
@@ -61,8 +60,18 @@ const resolvers = {
     },
     totalCount: async (_: unknown, { q }: { q?: string }) => {
       await dbConnect()
+      const filter = q
+        ? {
+            $or: [
+              { title: { $regex: q, $options: "i" } },
+              { content: { $regex: q, $options: "i" } },
+              { postTime: { $regex: q, $options: "i" } },
+              { tags: { $elemMatch: { $regex: q, $options: "i" } } },
+            ],
+          }
+        : {}
       if (q) {
-        return NFT.countDocuments({ title: { $regex: q, $options: "i" } })
+        return NFT.countDocuments(filter)
       }
       return NFT.countDocuments()
     },
