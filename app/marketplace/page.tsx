@@ -17,7 +17,7 @@ export default async function Marketplace({
   const params = await Promise.resolve(searchParams)
   const q = params?.q || ""
 
-  const currentPage = Number(params?.page)
+  const currentPage = Number(params?.page) || 1
   const itemsPerPage = 9
   const offset = (currentPage - 1) * itemsPerPage
 
