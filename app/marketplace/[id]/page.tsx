@@ -16,9 +16,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }): Promise<Metadata> {
-  const { id } = await Promise.resolve(params)
+  const { id } = await params
 
   const item = (await NFT.findById(id)) as NFT
 
@@ -29,12 +29,14 @@ export async function generateMetadata({
 }
 export default async function MarketPlaceItem({
   params,
+  searchParams,
 }: {
-  params: { id: string; page: number }
+  params: Promise<{ id: string }>
+  searchParams: Promise<{ page: string }>
 }) {
-  const { id, page } = await Promise.resolve(params)
-
-  const currentPage = Number(page)
+  const { id } = await params
+  const { page } = await searchParams
+  const currentPage = Number(page) || 1
   const itemsPerPage = 9
   const offset = (currentPage - 1) * itemsPerPage
 

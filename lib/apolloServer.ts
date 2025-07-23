@@ -1,11 +1,13 @@
-import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client"
+import { ApolloClient, InMemoryCache } from "@apollo/client"
+import { SchemaLink } from "@apollo/client/link/schema"
+import { makeExecutableSchema } from "@graphql-tools/schema"
+import typeDefs from "@/graphql/typeDefs"
+import resolvers from "@/graphql/resolvers"
 
-const apolloServer = new ApolloClient({
-  link: new HttpLink({
-    uri: process.env.NEXT_PUBLIC_API_URL + "/api/graphql",
-  }),
+const schema = makeExecutableSchema({ typeDefs, resolvers })
+
+export const apolloServer = new ApolloClient({
   cache: new InMemoryCache(),
-  ssrMode: true,
+  link: new SchemaLink({ schema }),
 })
-
 export default apolloServer

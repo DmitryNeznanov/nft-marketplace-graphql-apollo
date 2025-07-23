@@ -12,12 +12,11 @@ export const metadata: Metadata = {
 export default async function Marketplace({
   searchParams,
 }: {
-  searchParams?: { q?: string; page?: string }
+  searchParams: Promise<{ q: string; page: string }>
 }) {
-  const params = await Promise.resolve(searchParams)
-  const q = params?.q || ""
+  const { q, page } = await searchParams
 
-  const currentPage = Number(params?.page) || 1
+  const currentPage = Number(page) || 1
   const itemsPerPage = 9
   const offset = (currentPage - 1) * itemsPerPage
 
