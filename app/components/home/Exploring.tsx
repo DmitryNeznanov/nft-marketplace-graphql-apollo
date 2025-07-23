@@ -1,10 +1,14 @@
-import NFT from "@/app/models/NFT"
-import User from "@/app/models/User"
+import { GET_ITEMS_WITH_AUTHOR } from "@/graphql/queries/items/getItemsWithAuthor"
+import apolloServer from "@/lib/apolloServer"
 import Image from "next/image"
 import Link from "next/link"
 
 export default async function Exploring() {
-  const items: NFT[] = (await NFT.find()) as NFT[]
+  const { data } = await apolloServer.query({
+    query: GET_ITEMS_WITH_AUTHOR,
+    variables: { limit: 3 },
+  })
+
   return (
     <section className="py-[40px] md:py-[80px]">
       <div className="max-w-sm md:container mx-auto">
@@ -26,15 +30,14 @@ export default async function Exploring() {
         </article>
         <section className="mt-[40px] lg:mt-[60px]">
           <div className="flex flex-col md:flex-row items-center justify-center gap-[20px] md:gap-[30px] md:*:nth-[n+3]:hidden lg:*:nth-[n+3]:block">
-            {items.slice(0, 3).map(async (item: NFT, i) => {
-              const itemUser = (await User.findById(item.author)) as User
+            {data.items.map((item: NFT, i: number) => {
               return (
                 <article
                   className="max-w-[330px] w-full rounded-primary overflow-hidden scale-primary"
                   key={i}
                 >
                   <div>
-                    <Link href={`/marketplace/${item._id}`}>
+                    <Link href={`/marketplace/${item.id}`}>
                       <Image
                         className="w-full"
                         src={item.image}
@@ -48,7 +51,7 @@ export default async function Exploring() {
                     <div>
                       <Link
                         className="w-max block"
-                        href={`/marketplace/${item._id}`}
+                        href={`/marketplace/${item.id}`}
                       >
                         <h3 className="h3-sans hover:hover:underline-primary">
                           {item.title}
@@ -60,12 +63,12 @@ export default async function Exploring() {
                       >
                         <Image
                           className="mr-[12px] rounded-full"
-                          src={itemUser.profileImage}
+                          src={item.itemAuthor.profileImage}
                           width={24}
                           height={24}
                           alt="userProfileImage"
                         ></Image>
-                        <p className="p-space">{itemUser.name}</p>
+                        <p className="p-space">{item.itemAuthor.name}</p>
                       </Link>
                     </div>
                     <div className="mt-[25px] flex flex-row justify-between items-center">

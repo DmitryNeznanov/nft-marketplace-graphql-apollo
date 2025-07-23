@@ -1,42 +1,88 @@
 "use client"
+
 import Image from "next/image"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 export default function Search() {
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()
-  const [term, setTerm] = useState(searchParams.get("q")?.toString() || "")
-  useEffect(() => {
-    const delayDebounce = setTimeout(() => {
-      const params = new URLSearchParams(searchParams)
-      if (term) {
-        params.set("q", term)
+
+  const [query, setQuery] = useState(searchParams.get("q") || "")
+
+  const handleSearch = useCallback(
+    (value: string) => {
+      const currentQ = searchParams.get("q") || ""
+      if (value.trim() === currentQ.trim()) return
+
+      const params = new URLSearchParams(searchParams.toString())
+
+      if (value.trim()) {
+        params.set("q", value.trim())
       } else {
         params.delete("q")
       }
-      replace(`${pathname}?${params.toString()}`)
-    }, 300) // ⏱ 500 мс задержка
 
-    return () => clearTimeout(delayDebounce)
-  }, [term, pathname, replace, searchParams])
+      params.set("page", "1")
+      replace(`${pathname}?${params.toString()}`)
+    },
+    [searchParams, pathname, replace]
+  )
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      handleSearch(query)
+    }, 350)
+
+    return () => clearTimeout(debounce)
+  }, [query, handleSearch])
+
+  function handleClear() {
+    setQuery("")
+  }
+
   return (
-    <form>
-      <div className="pr-[20px] flex flex-row items-center justify-between gap-x-[26px] border border-gray rounded-primary">
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        handleSearch(query)
+      }}
+    >
+      <div className="pr-[20px] flex flex-row items-center justify-between gap-x-[10px] border border-gray rounded-primary">
         <input
           className="w-full p-[20px] outline-none p-sans placeholder:text-gray"
           type="text"
           placeholder="Search your favourite NFTs"
-          onChange={(e) => setTerm(e.target.value)}
-          defaultValue={searchParams.get("q")?.toString()}
+          onChange={(e) => setQuery(e.target.value)}
+          value={query}
         />
-        {/* ISSUE: sort on button click ? */}
-        <button className="-m-[10px] p-[10px] block hover:cursor-pointer">
+
+        {query && (
+          <button
+            className="hover:cursor-pointer"
+            type="button"
+            onClick={handleClear}
+          >
+            <Image
+              src="/icons/cross.svg"
+              width={20}
+              height={20}
+              alt="clear"
+            />
+          </button>
+        )}
+
+        <button
+          className="-m-[10px] p-[10px] hover:cursor-pointer"
+          type="submit"
+          onClick={() => {
+            handleSearch(query)
+          }}
+        >
           <Image
             src="/icons/search.svg"
             width={24}
             height={24}
-            alt="search.svg"
+            alt="Search"
           />
         </button>
       </div>

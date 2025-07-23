@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { Space_Mono, Work_Sans } from "next/font/google"
 import "./globals.css"
-import Footer from "@/app/components/Footer"
+import Footer from "@/app/components/footer/Footer"
 import Header from "@/app/components/header/Header"
 import ApolloProviderWrapper from "./ApolloProviderWrapper"
 
@@ -28,11 +28,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` ${spaceMono.variable} ${workSans.variable}`}>
+      <body className={`${spaceMono.variable} ${workSans.variable}`}>
         <ApolloProviderWrapper>
-          <Header></Header>
-          {children}
-          <Footer></Footer>
+          <div className="min-h-screen flex flex-col">
+            <Header></Header>
+            <div className="flex-1">{children}</div>
+            <Footer></Footer>
+          </div>
         </ApolloProviderWrapper>
       </body>
     </html>

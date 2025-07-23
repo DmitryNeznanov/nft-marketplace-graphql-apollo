@@ -1,8 +1,14 @@
 "use client"
 
+import Link from "next/link"
 import { useEffect, useState } from "react"
-
-export default function Timer({ expiredAt }: { expiredAt: string }) {
+export default function Timer({
+  expiredAt,
+  button,
+}: {
+  expiredAt: string
+  button?: boolean
+}) {
   const [time, setTime] = useState({
     hours: "00",
     minutes: "00",
@@ -81,6 +87,14 @@ export default function Timer({ expiredAt }: { expiredAt: string }) {
           </p>
         </div>
       </div>
+      {button && (
+        <Link
+          className="mt-[30px] w-full button-primary before:hidden"
+          href="#"
+        >
+          place bid
+        </Link>
+      )}
     </div>
   )
 }

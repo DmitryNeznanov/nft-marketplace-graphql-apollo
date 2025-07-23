@@ -5,18 +5,55 @@ import { useState } from "react"
 
 export default function Table({ users }: { users: User[] }) {
   const [data, setData] = useState(users)
-  // @ts-expect-error sasa
-  function sortByValue(value) {
-    const sortedData = [...users].sort((a, b) => {
-      // @ts-expect-error sasa
-      return b[value] - a[value]
+  const [sortKey, setSortKey] = useState<string | null>(null)
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc")
+
+  function sortByValue(key: keyof User) {
+    let newOrder: "asc" | "desc" = "desc"
+
+    if (sortKey === key) {
+      newOrder = sortOrder === "desc" ? "asc" : "desc"
+      setSortOrder(newOrder)
+    } else {
+      setSortKey(key)
+      setSortOrder("desc")
+    }
+
+    const sortedData = [...data].sort((a, b) => {
+      const aVal = a[key]
+      const bVal = b[key]
+
+      if (typeof aVal === "number" && typeof bVal === "number") {
+        return newOrder === "desc" ? bVal - aVal : aVal - bVal
+      }
+
+      if (typeof aVal === "string" && typeof bVal === "string") {
+        return newOrder === "desc"
+          ? bVal.localeCompare(aVal)
+          : aVal.localeCompare(bVal)
+      }
+
+      return 0
     })
+
     setData(sortedData)
+  }
+  function SortIndicator({
+    isActive,
+    direction,
+  }: {
+    isActive: boolean
+    direction: "asc" | "desc"
+  }) {
+    if (!isActive) return null
+    return (
+      <span className="absolute ml-[4px]">
+        {direction === "asc" ? "▲" : "▼"}
+      </span>
+    )
   }
 
   return (
-    // TODO: underline active
-    // TODO: reversed sorting on second click
     <table className="w-full border-spacing-y-[20px] border-separate -mb-[20px]">
       <thead>
         <tr className="text-gray *:first:pl-[20px] *:first:rounded-l-primary *:last:rounded-r-primary [&>th,td]:border-black-white [&>th,td]:text-start [&>th,td]:py-[12px] [&>th,td]:first:border [&>th,td]:last:border [&>th,td]:first:border-r-0 [&>th,td]:last:border-l-0 [&>th,td]:not-first:not-last:border-t [&>th,td]:not-first:not-last:border-b">
@@ -29,43 +66,75 @@ export default function Table({ users }: { users: User[] }) {
           <th
             className="p-space"
             scope="col"
-            onClick={() => {
-              sortByValue("name")
-            }}
           >
-            <button className="">Artist</button>
+            <button
+              className=" hover:cursor-pointer relative"
+              onClick={() => {
+                sortByValue("name")
+              }}
+            >
+              Artist
+              <SortIndicator
+                isActive={sortKey === "name"}
+                direction={sortOrder}
+              />
+            </button>
           </th>
           <th
             className="p-space hidden md:table-cell"
             scope="col"
-            onClick={() => {
-              sortByValue("change")
-            }}
           >
-            <button className="">Change</button>
+            <button
+              className="hover:cursor-pointer"
+              onClick={() => {
+                sortByValue("change")
+              }}
+            >
+              Change
+              <SortIndicator
+                isActive={sortKey === "change"}
+                direction={sortOrder}
+              />
+            </button>
           </th>
           <th
             className="p-space hidden lg:table-cell"
             scope="col"
-            onClick={() => {
-              sortByValue("sold")
-            }}
           >
-            <button className="">NFTs Sold</button>
+            <button
+              className="hover:cursor-pointer"
+              onClick={() => {
+                sortByValue("sold")
+              }}
+            >
+              NFTs Sold
+              <SortIndicator
+                isActive={sortKey === "sold"}
+                direction={sortOrder}
+              />
+            </button>
           </th>
           <th
             className="p-space"
             scope="col"
-            onClick={() => {
-              sortByValue("volume")
-            }}
           >
-            <button className="">Volume</button>
+            <button
+              className="hover:cursor-pointer"
+              onClick={() => {
+                sortByValue("volume")
+              }}
+            >
+              Volume
+              <SortIndicator
+                isActive={sortKey === "volume"}
+                direction={sortOrder}
+              />
+            </button>
           </th>
         </tr>
       </thead>
       <tbody>
-        {data.map((user: User, i) => {
+        {data.map((user: User, i: number) => {
           return (
             <tr
               className="bg-black-white *:first:rounded-l-primary *:last:rounded-r-primary *:first:pl-[20px] [&>th,td]:py-[13px] md:[&>th,td]:py-[14.5px] lg:[&>th,td]:py-[12px] [&>th,td]:text-start hover:scale-[99%] transition duration-350"
@@ -81,7 +150,7 @@ export default function Table({ users }: { users: User[] }) {
                 scope="row"
               >
                 <Link
-                  href={`/users/${user._id}`}
+                  href={`/users/${user.id.toString()}`}
                   className="flex items-center hover:underline-primary"
                 >
                   <Image

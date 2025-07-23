@@ -1,4 +1,6 @@
 ### Tasks
-- suspence for main page
+ - filter search by name. find users and items then filter
+ - cleanup for build
+ - initial data for user page
 ### Questions
-### Draft 
+### Draf
