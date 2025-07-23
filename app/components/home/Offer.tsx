@@ -5,7 +5,9 @@ import apolloServer from "@/lib/apolloServer"
 import { GET_ITEM_WITH_AUTHOR } from "@/graphql/queries/items/getItemWithAuthor"
 
 export default async function Offer() {
-  const { data } = await apolloServer.query({ query: GET_ITEM_WITH_AUTHOR })
+  const { data } = await apolloServer.query({
+    query: GET_ITEM_WITH_AUTHOR,
+  })
 
   return (
     <section className="relative pb-[40px] pt-[120px] md:pt-[360px] md:pb-[60px] bg-gradient-to-b from-white/0 to-accent">

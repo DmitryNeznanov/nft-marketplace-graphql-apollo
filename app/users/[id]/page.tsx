@@ -28,15 +28,18 @@ export async function generateStaticParams() {
 }
 export default async function UserPage({
   params,
+  searchParams,
 }: {
-  params: { id: string; page: number }
+  params: Promise<{ id: string }>
+  searchParams: Promise<{ page: string }>
 }) {
-  const { id, page } = await Promise.resolve(params)
+  const { id } = await params
+  const { page } = await searchParams
   const { data: userData } = await apolloServer.query({
     query: GET_USER_BY_ID,
     variables: { id: id },
   })
-  const currentPage = Number(page)
+  const currentPage = Number(page) || 1
   const itemsPerPage = 9
   const offset = (currentPage - 1) * itemsPerPage
   const user = userData.userById
