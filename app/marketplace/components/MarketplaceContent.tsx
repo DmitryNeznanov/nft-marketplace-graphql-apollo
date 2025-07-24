@@ -77,7 +77,7 @@ export default function MarketplaceContent({
             )}
             {error && <h2 className="h1-sans">Error: {error.message}</h2>}
 
-            {!loading && (
+            {!loading && dataLenght !== 0 && (
               <div>
                 <div className=" mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
                   {items.map((item: NFT, i: number) => {
