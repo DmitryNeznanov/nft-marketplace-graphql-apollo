@@ -9,6 +9,7 @@ import { totalCountByAuthorId } from "./resolvers/query/count/totalCountByAuthor
 import { userById } from "./resolvers/query/user/userById"
 import { users } from "./resolvers/query/user/users"
 import { item } from "./resolvers/query/item/item"
+import { signup } from "./resolvers/mutations/auth/signup"
 const resolvers = {
   Query: {
     users,
@@ -23,6 +24,7 @@ const resolvers = {
   },
   Mutation: {
     addEmail,
+    signup,
   },
   Item: {
     itemAuthor,

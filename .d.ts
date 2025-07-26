@@ -25,3 +25,15 @@ interface Subscribe {
   id: Types.ObjectId
   email: string
 }
+interface Token {
+  accountId: Types.ObjectId
+  token: string
+  createdAt: Date
+  expiresAt: Date
+}
+interface Account {
+  username: string
+  email: string
+  password: string
+  createdAt: Date
+}
