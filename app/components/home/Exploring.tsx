@@ -1,4 +1,4 @@
-import { GET_ITEMS_WITH_AUTHOR } from "@/graphql/queries/items/getItemsWithAuthor"
+import { GET_ITEMS_WITH_AUTHOR } from "@/graphql/client/queries/items/getItemsWithAuthor"
 import apolloServer from "@/lib/apolloServer"
 import Image from "next/image"
 import Link from "next/link"

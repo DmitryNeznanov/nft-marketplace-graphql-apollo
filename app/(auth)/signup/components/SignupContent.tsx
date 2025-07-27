@@ -1,22 +1,15 @@
 "use client"
 import Image from "next/image"
-// import type { Metadata } from "next"
 import { useMutation } from "@apollo/client"
-import { SIGNUP } from "@/graphql/mutations/auth/signup"
+import { SIGNUP } from "@/graphql/client/auth/signup"
 import { useForm } from "react-hook-form"
-// export const metadata: Metadata = {
-//   title: "NFT Marketplace | Signup",
-//   description: "NFT Marketplace Signup page",
-// }
-
 type FormData = {
   username: string
   email: string
   password: string
   confirmPassword: string
 }
-
-export default function Signup() {
+export default function SignupContent() {
   const {
     register,
     handleSubmit,
@@ -39,8 +32,12 @@ export default function Signup() {
         },
       })
       const token = response.data?.signup?.token
-      const user = response.data?.signup?.account
-      console.log(user)
+      const account = response.data?.signup?.account
+
+      if (token) {
+        localStorage.setItem("token", token)
+      }
+      console.log(account)
 
       console.log("token:", token)
     } catch (err) {

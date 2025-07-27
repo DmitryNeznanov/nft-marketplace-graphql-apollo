@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useQuery } from "@apollo/client"
-import { GET_ITEMS_BY_AUTHOR_ID_WITH_AUTHOR } from "@/graphql/queries/items/getItemsByAuthorIdWithAuthor"
+import { GET_ITEMS_BY_AUTHOR_ID_WITH_AUTHOR } from "@/graphql/client/queries/items/getItemsByAuthorIdWithAuthor"
 import Pagination from "@/app/components/Pagination/Pagination"
 export default function ItemContents({
   offset,

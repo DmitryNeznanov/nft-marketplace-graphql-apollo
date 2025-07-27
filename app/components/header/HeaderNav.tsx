@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import LogoutButton from "../auth/LogoutButton"
 
 export default function HeaderNav({
   closeMobileMenu,
@@ -32,6 +33,9 @@ export default function HeaderNav({
           </li>
         )
       })}
+      <li>
+        <LogoutButton></LogoutButton>
+      </li>
       <li>
         <Link
           className="px-[30px] button-primary before:content-[url(/icons/user.svg)]"

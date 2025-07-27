@@ -51,6 +51,8 @@ const typeDefs = gql`
   type Mutation {
     addEmail(email: String!): Email!
     signup(username: String!, email: String!, password: String!): AuthPayload!
+    signin(email: String!, password: String!): AuthPayload!
+    logout(token: String!): Boolean!
   }
 `
 // ISSUE: scalar value for Date?
