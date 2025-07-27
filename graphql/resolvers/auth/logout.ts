@@ -1,11 +1,16 @@
 import Token from "@/app/models/Token"
 import dbConnect from "@/lib/mongoose"
 
-export async function logout(_: unknown, { token }: { token: string }) {
+export const logout = async (_: any, __: any, { user }: { user: any }) => {
   await dbConnect()
+  console.log("USER CONTEXT IN LOGOUT:", user)
 
-  const result = await Token.deleteOne({ token })
-  console.log("token deleted:", token)
+  if (user?.token) {
+    const result = await Token.deleteOne({ token: user.token })
+    console.log("Delete result:", result)
+  } else {
+    console.warn("No token found in user context")
+  }
 
-  return result.deletedCount > 0
+  return { success: true }
 }

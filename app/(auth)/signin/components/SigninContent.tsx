@@ -24,14 +24,23 @@ export default function SigninContent() {
           password: data.password,
         },
       })
+
       const token = response.data?.signin?.token
-
       const user = response.data?.signin?.account
-      console.log(user)
 
-      console.log("token:", token)
+      if (!token) throw new Error("Token not received")
+
+      // Устанавливаем токен через API (cookie)
+      await fetch("/api/set-cookie", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      })
+
+      console.log("User:", user)
+      console.log("Token saved to cookie.")
     } catch (err) {
-      console.error("signin failed", err)
+      console.error("Sign-in failed:", err)
     }
   }
   return (

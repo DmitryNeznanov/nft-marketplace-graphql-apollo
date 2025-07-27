@@ -1,30 +1,19 @@
 "use client"
 
-import { LOGOUT } from "@/graphql/client/auth/logout"
-import { useMutation } from "@apollo/client"
-import { useRouter } from "next/navigation"
+import { useApolloClient } from "@apollo/client"
+import { logoutUser } from "@/lib/logoutUser"
 
-export default function LogoutButton() {
-  const router = useRouter()
-  const [logout] = useMutation(LOGOUT)
+export default function LogoutButton({ token }: { token: string }) {
+  const client = useApolloClient()
 
-  const handleLogout = async () => {
-    const token = localStorage.getItem("token")
-    if (!token) return
-
-    try {
-      await logout({ variables: { token } })
-      localStorage.removeItem("token")
-      router.push("/")
-    } catch (err) {
-      console.error("Logout error", err)
-    }
+  const handleLogout = () => {
+    logoutUser(client)
   }
 
   return (
     <button
+      className="button-primary before:hidden"
       onClick={handleLogout}
-      className="button-primary"
     >
       Logout
     </button>

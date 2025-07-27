@@ -37,6 +37,9 @@ const typeDefs = gql`
     token: String!
     account: Account!
   }
+  type LogoutResponse {
+    success: Boolean!
+  }
   type Query {
     users(limit: Int): [User!]!
     userById(id: ID!): User!
@@ -52,7 +55,7 @@ const typeDefs = gql`
     addEmail(email: String!): Email!
     signup(username: String!, email: String!, password: String!): AuthPayload!
     signin(email: String!, password: String!): AuthPayload!
-    logout(token: String!): Boolean!
+    logout: LogoutResponse!
   }
 `
 // ISSUE: scalar value for Date?
