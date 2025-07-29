@@ -3,6 +3,7 @@ import Image from "next/image"
 import { useMutation } from "@apollo/client"
 import { SIGNUP } from "@/graphql/client/auth/signup"
 import { useForm } from "react-hook-form"
+import { getGraphQLErrorMessage } from "@/lib/graphqlErrorHandler"
 type FormData = {
   username: string
   email: string
@@ -15,9 +16,7 @@ export default function SignupContent() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>()
-
   const [signup, { loading, error }] = useMutation(SIGNUP)
-
   async function onSubmit(data: FormData) {
     if (data.password !== data.confirmPassword) {
       alert("Passwords do not match")
@@ -34,14 +33,11 @@ export default function SignupContent() {
       const token = response.data?.signup?.token
       const account = response.data?.signup?.account
 
-      if (token) {
-        localStorage.setItem("token", token)
-      }
-      console.log(account)
-
+      console.log("account:", account)
       console.log("token:", token)
     } catch (err) {
-      console.error("signup failed", err)
+      const messages = getGraphQLErrorMessage(err)
+      alert(messages)
     }
   }
   return (
@@ -78,12 +74,12 @@ export default function SignupContent() {
                     alt="user-gray.svg"
                   ></Image>
                   <input
-                    className="font-work-sans text-black outline-none placeholder:text-black placeholder:capitalize"
+                    className="w-full font-work-sans text-black outline-none placeholder:text-black placeholder:capitalize"
                     type="text"
                     placeholder="username"
                     {...register("username", { required: true })}
-                    {...(errors.username && <span>Username is required</span>)}
                   />
+                  {errors.username && <span>{errors.username.message}</span>}
                 </label>
                 <label className="w-full py-[12px] flex flex-row gap-x-[12px] input-primary">
                   <Image
@@ -93,12 +89,12 @@ export default function SignupContent() {
                     alt="mail-gray.svg"
                   ></Image>
                   <input
-                    className="font-work-sans text-black outline-none placeholder:text-black placeholder:capitalize"
+                    className="w-full font-work-sans text-black outline-none placeholder:text-black placeholder:capitalize"
                     type="email"
                     placeholder="email adress"
                     {...register("email", { required: true })}
-                    {...(errors.email && <span>Email is required</span>)}
                   />
+                  {errors.email && <span>{errors.email.message}</span>}
                 </label>
                 <label className="w-full py-[12px]  flex flex-row gap-x-[12px] input-primary">
                   <Image
@@ -108,12 +104,12 @@ export default function SignupContent() {
                     alt="password-gray.svg"
                   ></Image>
                   <input
-                    className="font-work-sans text-black outline-none placeholder:text-black placeholder:capitalize"
+                    className="w-full font-work-sans text-black outline-none placeholder:text-black placeholder:capitalize"
                     type="password"
                     placeholder="password"
                     {...register("password", { required: true })}
-                    {...(errors.password && <span>Password is required</span>)}
                   />
+                  {errors.password && <span>{errors.password.message}</span>}
                 </label>
                 <label className="w-full py-[12px] flex flex-row gap-x-[12px] input-primary">
                   <Image
@@ -123,21 +119,18 @@ export default function SignupContent() {
                     alt="password-gray.svg"
                   ></Image>
                   <input
-                    className="font-work-sans text-black outline-none placeholder:text-black placeholder:capitalize"
+                    className="w-full font-work-sans text-black outline-none placeholder:text-black placeholder:capitalize"
                     type="password"
                     placeholder="confirm password"
                     {...register("confirmPassword", { required: true })}
-                    {...(errors.confirmPassword && (
-                      <span>Confirm your password</span>
-                    ))}
                   />
+                  {errors.confirmPassword && (
+                    <span>{errors.confirmPassword.message}</span>
+                  )}
                 </label>
               </div>
               <button className="w-full py-[12px] md:max-w-[330px] mt-[30px] button-primary before:hidden">
                 {loading ? "Creating..." : "create account"}
-                {error && (
-                  <p className="text-red-500">Error: {error.message}</p>
-                )}
               </button>
             </form>
           </div>
