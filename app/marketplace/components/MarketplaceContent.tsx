@@ -1,12 +1,12 @@
 "use client"
 import { useEffect, useState } from "react"
 import { useQuery } from "@apollo/client"
-import { GET_FILTERED_ITEMS_WITH_AUTHOR } from "@/graphql/queries/items/getFilteredItemsWithAuthor"
 import Image from "next/image"
 import Link from "next/link"
 import Search from "./Search"
 import Pagination from "@/app/components/Pagination/Pagination"
 import { useSearchParams } from "next/navigation"
+import { GET_FILTERED_ITEMS_WITH_AUTHOR } from "@/graphql/client/queries/items/getFilteredItemsWithAuthor"
 export default function MarketplaceContent({
   initialData,
   offset,

@@ -15,7 +15,8 @@ export default function SignupContent() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>()
+    getValues,
+  } = useForm<FormData>({ criteriaMode: "all" })
   const [signup, { loading, error }] = useMutation(SIGNUP)
   async function onSubmit(data: FormData) {
     if (data.password !== data.confirmPassword) {
@@ -43,7 +44,7 @@ export default function SignupContent() {
   return (
     <section>
       <div className="flex flex-col md:flex-row md:items-center md:gap-x-[40px] lg:gap-x-[60px]">
-        <div className="md:max-w-[50%]">
+        <div className="md:max-w-[50%] flex-1">
           <Image
             className="w-screen h-screen max-h-[232px] md:max-h-[615px] lg:max-h-[691px]"
             src="/signup.png"
@@ -77,10 +78,24 @@ export default function SignupContent() {
                     className="w-full font-work-sans text-black outline-none placeholder:text-black placeholder:capitalize"
                     type="text"
                     placeholder="username"
-                    {...register("username", { required: true })}
+                    {...register("username", {
+                      required: "Username is required!",
+                      minLength: {
+                        value: 3,
+                        message: "Username must be at least 3 characters",
+                      },
+                      maxLength: {
+                        value: 20,
+                        message: "Username must be at most 20 characters",
+                      },
+                      pattern: {
+                        value: /^[a-zA-Z0-9_]+$/,
+                        message: "Username contains invalid characters",
+                      },
+                    })}
                   />
-                  {errors.username && <span>{errors.username.message}</span>}
                 </label>
+                {errors.username && <span>{errors.username.message}</span>}
                 <label className="w-full py-[12px] flex flex-row gap-x-[12px] input-primary">
                   <Image
                     src="/icons/mail-gray.svg"
@@ -92,11 +107,25 @@ export default function SignupContent() {
                     className="w-full font-work-sans text-black outline-none placeholder:text-black placeholder:capitalize"
                     type="email"
                     placeholder="email adress"
-                    {...register("email", { required: true })}
+                    {...register("email", {
+                      required: "Email is required!",
+                      minLength: {
+                        value: 6,
+                        message: "Email must be at most 6 characters",
+                      },
+                      maxLength: {
+                        value: 254,
+                        message: "Email must be at most 254 characters",
+                      },
+                      pattern: {
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
+                        message: "Email contains invalid characters",
+                      },
+                    })}
                   />
-                  {errors.email && <span>{errors.email.message}</span>}
                 </label>
-                <label className="w-full py-[12px]  flex flex-row gap-x-[12px] input-primary">
+                {errors.email && <span>{errors.email.message}</span>}
+                <label className="w-full py-[12px] flex flex-row gap-x-[12px] input-primary">
                   <Image
                     src="/icons/password-gray.svg"
                     width={20}
@@ -107,10 +136,29 @@ export default function SignupContent() {
                     className="w-full font-work-sans text-black outline-none placeholder:text-black placeholder:capitalize"
                     type="password"
                     placeholder="password"
-                    {...register("password", { required: true })}
+                    {...register("password", {
+                      required: "Password is required!",
+                      minLength: {
+                        value: 8,
+                        message: "Password must be at least 8 characters",
+                      },
+                      maxLength: {
+                        value: 64,
+                        message: "Password must be at most 64 characters",
+                      },
+                      pattern: {
+                        value: /[A-Za-z]/,
+                        message: "Password must contain at least one letter",
+                      },
+                      validate: {
+                        safeCharacters: (v) =>
+                          /^[A-Za-z\d@$!%*?&]+$/.test(v) ||
+                          "Password contains invalid characters",
+                      },
+                    })}
                   />
-                  {errors.password && <span>{errors.password.message}</span>}
                 </label>
+                {errors.password && <span>{errors.password.message}</span>}
                 <label className="w-full py-[12px] flex flex-row gap-x-[12px] input-primary">
                   <Image
                     src="/icons/password-gray.svg"
@@ -122,16 +170,35 @@ export default function SignupContent() {
                     className="w-full font-work-sans text-black outline-none placeholder:text-black placeholder:capitalize"
                     type="password"
                     placeholder="confirm password"
-                    {...register("confirmPassword", { required: true })}
+                    {...register("confirmPassword", {
+                      required: "Confirm password!",
+                      validate: {
+                        matchPassword: (confirmPassword) =>
+                          confirmPassword === getValues("password") ||
+                          "Passwords do not match",
+                      },
+                    })}
                   />
-                  {errors.confirmPassword && (
-                    <span>{errors.confirmPassword.message}</span>
-                  )}
                 </label>
+                {errors.confirmPassword && (
+                  <span>{errors.confirmPassword.message}</span>
+                )}
               </div>
               <button className="w-full py-[12px] md:max-w-[330px] mt-[30px] button-primary before:hidden">
                 {loading ? "Creating..." : "create account"}
               </button>
+              <ul className="mt-[15px] px-[20px] flex flex-col gap-y-[2px] list-disc list-inside">
+                {Object.values(errors).map((error, i) => {
+                  return (
+                    <li
+                      className="p-sans text-[14px] text-rose-500"
+                      key={i}
+                    >
+                      {error.message}
+                    </li>
+                  )
+                })}
+              </ul>
             </form>
           </div>
         </div>

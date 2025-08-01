@@ -1,12 +1,12 @@
 import Timer from "@/app/components/Timer"
 import NFT from "@/app/models/NFT"
-import { GET_ITEM_BY_ID_WITH_AUTHOR } from "@/graphql/queries/items/getItemByIdWithAuthor"
 import apolloServer from "@/lib/apolloServer"
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import ItemContent from "./components/ItemContent"
-import { GET_TOTAL_COUNT_BY_AUTHOR_ID } from "@/graphql/queries/count/getCountByAuthorId"
+import { GET_TOTAL_COUNT_BY_AUTHOR_ID } from "@/graphql/client/queries/count/getCountByAuthorId"
+import { GET_ITEM_BY_ID_WITH_AUTHOR } from "@/graphql/client/queries/items/getItemByIdWithAuthor"
 export async function generateStaticParams() {
   const items = (await NFT.find()) as NFT[]
   return items.map((item: NFT) => ({
