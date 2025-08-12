@@ -12,51 +12,41 @@ export async function signup(
     password,
   }: { username: string; email: string; password: string }
 ) {
-  await dbConnect()
+  try {
+    await dbConnect()
 
-  const existingAccounts = await Account.find({
-    $or: [{ email }, { username }],
-  })
-
-  const errorMessages = []
-  const errorCodes = []
-
-  for (const acc of existingAccounts) {
-    if (acc.email === email) {
-      errorMessages.push("Email already in use")
-      errorCodes.push("EMAIL_EXISTS")
+    const emailExists = await Account.findOne({ email })
+    if (emailExists) {
+      throw new GraphQLError("Email already exists")
     }
-    if (acc.username === username) {
-      errorMessages.push("Username already taken")
-      errorCodes.push("USERNAME_EXISTS")
+    const usernameExists = await Account.findOne({ username })
+    if (usernameExists) {
+      throw new GraphQLError("Username already exists")
     }
-  }
 
-  if (errorMessages.length > 0) {
-    throw new GraphQLError(errorMessages.join("\n"), {
-      extensions: {
-        code: "MULTIPLE_CONFLICTS",
-        issues: errorCodes,
-      },
+    const hashedPassword = await bcrypt.hash(password, 10)
+
+    const account = await Account.create({
+      username: username,
+      email: email,
+      password: hashedPassword,
     })
-  }
 
-  const hashedPassword = await bcrypt.hash(password, 10)
+    const token = await createToken(account._id.toString())
 
-  const account = await Account.create({
-    username: username,
-    email: email,
-    password: hashedPassword,
-  })
-
-  const token = await createToken(account._id.toString())
-
-  return {
-    token,
-    account: {
-      id: account._id,
-      username: account.username,
-      email: account.email,
-    },
+    return {
+      token,
+      account: {
+        id: account._id,
+        username: account.username,
+        email: account.email,
+      },
+    }
+  } catch (error) {
+    console.error("Signup error:", error)
+    if (error instanceof GraphQLError) {
+      throw error
+    }
+    throw new GraphQLError("Internal server error. Signup failed")
   }
 }

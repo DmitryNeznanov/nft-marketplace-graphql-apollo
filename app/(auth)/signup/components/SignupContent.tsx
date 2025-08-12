@@ -3,7 +3,6 @@ import Image from "next/image"
 import { useMutation } from "@apollo/client"
 import { SIGNUP } from "@/graphql/client/auth/signup"
 import { useForm } from "react-hook-form"
-import { getGraphQLErrorMessage } from "@/lib/graphqlErrorHandler"
 type FormData = {
   username: string
   email: string
@@ -16,31 +15,38 @@ export default function SignupContent() {
     handleSubmit,
     formState: { errors },
     getValues,
-  } = useForm<FormData>({ criteriaMode: "all" })
-  const [signup, { loading, error }] = useMutation(SIGNUP)
-  async function onSubmit(data: FormData) {
-    if (data.password !== data.confirmPassword) {
-      alert("Passwords do not match")
-      return
-    }
-    try {
-      const response = await signup({
-        variables: {
-          username: data.username,
-          email: data.email,
-          password: data.password,
-        },
-      })
-      const token = response.data?.signup?.token
-      const account = response.data?.signup?.account
+  } = useForm<FormData>({ criteriaMode: "all", reValidateMode: "onSubmit" })
 
-      console.log("account:", account)
+  const [signup, { loading, error }] = useMutation(SIGNUP)
+  const formErrors = Object.values(errors).map((error) => error.message)
+  const gqlErrors = error?.graphQLErrors?.map((error) => error.message) || []
+  const allErrors = [...formErrors, ...gqlErrors]
+
+  async function onSubmit(data: FormData) {
+    const response = await signup({
+      variables: {
+        username: data.username,
+        email: data.email,
+        password: data.password,
+      },
+    })
+    const token = response.data?.signup?.token
+    const account = response.data?.signup?.account
+
+    console.log("account:", account)
+
+    if (process.env.NODE_ENV === "development") {
       console.log("token:", token)
-    } catch (err) {
-      const messages = getGraphQLErrorMessage(err)
-      alert(messages)
     }
+    alert(
+      `Account created successfully! You can now log in.\n\Your account:\n\ ${JSON.stringify(
+        account,
+        null,
+        2
+      )}`
+    )
   }
+
   return (
     <section>
       <div className="flex flex-col md:flex-row md:items-center md:gap-x-[40px] lg:gap-x-[60px]">
@@ -78,6 +84,8 @@ export default function SignupContent() {
                     className="w-full font-work-sans text-black outline-none placeholder:text-black placeholder:capitalize"
                     type="text"
                     placeholder="username"
+                    minLength={3}
+                    maxLength={20}
                     {...register("username", {
                       required: "Username is required!",
                       minLength: {
@@ -95,7 +103,6 @@ export default function SignupContent() {
                     })}
                   />
                 </label>
-                {errors.username && <span>{errors.username.message}</span>}
                 <label className="w-full py-[12px] flex flex-row gap-x-[12px] input-primary">
                   <Image
                     src="/icons/mail-gray.svg"
@@ -107,6 +114,8 @@ export default function SignupContent() {
                     className="w-full font-work-sans text-black outline-none placeholder:text-black placeholder:capitalize"
                     type="email"
                     placeholder="email adress"
+                    minLength={6}
+                    maxLength={254}
                     {...register("email", {
                       required: "Email is required!",
                       minLength: {
@@ -124,7 +133,6 @@ export default function SignupContent() {
                     })}
                   />
                 </label>
-                {errors.email && <span>{errors.email.message}</span>}
                 <label className="w-full py-[12px] flex flex-row gap-x-[12px] input-primary">
                   <Image
                     src="/icons/password-gray.svg"
@@ -136,6 +144,8 @@ export default function SignupContent() {
                     className="w-full font-work-sans text-black outline-none placeholder:text-black placeholder:capitalize"
                     type="password"
                     placeholder="password"
+                    minLength={8}
+                    maxLength={64}
                     {...register("password", {
                       required: "Password is required!",
                       minLength: {
@@ -158,7 +168,6 @@ export default function SignupContent() {
                     })}
                   />
                 </label>
-                {errors.password && <span>{errors.password.message}</span>}
                 <label className="w-full py-[12px] flex flex-row gap-x-[12px] input-primary">
                   <Image
                     src="/icons/password-gray.svg"
@@ -170,8 +179,10 @@ export default function SignupContent() {
                     className="w-full font-work-sans text-black outline-none placeholder:text-black placeholder:capitalize"
                     type="password"
                     placeholder="confirm password"
+                    minLength={8}
+                    maxLength={64}
                     {...register("confirmPassword", {
-                      required: "Confirm password!",
+                      required: "Confirm your password!",
                       validate: {
                         matchPassword: (confirmPassword) =>
                           confirmPassword === getValues("password") ||
@@ -180,21 +191,18 @@ export default function SignupContent() {
                     })}
                   />
                 </label>
-                {errors.confirmPassword && (
-                  <span>{errors.confirmPassword.message}</span>
-                )}
               </div>
               <button className="w-full py-[12px] md:max-w-[330px] mt-[30px] button-primary before:hidden">
                 {loading ? "Creating..." : "create account"}
               </button>
               <ul className="mt-[15px] px-[20px] flex flex-col gap-y-[2px] list-disc list-inside">
-                {Object.values(errors).map((error, i) => {
+                {allErrors.map((error, i) => {
                   return (
                     <li
                       className="p-sans text-[14px] text-rose-500"
                       key={i}
                     >
-                      {error.message}
+                      {error}
                     </li>
                   )
                 })}
