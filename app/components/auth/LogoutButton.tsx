@@ -1,21 +1,31 @@
 "use client"
 
-import { useApolloClient } from "@apollo/client"
-import { logoutUser } from "@/lib/logoutUser"
+import { useMutation } from "@apollo/client"
+import { LOGOUT } from "@/graphql/client/auth/logout"
 
-export default function LogoutButton({ token }: { token: string }) {
-  const client = useApolloClient()
+export default function LogoutButton() {
+  const [logoutMutation, { loading }] = useMutation(LOGOUT, {
+    context: { fetchOptions: { credentials: "include" } },
+  })
 
-  const handleLogout = () => {
-    logoutUser(client)
+  async function handleLogout() {
+    try {
+      const { data } = await logoutMutation()
+      if (data?.logout?.success) {
+        window.location.href = "/"
+      }
+    } catch (err) {
+      console.error("Logout failed:", err)
+    }
   }
 
   return (
     <button
       className="button-primary before:hidden"
       onClick={handleLogout}
+      disabled={loading}
     >
-      Logout
+      {loading ? "Logging out..." : "Logout"}
     </button>
   )
 }

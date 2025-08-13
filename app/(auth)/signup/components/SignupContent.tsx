@@ -30,14 +30,10 @@ export default function SignupContent() {
         password: data.password,
       },
     })
-    const token = response.data?.signup?.token
     const account = response.data?.signup?.account
 
     console.log("account:", account)
 
-    if (process.env.NODE_ENV === "development") {
-      console.log("token:", token)
-    }
     alert(
       `Account created successfully! You can now log in.\n\Your account:\n\ ${JSON.stringify(
         account,

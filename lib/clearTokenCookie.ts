@@ -1,13 +1,15 @@
+// lib/clearTokenCookie.ts
 import { serialize } from "cookie"
+import { NextResponse } from "next/server"
 
-export function clearTokenCookie(res: any) {
+export function clearTokenCookie(res: NextResponse) {
   const cookie = serialize("token", "", {
     httpOnly: true,
-    path: "/",
     secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    sameSite: "strict",
+    path: "/",
     maxAge: 0,
   })
 
-  res.setHeader("Set-Cookie", cookie)
+  res.headers.set("Set-Cookie", cookie)
 }

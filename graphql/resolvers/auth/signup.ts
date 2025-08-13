@@ -1,7 +1,6 @@
 import bcrypt from "bcryptjs"
 import dbConnect from "@/lib/mongoose"
 import Account from "@/app/models/Account"
-import { createToken } from "@/lib/createToken"
 import { GraphQLError } from "graphql"
 
 export async function signup(
@@ -32,10 +31,7 @@ export async function signup(
       password: hashedPassword,
     })
 
-    const token = await createToken(account._id.toString())
-
     return {
-      token,
       account: {
         id: account._id,
         username: account.username,

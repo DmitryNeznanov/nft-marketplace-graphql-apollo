@@ -1,16 +1,32 @@
-import Token from "@/app/models/Token"
+// graphql/resolvers/auth/logout.ts
 import dbConnect from "@/lib/mongoose"
+import Token from "@/app/models/Token"
+import { NextResponse } from "next/server"
 
-export const logout = async (_: any, __: any, { user }: { user: any }) => {
+export const logout = async (
+  _: unknown,
+  __: unknown,
+  {
+    user,
+    res,
+  }: { user: { accountId: string; token: string } | null; res: NextResponse }
+) => {
   await dbConnect()
-  console.log("USER CONTEXT IN LOGOUT:", user)
 
   if (user?.token) {
-    const result = await Token.deleteOne({ token: user.token })
-    console.log("Delete result:", result)
-  } else {
-    console.warn("No token found in user context")
+    await Token.deleteOne({ token: user.token })
+    console.log("Token deleted from DB:", user.token)
   }
 
+  // Удаляем cookie
+  res.cookies.set("token", "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
+    maxAge: 0,
+  })
+
+  console.log("Cookie cleared")
   return { success: true }
 }

@@ -3,6 +3,7 @@ import Image from "next/image"
 import { useMutation } from "@apollo/client"
 import { useForm } from "react-hook-form"
 import { SIGNIN } from "@/graphql/client/auth/signin"
+import { useRouter } from "next/navigation"
 type FormData = {
   email: string
   password: string
@@ -16,6 +17,8 @@ export default function SigninContent() {
 
   const [signin, { loading, error }] = useMutation(SIGNIN)
 
+  const router = useRouter()
+
   async function onSubmit(data: FormData) {
     try {
       const response = await signin({
@@ -25,20 +28,13 @@ export default function SigninContent() {
         },
       })
 
-      const token = response.data?.signin?.token
       const user = response.data?.signin?.account
+      if (!user) throw new Error("User not found")
 
-      if (!token) throw new Error("Token not received")
+      console.log("User signed in:", user)
+      console.log("Token set in HttpOnly cookie by server")
 
-      // Устанавливаем токен через API (cookie)
-      await fetch("/api/set-cookie", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token }),
-      })
-
-      console.log("User:", user)
-      console.log("Token saved to cookie.")
+      router.push("/")
     } catch (err) {
       console.error("Sign-in failed:", err)
     }

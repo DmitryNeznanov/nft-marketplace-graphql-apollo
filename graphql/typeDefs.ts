@@ -34,7 +34,6 @@ const typeDefs = gql`
     email: String!
   }
   type AuthPayload {
-    token: String!
     account: Account!
   }
   type LogoutResponse {

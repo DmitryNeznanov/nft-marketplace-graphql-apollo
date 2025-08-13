@@ -1,11 +1,15 @@
+// resolvers/auth.ts
 import Account from "@/app/models/Account"
 import dbConnect from "@/lib/mongoose"
 import { compare } from "bcryptjs"
 import { createToken } from "@/lib/createToken"
+import { setTokenCookie } from "@/lib/setTokenCookie"
+import { NextResponse } from "next/server"
 
 export async function signin(
   _: unknown,
-  { email, password }: { email: string; password: string }
+  { email, password }: { email: string; password: string },
+  { res }: { res: NextResponse }
 ) {
   await dbConnect()
 
@@ -17,8 +21,9 @@ export async function signin(
 
   const token = await createToken(account._id.toString())
 
+  setTokenCookie(res, token)
+
   return {
-    token,
     account: {
       id: account._id,
       username: account.username,

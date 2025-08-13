@@ -22,7 +22,7 @@
 
 @layer base {
   body {
-    @apply font-work-sans bg-black text-white autofill:bg-transparent;
+    @apply font-work-sans bg-black text-white;
   }
 }
 @layer components {
