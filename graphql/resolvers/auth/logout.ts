@@ -1,32 +1,16 @@
 // graphql/resolvers/auth/logout.ts
 import dbConnect from "@/lib/mongoose"
 import Token from "@/app/models/Token"
-import { NextResponse } from "next/server"
+import serializeClearTokenCookie from "@/lib/cookies/serializeClearTokenCookie"
 
-export const logout = async (
-  _: unknown,
-  __: unknown,
-  {
-    user,
-    res,
-  }: { user: { accountId: string; token: string } | null; res: NextResponse }
-) => {
+export async function logout(_: unknown, __: unknown, context: ServerContext) {
   await dbConnect()
 
-  if (user?.token) {
-    await Token.deleteOne({ token: user.token })
-    console.log("Token deleted from DB:", user.token)
+  if (context.user?.token) {
+    await Token.deleteOne({ token: context.user.token }).catch(() => {})
   }
 
-  // Удаляем cookie
-  res.cookies.set("token", "", {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-    path: "/",
-    maxAge: 0,
-  })
+  context.setCookies.push(serializeClearTokenCookie())
 
-  console.log("Cookie cleared")
   return { success: true }
 }

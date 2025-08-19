@@ -1,15 +1,13 @@
-// resolvers/auth.ts
+// graphql/resolvers/auth/signin.ts
 import Account from "@/app/models/Account"
 import dbConnect from "@/lib/mongoose"
 import { compare } from "bcryptjs"
 import { createToken } from "@/lib/createToken"
-import { setTokenCookie } from "@/lib/setTokenCookie"
-import { NextResponse } from "next/server"
-
+import serializeTokenCookie from "@/lib/cookies/serializeTokenCookie"
 export async function signin(
   _: unknown,
   { email, password }: { email: string; password: string },
-  { res }: { res: NextResponse }
+  context: ServerContext
 ) {
   await dbConnect()
 
@@ -21,11 +19,11 @@ export async function signin(
 
   const token = await createToken(account._id.toString())
 
-  setTokenCookie(res, token)
+  context.setCookies.push(serializeTokenCookie(token))
 
   return {
     account: {
-      id: account._id,
+      id: account._id.toString(),
       username: account.username,
       email: account.email,
     },
