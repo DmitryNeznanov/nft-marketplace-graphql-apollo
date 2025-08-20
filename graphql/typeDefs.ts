@@ -35,6 +35,7 @@ const typeDefs = gql`
   }
   type AuthPayload {
     account: Account!
+    tokenSet: Boolean
   }
   type LogoutResponse {
     success: Boolean!

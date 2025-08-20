@@ -16,10 +16,10 @@ const server = new ApolloServer<ServerContext>({
   plugins: [setCookiePlugin()],
 })
 
-export function getUserFromRequest(req: Request): ServerContext["user"] {
+export function getAccountFromRequest(req: Request): ServerContext["account"] {
   const token = cookie.parse(req.headers.get("cookie") || "").token
   if (!token) {
-    console.log("⚠️ Token not found")
+    console.log("No token found in request or token is empty")
     return null
   }
 
@@ -38,7 +38,7 @@ export function getUserFromRequest(req: Request): ServerContext["user"] {
 
 const handler = startServerAndCreateNextHandler(server, {
   context: async (req: NextRequest): Promise<ServerContext> => ({
-    user: getUserFromRequest(req),
+    account: getAccountFromRequest(req),
     setCookies: [],
   }),
 })

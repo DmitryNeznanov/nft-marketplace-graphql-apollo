@@ -8,6 +8,7 @@ export const SIGNIN = gql`
         username
         email
       }
+      tokenSet
     }
   }
 `

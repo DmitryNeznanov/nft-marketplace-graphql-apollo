@@ -18,8 +18,8 @@ export default function SignupContent() {
   } = useForm<FormData>({ criteriaMode: "all", reValidateMode: "onSubmit" })
 
   const [signup, { loading, error }] = useMutation(SIGNUP)
-  const formErrors = Object.values(errors).map((error) => error.message)
-  const gqlErrors = error?.graphQLErrors?.map((error) => error.message) || []
+  const formErrors = Object.values(errors).map((err) => err?.message || "")
+  const gqlErrors = error?.graphQLErrors?.map((err) => err.message) || []
   const allErrors = [...formErrors, ...gqlErrors]
 
   async function onSubmit(data: FormData) {
@@ -31,8 +31,6 @@ export default function SignupContent() {
       },
     })
     const account = response.data?.signup?.account
-
-    console.log("account:", account)
 
     alert(
       `Account created successfully! You can now log in.\n\Your account:\n\ ${JSON.stringify(

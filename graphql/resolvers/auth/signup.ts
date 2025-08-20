@@ -31,6 +31,7 @@ export async function signup(
       password: hashedPassword,
     })
 
+    console.log("Account created:", account)
     return {
       account: {
         id: account._id,

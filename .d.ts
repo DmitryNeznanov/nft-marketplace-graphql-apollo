@@ -38,6 +38,6 @@ interface Account {
   createdAt: Date
 }
 interface ServerContext {
-  user: { accountId: string; token?: string } | null
+  account: { accountId: string; token?: string } | null
   setCookies: string[]
 }
