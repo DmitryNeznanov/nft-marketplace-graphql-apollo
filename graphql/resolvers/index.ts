@@ -12,6 +12,7 @@ import { item } from "./queries/item/item"
 import { signup } from "./auth/signup"
 import { signin } from "./auth/signin"
 import { logout } from "./auth/logout"
+import { me } from "./auth/me"
 const resolvers = {
   Query: {
     users,
@@ -23,6 +24,7 @@ const resolvers = {
     checkSubscriberByEmail,
     totalCount,
     totalCountByAuthorId,
+    me,
   },
   Mutation: {
     addEmail,

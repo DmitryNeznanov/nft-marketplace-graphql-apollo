@@ -1,8 +1,7 @@
 "use client"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import LogoutButton from "../auth/LogoutButton"
-
+import AuthButton from "../auth/AuthButton"
 export default function HeaderNav({
   closeMobileMenu,
 }: {
@@ -10,41 +9,43 @@ export default function HeaderNav({
 }) {
   const router = usePathname()
   return (
-    <ul className="flex flex-col lg:flex-row lg:items-center gap-y-[25px] gap-x-[50px]">
-      {[
-        ["Marketplace", "marketplace"],
-        ["Rankings", "rankings"],
-        ["Connect a wallet", "wallet"],
-      ].map(([title, href], i) => {
-        return (
-          <li
-            className={`w-max font-work-sans font-semibold text-[16px] hover:underline-primary ${
-              router.includes(href) ? "text-accent" : ""
-            }`}
-            key={i}
+    <>
+      <div className="flex flex-col md:flex-row gap-[35px]">
+        <ul className="flex flex-col lg:flex-row lg:items-center gap-y-[25px] gap-x-[50px]">
+          {[
+            ["Marketplace", "marketplace"],
+            ["Rankings", "rankings"],
+            ["Connect a wallet", "wallet"],
+          ].map(([title, href], i) => {
+            return (
+              <li
+                className={`w-max font-work-sans font-semibold text-[16px] hover:underline-primary ${
+                  router.includes(href) ? "text-accent" : ""
+                }`}
+                key={i}
+              >
+                <Link
+                  className="w-max -m-[10px] p-[10px]"
+                  href={`/${href}`}
+                  onClick={closeMobileMenu}
+                >
+                  {title}
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+        <div className="flex flex-col md:flex-row items-start justify-center md:items-center gap-[10px]">
+          <AuthButton></AuthButton>
+          <Link
+            className="px-[30px] button-primary before:content-[url(/icons/user.svg)]"
+            href="signup"
+            onClick={closeMobileMenu}
           >
-            <Link
-              className="w-max -m-[10px] p-[10px]"
-              href={`/${href}`}
-              onClick={closeMobileMenu}
-            >
-              {title}
-            </Link>
-          </li>
-        )
-      })}
-      <li>
-        <LogoutButton></LogoutButton>
-      </li>
-      <li>
-        <Link
-          className="px-[30px] button-primary before:content-[url(/icons/user.svg)]"
-          href="signup"
-          onClick={closeMobileMenu}
-        >
-          sign up
-        </Link>
-      </li>
-    </ul>
+            sign up
+          </Link>
+        </div>
+      </div>
+    </>
   )
 }

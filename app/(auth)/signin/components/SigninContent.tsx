@@ -4,6 +4,7 @@ import { useMutation } from "@apollo/client"
 import { useForm } from "react-hook-form"
 import { SIGNIN } from "@/graphql/client/auth/signin"
 import { useRouter } from "next/navigation"
+import { ME } from "@/graphql/client/auth/me"
 
 type FormData = {
   email: string
@@ -16,7 +17,10 @@ export default function SigninContent() {
     formState: { errors },
   } = useForm<FormData>({ criteriaMode: "all", reValidateMode: "onSubmit" })
 
-  const [signin, { loading, error }] = useMutation(SIGNIN)
+  const [signin, { loading, error }] = useMutation(SIGNIN, {
+    context: { fetchOptions: { credentials: "include" } },
+    refetchQueries: [{ query: ME }],
+  })
 
   const formErrors = Object.values(errors).map((err) => err?.message || "")
   const gqlErrors = error?.graphQLErrors?.map((err) => err.message) || []
@@ -34,11 +38,12 @@ export default function SigninContent() {
       })
 
       const account = response.data?.signin?.account
+      if (!account) throw new Error("User not found")
       const tokenSet = response.data?.signin?.tokenSet
 
-      if (!account) throw new Error("User not found")
       console.log("User signed in:", account)
       console.log("Token set successfully:", tokenSet)
+      alert(`You have signed in successfully!`)
       router.push("/")
     } catch (err) {
       console.error("Sign-in failed:", err)

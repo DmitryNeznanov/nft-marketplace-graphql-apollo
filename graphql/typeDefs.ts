@@ -50,6 +50,7 @@ const typeDefs = gql`
     checkSubscriberByEmail(email: String!): Email!
     totalCount(q: String): Int!
     totalCountByAuthorId(id: ID!): Int!
+    me: Account
   }
   type Mutation {
     addEmail(email: String!): Email!

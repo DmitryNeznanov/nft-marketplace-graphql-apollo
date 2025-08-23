@@ -28,7 +28,7 @@ export async function signin(
       throw new GraphQLError("Internal server error. Signin failed")
     }
     context.setCookies.push(cookie)
-    console.log("Cookie set successfully:", cookie)
+    console.log("Cookie token set successfully")
 
     return {
       account: {

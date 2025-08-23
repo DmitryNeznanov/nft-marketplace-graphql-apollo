@@ -7,6 +7,7 @@ import Link from "next/link"
 export default function MobileMenu() {
   function closeMobileMenu() {
     const mobileMenu = document.getElementById("mobileMenu")!
+    document.body.style.overflow = "auto"
     mobileMenu.style.width = "0%"
   }
   return (

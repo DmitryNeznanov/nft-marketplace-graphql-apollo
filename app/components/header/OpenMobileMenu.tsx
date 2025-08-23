@@ -4,6 +4,7 @@ import Image from "next/image"
 export default function OpenMobileMenu() {
   function openMobileMenu() {
     const mobileMenu = document.getElementById("mobileMenu")!
+    document.body.style.overflow = "hidden"
     mobileMenu.style.width = "100%"
   }
   return (
