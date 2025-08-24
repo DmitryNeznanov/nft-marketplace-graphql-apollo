@@ -18,9 +18,10 @@ export default function SignupContent() {
   } = useForm<FormData>({ criteriaMode: "all", reValidateMode: "onSubmit" })
 
   const [signup, { loading, error }] = useMutation(SIGNUP)
-  const formErrors = Object.values(errors).map((err) => err?.message || "")
-  const gqlErrors = error?.graphQLErrors?.map((err) => err.message) || []
-  const allErrors = [...formErrors, ...gqlErrors]
+  const allErrors = [
+    ...Object.values(errors).map((e) => e?.message || ""),
+    ...(error?.graphQLErrors.map((e) => e.message) || []),
+  ]
 
   async function onSubmit(data: FormData) {
     const response = await signup({

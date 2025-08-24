@@ -1,7 +1,6 @@
 "use client"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import AuthButton from "../auth/AuthButton"
 export default function HeaderNav({
   closeMobileMenu,
 }: {
@@ -35,16 +34,6 @@ export default function HeaderNav({
             )
           })}
         </ul>
-        <div className="flex flex-col md:flex-row items-start justify-center md:items-center gap-[10px]">
-          <AuthButton></AuthButton>
-          <Link
-            className="px-[30px] button-primary before:content-[url(/icons/user.svg)]"
-            href="signup"
-            onClick={closeMobileMenu}
-          >
-            sign up
-          </Link>
-        </div>
       </div>
     </>
   )

@@ -1,72 +1,44 @@
 "use client"
 
-import { useMutation, useQuery } from "@apollo/client"
-import { LOGOUT } from "@/graphql/client/auth/logout"
-import { ME } from "@/graphql/client/auth/me"
+import { useMutation } from "@apollo/client"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
+import { LOGOUT } from "@/graphql/client/auth/logout"
+import { useMe } from "@/app/providers/MeProvider"
 
 export default function AuthButton() {
-  const {
-    data,
-    loading: meLoading,
-    error,
-  } = useQuery(ME, {
-    fetchPolicy: "cache-and-network",
+  const { account, logout } = useMe()
+  const router = useRouter()
+
+  const [logoutMutation, { loading }] = useMutation(LOGOUT, {
     context: { fetchOptions: { credentials: "include" } },
+    onCompleted: () => {
+      logout()
+      router.push("/")
+    },
+    onError: (err) => {
+      console.error("Logout failed:", err)
+      alert(`Logout failed:\n${err}`)
+    },
   })
 
-  const [logoutMutation, { loading: logoutLoading }] = useMutation(LOGOUT, {
-    context: { fetchOptions: { credentials: "include" } },
-    refetchQueries: [{ query: ME }],
-  })
-  const router = useRouter()
-  async function handleLogout() {
-    try {
-      const { data } = await logoutMutation()
-      if (data?.logout?.success) {
-        console.log("User logged out successfully")
-        alert(
-          "You have been logged out successfully. close window to continue. you will be redirected to home page"
-        )
-        router.push("/")
-      }
-    } catch (err) {
-      console.error("Logout failed:", err)
-      alert(`Logout failed:\n\ ${err}`)
-    }
-  }
-  if (meLoading)
+  if (!account) {
     return (
-      <button
+      <a
         className="button-primary before:hidden"
-        disabled
+        href="/signin"
       >
-        ...
-      </button>
+        Sign in
+      </a>
     )
-  if (error) {
-    console.error("Error fetching user data:", error)
   }
-  const user = data?.me
+
   return (
-    <>
-      {user ? (
-        <button
-          className="button-primary before:hidden"
-          onClick={handleLogout}
-          disabled={logoutLoading}
-        >
-          {logoutLoading ? "Logging out..." : "Logout"}
-        </button>
-      ) : (
-        <Link
-          className="button-primary before:hidden"
-          href="/signin"
-        >
-          Sign in
-        </Link>
-      )}
-    </>
+    <button
+      className="button-primary before:hidden"
+      onClick={() => logoutMutation()}
+      disabled={loading}
+    >
+      {loading ? "Logging out..." : "Logout"}
+    </button>
   )
 }
