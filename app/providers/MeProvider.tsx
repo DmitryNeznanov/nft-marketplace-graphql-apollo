@@ -36,13 +36,11 @@ const MeContext = createContext<MeContextType>({
 export function MeProvider({ children }: { children: ReactNode }) {
   const { data, loading: queryLoading } = useQuery(ME, {
     fetchPolicy: "cache-and-network",
-    context: { fetchOptions: { credentials: "include" } },
   })
 
   const [account, setAccount] = useState<AccountType | null>(null)
   const [loading, setLoading] = useState(true)
 
-  // синхронизация с результатом запроса ME
   useEffect(() => {
     if (queryLoading) {
       setLoading(true)
@@ -52,13 +50,13 @@ export function MeProvider({ children }: { children: ReactNode }) {
     }
   }, [data, queryLoading])
 
-  const login = (acc: AccountType) => {
+  function login(acc: AccountType) {
     setAccount(acc)
   }
 
-  const logout = () => {
+  function logout() {
     setAccount(null)
-    apolloClient.clearStore() // сброс кэша Apollo, чтобы все компоненты обновились
+    apolloClient.clearStore()
   }
 
   return (

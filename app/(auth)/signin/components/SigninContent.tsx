@@ -26,7 +26,7 @@ export default function SigninContent() {
   const router = useRouter()
 
   const [signin, { loading, error }] = useMutation(SIGNIN, {
-    context: { fetchOptions: { credentials: "include" } },
+    fetchPolicy: "no-cache",
   })
 
   const allErrors = [

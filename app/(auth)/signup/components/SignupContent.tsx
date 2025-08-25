@@ -17,7 +17,9 @@ export default function SignupContent() {
     getValues,
   } = useForm<FormData>({ criteriaMode: "all", reValidateMode: "onSubmit" })
 
-  const [signup, { loading, error }] = useMutation(SIGNUP)
+  const [signup, { loading, error }] = useMutation(SIGNUP, {
+    fetchPolicy: "no-cache",
+  })
   const allErrors = [
     ...Object.values(errors).map((e) => e?.message || ""),
     ...(error?.graphQLErrors.map((e) => e.message) || []),

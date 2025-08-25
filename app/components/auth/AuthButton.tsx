@@ -10,10 +10,10 @@ export default function AuthButton() {
   const router = useRouter()
 
   const [logoutMutation, { loading }] = useMutation(LOGOUT, {
-    context: { fetchOptions: { credentials: "include" } },
     onCompleted: () => {
-      logout()
+      alert("Logged out successfully. you will be redirected to home page.")
       router.push("/")
+      logout()
     },
     onError: (err) => {
       console.error("Logout failed:", err)
