@@ -1,7 +1,7 @@
 ### Tasks
- - cleanup for build
- - initial data for user page
- - hide pagination while loading in nft page
- - auth image size
+ - optimaze code for build
+ - auth image size/tailwind issue
+ - Modal mobilemenu?
 ### Questions
+ - repeat error handling?
 ### Draf

@@ -1,4 +1,3 @@
-// graphql/resolvers/auth/logout.ts
 import dbConnect from "@/lib/mongoose"
 import Token from "@/app/models/Token"
 import serializeClearTokenCookie from "@/lib/cookies/serializeClearTokenCookie"

@@ -57,6 +57,7 @@ const typeDefs = gql`
     signup(username: String!, email: String!, password: String!): AuthPayload!
     signin(email: String!, password: String!): AuthPayload!
     logout: LogoutResponse!
+    updateEmail(email: String!): Account!
   }
 `
 // ISSUE: scalar value for Date?

@@ -117,7 +117,7 @@ export default function SignupContent() {
                       required: "Email is required!",
                       minLength: {
                         value: 6,
-                        message: "Email must be at most 6 characters",
+                        message: "Email must be at least 6 characters",
                       },
                       maxLength: {
                         value: 254,

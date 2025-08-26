@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import apolloServer from "@/lib/apolloServer"
-import { GET_USERS } from "@/graphql/queries/user/getUsers"
+import { GET_USERS } from "@/graphql/client/queries/user/getUsers"
 import Table from "./components/Table"
 export const metadata: Metadata = {
   title: "NFT Marketplace | Rankings",
