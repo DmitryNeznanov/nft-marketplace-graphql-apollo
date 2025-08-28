@@ -3,6 +3,10 @@ import Image from "next/image"
 import { useMutation } from "@apollo/client"
 import { SIGNUP } from "@/graphql/client/auth/signup"
 import { useForm } from "react-hook-form"
+import { SIGNIN } from "@/graphql/client/auth/signin"
+import { useMe } from "@/app/providers/MeProvider"
+import { useRouter } from "next/navigation"
+
 type FormData = {
   username: string
   email: string
@@ -10,6 +14,9 @@ type FormData = {
   confirmPassword: string
 }
 export default function SignupContent() {
+  const router = useRouter()
+  const { login } = useMe()
+
   const {
     register,
     handleSubmit,
@@ -17,31 +24,49 @@ export default function SignupContent() {
     getValues,
   } = useForm<FormData>({ criteriaMode: "all", reValidateMode: "onSubmit" })
 
-  const [signup, { loading, error }] = useMutation(SIGNUP, {
+  const [signup, { loading: signupLoading, error: signupError }] = useMutation(
+    SIGNUP,
+    {
+      fetchPolicy: "no-cache",
+    }
+  )
+  const [signin] = useMutation(SIGNIN, {
     fetchPolicy: "no-cache",
   })
-  const allErrors = [
+
+  const signupErrors = [
     ...Object.values(errors).map((e) => e?.message || ""),
-    ...(error?.graphQLErrors.map((e) => e.message) || []),
+    ...(signupError?.graphQLErrors.map((e) => e.message) || []),
   ]
-
   async function onSubmit(data: FormData) {
-    const response = await signup({
-      variables: {
-        username: data.username,
-        email: data.email,
-        password: data.password,
-      },
-    })
-    const account = response.data?.signup?.account
+    try {
+      const signupResponse = await signup({
+        variables: {
+          username: data.username,
+          email: data.email,
+          password: data.password,
+        },
+      })
 
-    alert(
-      `Account created successfully! You can now log in.\n\Your account:\n\ ${JSON.stringify(
-        account,
-        null,
-        2
-      )}`
-    )
+      if (!signupResponse.data?.signup?.account) {
+        throw new Error("Sign-up failed. No account returned.")
+      }
+
+      const signinResponse = await signin({
+        variables: { email: data.email, password: data.password },
+      })
+
+      const account = signinResponse.data?.signin?.account
+      if (!account) {
+        throw new Error("Sign-in after sign-up failed")
+      }
+
+      login(account)
+
+      router.replace("/account")
+    } catch (err) {
+      console.error("Sign-up or sign-in failed:", err)
+    }
   }
 
   return (
@@ -190,10 +215,10 @@ export default function SignupContent() {
                 </label>
               </div>
               <button className="w-full py-[12px] md:max-w-[330px] mt-[30px] button-primary before:hidden">
-                {loading ? "Creating..." : "create account"}
+                {signupLoading ? "Creating..." : "create account"}
               </button>
               <ul className="mt-[15px] px-[20px] flex flex-col gap-y-[2px] list-disc list-inside">
-                {allErrors.map((error, i) => {
+                {signupErrors.map((error, i) => {
                   return (
                     <li
                       className="p-sans text-[14px] text-rose-500"

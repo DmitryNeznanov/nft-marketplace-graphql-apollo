@@ -2,18 +2,20 @@
 
 import { useRouter } from "next/navigation"
 import Modal from "../../components/Modal"
-import { UPDATE_EMAIL } from "@/graphql/client/account/updateEmail"
+import { DELETE_ACCOUNT } from "@/graphql/client/account/deleteAccount"
 import { useMutation } from "@apollo/client"
 import { useForm } from "react-hook-form"
 import { ME } from "@/graphql/client/auth/me"
+import { useMe } from "@/app/providers/MeProvider"
 type FormData = {
-  email: string
+  password: string
 }
 
-export default function ChangeEmailModal() {
+export default function DeleteAccountModel() {
+  const { logout } = useMe()
   const router = useRouter()
-  const [changeEmail, { loading: changingEmail, error }] = useMutation(
-    UPDATE_EMAIL,
+  const [deleteAccount, { loading: deletingAccount, error }] = useMutation(
+    DELETE_ACCOUNT,
     {
       fetchPolicy: "no-cache",
       refetchQueries: [{ query: ME }],
@@ -26,16 +28,16 @@ export default function ChangeEmailModal() {
   } = useForm<FormData>({ criteriaMode: "all", reValidateMode: "onSubmit" })
 
   async function onSubmit(data: FormData) {
-    const response = await changeEmail({
-      variables: { email: data.email },
+    const response = await deleteAccount({
+      variables: { password: data.password },
     })
-    const updatedEmail = response.data?.updateEmail?.email
-
-    if (!updatedEmail) throw new Error("Email update failed")
-    alert(
-      `Email updated successfully to: "${updatedEmail}".\n\You can close this modal.`
-    )
-    router.back()
+    if (!response.data?.deleteAccount?.success) {
+      alert("Account deletion failed. Please try again.")
+      return
+    }
+    logout()
+    alert("Account deleted successfully. You will be redirected to homepage.")
+    router.replace("/")
   }
   const allErrors = [
     ...Object.values(errors).map((e) => e?.message || ""),
@@ -43,8 +45,8 @@ export default function ChangeEmailModal() {
   ]
   return (
     <Modal>
-      <h2 className="h2-sans">Change Email</h2>
-      <p className="mt-[25px] p-sans">Enter your new email below:</p>
+      <h2 className="h2-sans">Delete account</h2>
+      <p className="mt-[25px] p-sans">Enter your password to delete account:</p>
       <form
         className="mt-[3px] flex flex-col gap-y-[30px]"
         onSubmit={handleSubmit(onSubmit)}
@@ -52,21 +54,27 @@ export default function ChangeEmailModal() {
         <div>
           <input
             className="w-full input-primary"
-            placeholder="Enter new email"
+            placeholder="Enter your password"
+            type="password"
             autoFocus
-            {...register("email", {
-              required: "Email is required",
+            {...register("password", {
+              required: "Password is required!",
               minLength: {
-                value: 6,
-                message: "Email must be at least 6 characters",
+                value: 8,
+                message: "Password must be at least 8 characters",
               },
               maxLength: {
-                value: 254,
-                message: "Email must be at most 254 characters",
+                value: 64,
+                message: "Password must be at most 64 characters",
               },
               pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
-                message: "Invalid email format",
+                value: /[A-Za-z]/,
+                message: "Password must contain at least one letter",
+              },
+              validate: {
+                safeCharacters: (v) =>
+                  /^[A-Za-z\d@$!%*?&]+$/.test(v) ||
+                  "Password contains invalid characters",
               },
             })}
           />
@@ -94,9 +102,9 @@ export default function ChangeEmailModal() {
           <button
             className="button-primary before:hidden"
             type="submit"
-            disabled={changingEmail}
+            disabled={deletingAccount}
           >
-            {changingEmail ? "Updating..." : "Submit"}
+            {deletingAccount ? "Updating..." : "Submit"}
           </button>
         </div>
       </form>

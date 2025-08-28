@@ -40,8 +40,7 @@ export default function SigninContent() {
       if (!account) throw new Error("User not found")
 
       login(account)
-      alert("You have signed in successfully!")
-      router.push("/")
+      router.replace("/account")
     } catch (err) {
       console.error("Sign-in failed:", err)
     }

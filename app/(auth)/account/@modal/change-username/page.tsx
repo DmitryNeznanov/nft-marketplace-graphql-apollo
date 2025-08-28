@@ -2,18 +2,18 @@
 
 import { useRouter } from "next/navigation"
 import Modal from "../../components/Modal"
-import { UPDATE_EMAIL } from "@/graphql/client/account/updateEmail"
+import { UPDATE_USERNAME } from "@/graphql/client/account/updateUsername"
 import { useMutation } from "@apollo/client"
 import { useForm } from "react-hook-form"
 import { ME } from "@/graphql/client/auth/me"
 type FormData = {
-  email: string
+  username: string
 }
 
-export default function ChangeEmailModal() {
+export default function ChangeUsernameModal() {
   const router = useRouter()
-  const [changeEmail, { loading: changingEmail, error }] = useMutation(
-    UPDATE_EMAIL,
+  const [changeUsername, { loading: changingUsername, error }] = useMutation(
+    UPDATE_USERNAME,
     {
       fetchPolicy: "no-cache",
       refetchQueries: [{ query: ME }],
@@ -26,14 +26,16 @@ export default function ChangeEmailModal() {
   } = useForm<FormData>({ criteriaMode: "all", reValidateMode: "onSubmit" })
 
   async function onSubmit(data: FormData) {
-    const response = await changeEmail({
-      variables: { email: data.email },
+    const response = await changeUsername({
+      variables: { username: data.username },
     })
-    const updatedEmail = response.data?.updateEmail?.email
+    const updatedUsername = response.data?.updateUsername?.username
 
-    if (!updatedEmail) throw new Error("Email update failed")
+    if (!updatedUsername) throw new Error("Username update failed")
     alert(
-      `Email updated successfully to: "${updatedEmail}".\n\You can close this modal.`
+      `Username updated successfully to: \n\ ${JSON.stringify(
+        updatedUsername
+      )}. \n\ You can close this modal.`
     )
     router.back()
   }
@@ -43,8 +45,8 @@ export default function ChangeEmailModal() {
   ]
   return (
     <Modal>
-      <h2 className="h2-sans">Change Email</h2>
-      <p className="mt-[25px] p-sans">Enter your new email below:</p>
+      <h2 className="h2-sans">Change username</h2>
+      <p className="mt-[25px] p-sans">Enter your new username below:</p>
       <form
         className="mt-[3px] flex flex-col gap-y-[30px]"
         onSubmit={handleSubmit(onSubmit)}
@@ -52,21 +54,21 @@ export default function ChangeEmailModal() {
         <div>
           <input
             className="w-full input-primary"
-            placeholder="Enter new email"
+            placeholder="Enter new username"
             autoFocus
-            {...register("email", {
-              required: "Email is required",
+            {...register("username", {
+              required: "Username is required!",
               minLength: {
-                value: 6,
-                message: "Email must be at least 6 characters",
+                value: 3,
+                message: "Username must be at least 3 characters",
               },
               maxLength: {
-                value: 254,
-                message: "Email must be at most 254 characters",
+                value: 20,
+                message: "Username must be at most 20 characters",
               },
               pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
-                message: "Invalid email format",
+                value: /^[a-zA-Z0-9_]+$/,
+                message: "Username contains invalid characters",
               },
             })}
           />
@@ -94,9 +96,9 @@ export default function ChangeEmailModal() {
           <button
             className="button-primary before:hidden"
             type="submit"
-            disabled={changingEmail}
+            disabled={changingUsername}
           >
-            {changingEmail ? "Updating..." : "Submit"}
+            {changingUsername ? "Updating..." : "Submit"}
           </button>
         </div>
       </form>

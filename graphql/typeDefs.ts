@@ -37,7 +37,7 @@ const typeDefs = gql`
     account: Account!
     tokenSet: Boolean
   }
-  type LogoutResponse {
+  type SuccessResponse {
     success: Boolean!
   }
   type Query {
@@ -50,14 +50,17 @@ const typeDefs = gql`
     checkSubscriberByEmail(email: String!): Email!
     totalCount(q: String): Int!
     totalCountByAuthorId(id: ID!): Int!
-    me: Account
+    me: Account!
   }
   type Mutation {
     addEmail(email: String!): Email!
     signup(username: String!, email: String!, password: String!): AuthPayload!
     signin(email: String!, password: String!): AuthPayload!
-    logout: LogoutResponse!
+    logout: SuccessResponse!
     updateEmail(email: String!): Account!
+    updateUsername(username: String!): Account!
+    deleteAccount(password: String!): SuccessResponse!
+    updatePassword(oldPassword: String!, newPassword: String!): SuccessResponse!
   }
 `
 // ISSUE: scalar value for Date?

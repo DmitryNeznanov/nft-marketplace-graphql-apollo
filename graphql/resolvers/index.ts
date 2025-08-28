@@ -14,6 +14,9 @@ import { signin } from "./auth/signin"
 import { logout } from "./auth/logout"
 import { me } from "./auth/me"
 import { updateEmail } from "./account/updateEmail"
+import { updateUsername } from "./account/updateUsername"
+import { deleteAccount } from "./account/deleteAccount"
+import { updatePassword } from "./account/updatePassword"
 const resolvers = {
   Query: {
     users,
@@ -33,6 +36,9 @@ const resolvers = {
     signin,
     logout,
     updateEmail,
+    updateUsername,
+    updatePassword,
+    deleteAccount,
   },
   Item: {
     itemAuthor,

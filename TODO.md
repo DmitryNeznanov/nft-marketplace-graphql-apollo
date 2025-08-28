@@ -3,5 +3,4 @@
  - auth image size/tailwind issue
  - Modal mobilemenu?
 ### Questions
- - repeat error handling?
 ### Draf
