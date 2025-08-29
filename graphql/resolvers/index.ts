@@ -17,6 +17,7 @@ import { updateEmail } from "./account/updateEmail"
 import { updateUsername } from "./account/updateUsername"
 import { deleteAccount } from "./account/deleteAccount"
 import { updatePassword } from "./account/updatePassword"
+import { accountById } from "./account/getAccountById"
 const resolvers = {
   Query: {
     users,
@@ -29,6 +30,7 @@ const resolvers = {
     totalCount,
     totalCountByAuthorId,
     me,
+    accountById,
   },
   Mutation: {
     addEmail,

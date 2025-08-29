@@ -214,7 +214,10 @@ export default function SignupContent() {
                   />
                 </label>
               </div>
-              <button className="w-full py-[12px] md:max-w-[330px] mt-[30px] button-primary before:hidden">
+              <button
+                className="w-full py-[12px] md:max-w-[330px] mt-[30px] button-primary before:hidden"
+                type="submit"
+              >
                 {signupLoading ? "Creating..." : "create account"}
               </button>
               <ul className="mt-[15px] px-[20px] flex flex-col gap-y-[2px] list-disc list-inside">

@@ -5,7 +5,13 @@ import HeaderNav from "./HeaderNav"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 
-export default function MobileMenu({ closeMenu }: { closeMenu: () => void }) {
+export default function MobileMenu({
+  closeMenu,
+  account,
+}: {
+  closeMenu: () => void
+  account: Account | null
+}) {
   const dialogRef = useRef<HTMLDialogElement>(null)
   const [isVisible, setIsVisible] = useState(false)
 
@@ -19,13 +25,13 @@ export default function MobileMenu({ closeMenu }: { closeMenu: () => void }) {
     setTimeout(() => {
       dialogRef.current?.close()
       closeMenu()
-    }, 300) // время совпадает с transition
+    }, 300)
   }
 
   return (
     <dialog
+      className="fixed inset-0 w-screen h-screen border-none bg-transparent z-[9999] text-white overflow-hidden lg:hidden"
       ref={dialogRef}
-      className="fixed inset-0 w-screen h-screen m-0 p-0 border-none bg-transparent z-[9999] overflow-hidden"
     >
       <div
         className={`absolute inset-0 bg-black/50 transition-opacity duration-300 ${
@@ -39,17 +45,20 @@ export default function MobileMenu({ closeMenu }: { closeMenu: () => void }) {
         }`}
       >
         <div className="px-[30px] md:px-[50px] py-[15px] lg:py-[20px] h-full flex flex-col">
-          <header className="flex justify-between items-center">
+          <div className="flex justify-between items-center">
             <Link href="/">
               <Image
+                className="w-[182px] h-[24px] lg:w-auto lg:h-auto"
                 src="/logo.svg"
                 width={243}
                 height={32}
                 alt="logo.svg"
-                className="w-[182px] h-[24px] lg:w-auto lg:h-auto"
               />
             </Link>
-            <button onClick={handleClose}>
+            <button
+              className="hover:cursor-pointer"
+              onClick={handleClose}
+            >
               <Image
                 src="/icons/closeMobileMenu.svg"
                 width={24}
@@ -57,9 +66,12 @@ export default function MobileMenu({ closeMenu }: { closeMenu: () => void }) {
                 alt="close"
               />
             </button>
-          </header>
-          <nav className="mt-[50px] flex-1">
-            <HeaderNav closeMenu={handleClose} />
+          </div>
+          <nav className="my-auto">
+            <HeaderNav
+              closeMenu={handleClose}
+              account={account}
+            />
           </nav>
         </div>
       </div>

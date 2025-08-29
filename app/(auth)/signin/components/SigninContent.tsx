@@ -123,7 +123,10 @@ export default function SigninContent() {
             </label>
           </div>
 
-          <button className="w-full py-[12px] md:max-w-[330px] mt-[30px] button-primary before:hidden">
+          <button
+            className="w-full py-[12px] md:max-w-[330px] mt-[30px] button-primary before:hidden"
+            type="submit"
+          >
             {loading ? "Signing in..." : "Sign In"}
           </button>
 

@@ -51,6 +51,7 @@ const typeDefs = gql`
     totalCount(q: String): Int!
     totalCountByAuthorId(id: ID!): Int!
     me: Account!
+    accountById(id: ID!): Account!
   }
   type Mutation {
     addEmail(email: String!): Email!

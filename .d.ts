@@ -32,6 +32,7 @@ interface Token {
   expiresAt: Date
 }
 interface Account {
+  id: Types.ObjectId
   username: string
   email: string
   password: string
