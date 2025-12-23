@@ -1,8 +1,6 @@
 ### Tasks
- - filter search by name. find users and items then filter
- - cleanup for build
- - initial data for user page
- - fix number string search
- - creators clear filter on click
+ - optimaze code for build
+ - auth image size/tailwind issue
+ - get token from cookie -> gql findByAccountId -> add this to provider
 ### Questions
 ### Draf

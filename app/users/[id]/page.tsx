@@ -4,9 +4,9 @@ import Image from "next/image"
 import Link from "next/link"
 import CopyIdButton from "./components/CopyIdButton"
 import apolloServer from "@/lib/apolloServer"
-import { GET_USER_BY_ID } from "@/graphql/queries/user/getUserById"
+import { GET_USER_BY_ID } from "@/graphql/client/queries/user/getUserById"
 import UserContent from "./components/UserContent"
-import { GET_TOTAL_COUNT_BY_AUTHOR_ID } from "@/graphql/queries/count/getCountByAuthorId"
+import { GET_TOTAL_COUNT_BY_AUTHOR_ID } from "@/graphql/client/queries/count/getCountByAuthorId"
 export async function generateMetadata({
   params,
 }: {

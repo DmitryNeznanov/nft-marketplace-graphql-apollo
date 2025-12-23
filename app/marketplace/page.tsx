@@ -1,9 +1,8 @@
 import { Metadata } from "next"
 import MarketplaceContent from "./components/MarketplaceContent"
 import apolloServer from "@/lib/apolloServer"
-import { GET_FILTERED_ITEMS_WITH_AUTHOR } from "@/graphql/queries/items/getFilteredItemsWithAuthor"
-import { GET_TOTAL_COUNT } from "@/graphql/queries/count/getTotalCount"
-
+import { GET_TOTAL_COUNT } from "@/graphql/client/queries/count/getTotalCount"
+import { GET_FILTERED_ITEMS_WITH_AUTHOR } from "@/graphql/client/queries/items/getFilteredItemsWithAuthor"
 export const metadata: Metadata = {
   title: "NFT Marketplace | Marketplace",
   description: "Page on which NFT is sold",

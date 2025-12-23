@@ -1,0 +1,50 @@
+import { itemAuthor } from "./Item/itemAuthor"
+import { addEmail } from "./mutations/addEmail"
+import { checkSubscriberByEmail } from "./queries/checkSubscriberByEmail"
+import { itemById } from "./queries/item/itemById"
+import { items } from "./queries/item/items"
+import { itemsByAuthorId } from "./queries/item/itemsByAuthorId"
+import { totalCount } from "./queries/count/totalCount"
+import { totalCountByAuthorId } from "./queries/count/totalCountByAuthorId"
+import { userById } from "./queries/user/userById"
+import { users } from "./queries/user/users"
+import { item } from "./queries/item/item"
+import { signup } from "./auth/signup"
+import { signin } from "./auth/signin"
+import { logout } from "./auth/logout"
+import { me } from "./auth/me"
+import { updateEmail } from "./account/updateEmail"
+import { updateUsername } from "./account/updateUsername"
+import { deleteAccount } from "./account/deleteAccount"
+import { updatePassword } from "./account/updatePassword"
+import { accountById } from "./account/getAccountById"
+const resolvers = {
+  Query: {
+    users,
+    userById,
+    item,
+    items,
+    itemById,
+    itemsByAuthorId,
+    checkSubscriberByEmail,
+    totalCount,
+    totalCountByAuthorId,
+    me,
+    accountById,
+  },
+  Mutation: {
+    addEmail,
+    signup,
+    signin,
+    logout,
+    updateEmail,
+    updateUsername,
+    updatePassword,
+    deleteAccount,
+  },
+  Item: {
+    itemAuthor,
+  },
+}
+
+export default resolvers

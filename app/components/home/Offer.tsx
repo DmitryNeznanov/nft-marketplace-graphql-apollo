@@ -2,8 +2,7 @@ import Link from "next/link"
 import Timer from "../Timer"
 import Image from "next/image"
 import apolloServer from "@/lib/apolloServer"
-import { GET_ITEM_WITH_AUTHOR } from "@/graphql/queries/items/getItemWithAuthor"
-
+import { GET_ITEM_WITH_AUTHOR } from "@/graphql/client/queries/items/getItemWithAuthor"
 export default async function Offer() {
   const { data } = await apolloServer.query({
     query: GET_ITEM_WITH_AUTHOR,
@@ -31,7 +30,7 @@ export default async function Offer() {
                   src={data.item.itemAuthor.profileImage}
                   width={24}
                   height={24}
-                  alt="profile image"
+                  alt="profileImage"
                 ></Image>
                 <p className="ml-[12px] flex items-center p-sans">
                   {data.item.itemAuthor.name}

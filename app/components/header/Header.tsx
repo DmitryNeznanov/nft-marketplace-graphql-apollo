@@ -1,40 +1,30 @@
-import Image from "next/image"
-import OpenMobileMenu from "./OpenMobileMenu"
-import HeaderNav from "./HeaderNav"
-import MobileMenu from "./MobileMenu"
-import Link from "next/link"
+import { cookies } from "next/headers"
+import apolloServer from "@/lib/apolloServer"
+import { GET_ACCOUNT_BY_ID } from "@/graphql/client/account/getAccountById"
+import jwt, { JwtPayload } from "jsonwebtoken"
+import HeaderContent from "./HeaderContent"
 
-export default function Header() {
-  return (
-    <header
-      className="w-full bg-black px-[5px] lg:px-[50px] 2xl:px-[175px] py-[15px] lg:py-[20px]"
-      id="header"
-    >
-      <div className="">
-        <nav className="flex justify-between items-center">
-          <div>
-            <Link href="/">
-              <Image
-                className="w-[182px] h-[24px] lg:w-auto lg:h-auto p-[10px] -m-[10px] box-content"
-                src="/logo.svg"
-                width={243}
-                height={32}
-                alt="logo.svg"
-                priority={true}
-              ></Image>
-            </Link>
-          </div>
-          <div>
-            <div className="hidden lg:block">
-              <HeaderNav />
-            </div>
-            <div className="lg:hidden">
-              <OpenMobileMenu />
-            </div>
-          </div>
-        </nav>
-        <MobileMenu />
-      </div>
-    </header>
-  )
+const JWT_SECRET = process.env.JWT_SECRET || "your_secret"
+
+export default async function Header() {
+  const token = (await cookies()).get("token")?.value
+  if (!token) return <HeaderContent account={null} />
+
+  const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload & {
+    accountId?: string
+  }
+  const accountId = decoded.accountId
+  if (!accountId) console.log("Invalid token: accountId missing.")
+
+  const { data } = await apolloServer.query({
+    query: GET_ACCOUNT_BY_ID,
+    variables: { id: accountId },
+  })
+  const account = data.accountById
+  if (!data?.accountById) {
+    throw new Error(`Account with id ${accountId} not found.`)
+  }
+  console.log(account)
+
+  return <HeaderContent account={account} />
 }

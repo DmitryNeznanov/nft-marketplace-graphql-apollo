@@ -1,12 +1,12 @@
 "use client"
 import { useEffect, useState } from "react"
 import { useQuery } from "@apollo/client"
-import { GET_FILTERED_ITEMS_WITH_AUTHOR } from "@/graphql/queries/items/getFilteredItemsWithAuthor"
 import Image from "next/image"
 import Link from "next/link"
 import Search from "./Search"
 import Pagination from "@/app/components/Pagination/Pagination"
 import { useSearchParams } from "next/navigation"
+import { GET_FILTERED_ITEMS_WITH_AUTHOR } from "@/graphql/client/queries/items/getFilteredItemsWithAuthor"
 export default function MarketplaceContent({
   initialData,
   offset,
@@ -77,7 +77,7 @@ export default function MarketplaceContent({
             )}
             {error && <h2 className="h1-sans">Error: {error.message}</h2>}
 
-            {!loading && (
+            {!loading && dataLenght !== 0 && (
               <div>
                 <div className=" mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
                   {items.map((item: NFT, i: number) => {

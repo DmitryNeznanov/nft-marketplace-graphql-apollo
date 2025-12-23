@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useMutation } from "@apollo/client"
-import { ADD_EMAIL } from "@/graphql/mutations/addEmail"
+import { ADD_EMAIL } from "@/graphql/client/mutations/addEmail"
 
 export default function EmailForm() {
   const [email, setEmail] = useState("")

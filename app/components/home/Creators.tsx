@@ -1,8 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import apolloServer from "@/lib/apolloServer"
-import { GET_USERS } from "@/graphql/queries/user/getUsers"
-
+import { GET_USERS } from "@/graphql/client/queries/user/getUsers"
 export default async function Creators() {
   const { data } = await apolloServer.query({
     query: GET_USERS,

@@ -1,46 +1,42 @@
 "use client"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-
+import AuthNav from "../auth/AuthNav"
 export default function HeaderNav({
-  closeMobileMenu,
+  closeMenu,
+  account,
 }: {
-  closeMobileMenu?: React.MouseEventHandler
+  closeMenu?: () => void
+  account: Account | null
 }) {
   const router = usePathname()
   return (
-    <ul className="flex flex-col lg:flex-row lg:items-center gap-y-[25px] gap-x-[50px]">
-      {[
-        ["Marketplace", "marketplace"],
-        ["Rankings", "rankings"],
-        ["Connect a wallet", "wallet"],
-      ].map(([title, href], i) => {
-        return (
+    <div className="flex flex-col lg:flex-row gap-y-[15px] lg:gap-y-0 lg:gap-x-[55px]">
+      <ul className="flex flex-col lg:flex-row items-center gap-y-[25px] gap-x-[50px]">
+        {[
+          ["Marketplace", "marketplace"],
+          ["Rankings", "rankings"],
+          ["Connect a wallet", "wallet"],
+        ].map(([title, href], i) => (
           <li
             className={`w-max font-work-sans font-semibold text-[16px] hover:underline-primary ${
-              router.includes(href) ? "text-accent" : ""
+              router.includes(href) ? "text-accent" : "text-white"
             }`}
             key={i}
           >
             <Link
               className="w-max -m-[10px] p-[10px]"
               href={`/${href}`}
-              onClick={closeMobileMenu}
+              onClick={closeMenu}
             >
               {title}
             </Link>
           </li>
-        )
-      })}
-      <li>
-        <Link
-          className="px-[30px] button-primary before:content-[url(/icons/user.svg)]"
-          href="signup"
-          onClick={closeMobileMenu}
-        >
-          sign up
-        </Link>
-      </li>
-    </ul>
+        ))}
+      </ul>
+      <div className="flex flex-col lg:flex-row items-center gap-[10px]">
+        <AuthNav account={account} />
+      </div>
+    </div>
   )
 }

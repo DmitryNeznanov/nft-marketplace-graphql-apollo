@@ -1,7 +1,7 @@
 "use client"
 
 import Pagination from "@/app/components/Pagination/Pagination"
-import { GET_ITEMS_BY_AUTHOR_ID_WITH_AUTHOR } from "@/graphql/queries/items/getItemsByAuthorIdWithAuthor"
+import { GET_ITEMS_BY_AUTHOR_ID_WITH_AUTHOR } from "@/graphql/client/queries/items/getItemsByAuthorIdWithAuthor"
 import { useQuery } from "@apollo/client"
 import Image from "next/image"
 import Link from "next/link"
@@ -110,9 +110,11 @@ export default function UserContent({
                 })}
               </div>
             )}
-            <div className="mt-[25px] md:mt-[45px]">
-              <Pagination totalPages={totalPages}></Pagination>
-            </div>
+            {!loading && dataLenght !== 0 && (
+              <div className="mt-[25px] md:mt-[45px]">
+                <Pagination totalPages={totalPages}></Pagination>
+              </div>
+            )}
           </div>
         </div>
       </section>

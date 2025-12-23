@@ -9,35 +9,44 @@ export default function Table({ users }: { users: User[] }) {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc")
 
   function sortByValue(key: keyof User) {
-    let newOrder: "asc" | "desc" = "desc"
-
     if (sortKey === key) {
-      newOrder = sortOrder === "desc" ? "asc" : "desc"
-      setSortOrder(newOrder)
+      if (sortOrder === "desc") {
+        setSortOrder("asc")
+        const sortedAsc = [...users].sort((a, b) =>
+          compareValues(a[key], b[key], "asc")
+        )
+        setData(sortedAsc)
+      } else if (sortOrder === "asc") {
+        setSortKey(null)
+        setSortOrder("desc")
+        setData(users)
+      }
     } else {
       setSortKey(key)
       setSortOrder("desc")
+      const sortedDesc = [...users].sort((a, b) =>
+        compareValues(a[key], b[key], "desc")
+      )
+      setData(sortedDesc)
+    }
+  }
+
+  function compareValues(
+    a: string | number,
+    b: string | number,
+    order: "asc" | "desc"
+  ): number {
+    if (typeof a === "number" && typeof b === "number") {
+      return order === "desc" ? b - a : a - b
     }
 
-    const sortedData = [...data].sort((a, b) => {
-      const aVal = a[key]
-      const bVal = b[key]
+    if (typeof a === "string" && typeof b === "string") {
+      return order === "desc" ? b.localeCompare(a) : a.localeCompare(b)
+    }
 
-      if (typeof aVal === "number" && typeof bVal === "number") {
-        return newOrder === "desc" ? bVal - aVal : aVal - bVal
-      }
-
-      if (typeof aVal === "string" && typeof bVal === "string") {
-        return newOrder === "desc"
-          ? bVal.localeCompare(aVal)
-          : aVal.localeCompare(bVal)
-      }
-
-      return 0
-    })
-
-    setData(sortedData)
+    return 0
   }
+
   function SortIndicator({
     isActive,
     direction,

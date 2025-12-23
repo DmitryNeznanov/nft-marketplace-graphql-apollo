@@ -3,9 +3,9 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useQuery } from "@apollo/client"
-import { GET_ITEMS_BY_AUTHOR_ID_WITH_AUTHOR } from "@/graphql/queries/items/getItemsByAuthorIdWithAuthor"
+import { GET_ITEMS_BY_AUTHOR_ID_WITH_AUTHOR } from "@/graphql/client/queries/items/getItemsByAuthorIdWithAuthor"
 import Pagination from "@/app/components/Pagination/Pagination"
-export default function ItemContents({
+export default function ItemContent({
   offset,
   itemsPerPage,
   dataLenght,
@@ -96,9 +96,11 @@ export default function ItemContents({
           })}
         </div>
       )}
-      <div className="mt-[25px] md:mt-[45px]">
-        <Pagination totalPages={totalPages}></Pagination>
-      </div>
+      {!loading && dataLenght !== 0 && (
+        <div className="mt-[25px] md:mt-[45px]">
+          <Pagination totalPages={totalPages}></Pagination>
+        </div>
+      )}
     </>
   )
 }
