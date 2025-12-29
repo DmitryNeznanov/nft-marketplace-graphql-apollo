@@ -1,57 +1,57 @@
-import Timer from "@/app/components/Timer"
-import NFT from "@/app/models/NFT"
-import apolloServer from "@/lib/apolloServer"
-import type { Metadata } from "next"
-import Image from "next/image"
-import Link from "next/link"
-import ItemContent from "./components/ItemContent"
-import { GET_TOTAL_COUNT_BY_AUTHOR_ID } from "@/graphql/client/queries/count/getCountByAuthorId"
-import { GET_ITEM_BY_ID_WITH_AUTHOR } from "@/graphql/client/queries/items/getItemByIdWithAuthor"
+import Timer from "@/app/components/Timer";
+import NFT from "@/app/models/NFT";
+import apolloServer from "@/lib/apolloServer";
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import ItemContent from "./components/ItemContent";
+import { GET_TOTAL_COUNT_BY_AUTHOR_ID } from "@/graphql/client/queries/count/getCountByAuthorId";
+import { GET_ITEM_BY_ID_WITH_AUTHOR } from "@/graphql/client/queries/items/getItemByIdWithAuthor";
 export async function generateStaticParams() {
-  const items = (await NFT.find()) as NFT[]
+  const items = (await NFT.find()) as NFT[];
   return items.map((item: NFT) => ({
     id: item.id.toString(),
-  }))
+  }));
 }
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ id: string }>
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const { id } = await params
+  const { id } = await params;
 
-  const item = (await NFT.findById(id)) as NFT
+  const item = (await NFT.findById(id)) as NFT;
 
   return {
     title: `NFT Marketplace | ${item.title}`,
     description: `Page with information about NFT with name "${item.title}" and ID "${item.id}"`,
-  }
+  };
 }
 export default async function MarketPlaceItem({
   params,
   searchParams,
 }: {
-  params: Promise<{ id: string }>
-  searchParams: Promise<{ page: string }>
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ page: string }>;
 }) {
-  const { id } = await params
-  const { page } = await searchParams
-  const currentPage = Number(page) || 1
-  const itemsPerPage = 9
-  const offset = (currentPage - 1) * itemsPerPage
+  const { id } = await params;
+  const { page } = await searchParams;
+  const currentPage = Number(page) || 1;
+  const itemsPerPage = 9;
+  const offset = (currentPage - 1) * itemsPerPage;
 
   const { data: itemData } = await apolloServer.query({
     query: GET_ITEM_BY_ID_WITH_AUTHOR,
     variables: { id: id },
-  })
-  const { itemAuthor: author, ...item } = itemData.itemById
-  const itemAuthorId = itemData.itemById.author
+  });
+  const { itemAuthor: author, ...item } = itemData.itemById;
+  const itemAuthorId = itemData.itemById.author;
 
   const { data: countData } = await apolloServer.query({
     query: GET_TOTAL_COUNT_BY_AUTHOR_ID,
     variables: { id: itemAuthorId },
-  })
-  const dataLenght = countData?.totalCountByAuthorId || 0
+  });
+  const dataLenght = countData?.totalCountByAuthorId || 0;
 
   return (
     <>
@@ -62,8 +62,7 @@ export default async function MarketPlaceItem({
             src={item.image}
             width={1280}
             height={560}
-            alt="NFT image"
-          ></Image>
+            alt="NFT image"></Image>
         </div>
         <div className="max-w-sm md:container mx-auto">
           <div className="py-[40px]">
@@ -86,15 +85,13 @@ export default async function MarketPlaceItem({
                   <h4 className="h4-space text-gray">Created By</h4>
                   <Link
                     className="mt-[10px] w-max flex items-center hover:underline-primary hover:cursor-pointer"
-                    href={`/users/${item.id}`}
-                  >
+                    href={`/users/${author.id}`}>
                     <Image
                       className="mr-[12px] rounded-full"
                       src={author.profileImage}
                       width={24}
                       height={24}
-                      alt="userProfileImage"
-                    ></Image>
+                      alt="userProfileImage"></Image>
                     <p className="font-work-sans text-[16px]/[140%] font-normal md:font-semibold">
                       {author.name}
                     </p>
@@ -114,17 +111,15 @@ export default async function MarketPlaceItem({
                       return (
                         <li
                           className="w-max list-none"
-                          key={i}
-                        >
+                          key={i}>
                           <Link
                             className="p-sans-xl flex items-center before:content-[url('/icons/globe.svg')] hover:before:content-[url('/icons/globe-accent.svg')] before:w-[32px] before:h-[32px] before:mr-[10px] hover:underline-primary "
                             href={href}
-                            target="_blank"
-                          >
+                            target="_blank">
                             {text}
                           </Link>
                         </li>
-                      )
+                      );
                     })}
                   </ul>
                 </div>
@@ -135,19 +130,17 @@ export default async function MarketPlaceItem({
                       return (
                         <li
                           className="w-max p-sans font-semibold"
-                          key={i}
-                        >
+                          key={i}>
                           <Link
                             className="block py-[12px] px-[20px] rounded-primary bg-black-white uppercase hover:text-accent"
                             href={`/marketplace?q=${tag
                               .toString()
                               .toLowerCase()}
-    `}
-                          >
+    `}>
                             {tag}
                           </Link>
                         </li>
-                      )
+                      );
                     })}
                   </ul>
                 </div>
@@ -155,8 +148,7 @@ export default async function MarketPlaceItem({
               <div className="mt-[20px] md:mt-0 order-3">
                 <Timer
                   expiredAt={item.postTime}
-                  button={true}
-                ></Timer>
+                  button={true}></Timer>
               </div>
             </div>
           </div>
@@ -170,8 +162,7 @@ export default async function MarketPlaceItem({
               <h2 className="h2-sans capitalize">More from this artist</h2>
               <Link
                 className="hidden md:flex button-transparent before:content-[url('/icons/arrow-right-accent.svg')]"
-                href={`/users/${itemAuthorId}`}
-              >
+                href={`/users/${itemAuthorId}`}>
                 go to artist page
               </Link>
             </div>
@@ -179,13 +170,11 @@ export default async function MarketPlaceItem({
               offset={offset}
               itemsPerPage={itemsPerPage}
               dataLenght={dataLenght}
-              itemAuthorId={itemAuthorId}
-            ></ItemContent>
+              itemAuthorId={itemAuthorId}></ItemContent>
             <div>
               <Link
                 className="w-full md:w-max md:hidden button-transparent before:content-[url('/icons/arrow-right-accent.svg')]"
-                href={`/users/${itemAuthorId}`}
-              >
+                href={`/users/${itemAuthorId}`}>
                 go to artist page
               </Link>
             </div>
@@ -193,5 +182,5 @@ export default async function MarketPlaceItem({
         </div>
       </section>
     </>
-  )
+  );
 }
