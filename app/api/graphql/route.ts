@@ -1,4 +1,3 @@
-// app/api/graphql/route.ts
 import { ApolloServer } from "@apollo/server";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import type { NextRequest } from "next/server";
