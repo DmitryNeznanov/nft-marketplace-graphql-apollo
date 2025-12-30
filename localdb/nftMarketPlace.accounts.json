@@ -1,0 +1,60 @@
+[{
+  "_id": {
+    "$oid": "68b02f3ee41ff86a54d3a30c"
+  },
+  "username": "Morojenko1233232",
+  "email": "JokergeJokergevich@gmail.com",
+  "password": "$2b$10$qlHY.KTC1x12uLjYZMyJh.Vu/bp5PoCjI7cJFhBqiPrAisrSkoKfW",
+  "createdAt": {
+    "$date": "2025-08-28T10:28:14.038Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-28T13:51:59.134Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68b033afe41ff86a54d3a324"
+  },
+  "username": "Morojenko123",
+  "email": "fakevichfake123@gmail.com",
+  "password": "$2b$10$OBjrVUAITLy.X54TyjYOFeG8CmICWP2XGXLz3Y7U9qMNFiD9TO03.",
+  "createdAt": {
+    "$date": "2025-08-28T10:47:11.564Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-28T10:47:11.564Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "694ac3d939752c233f50a7f9"
+  },
+  "username": "Morojenko123213",
+  "email": "okergeJokergevich@gmail.com",
+  "password": "$2b$10$6xwCHOld.lOPJFCSXlhp4ekz4WY0IjBVDhdpYTWe6IcBeSW1zHhQy",
+  "createdAt": {
+    "$date": "2025-12-23T16:31:21.598Z"
+  },
+  "updatedAt": {
+    "$date": "2025-12-23T16:31:21.598Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6952967d59758ae61ac31eb5"
+  },
+  "username": "Morojenko123da",
+  "email": "JokesasasasrgeJokergevich@gmail.com",
+  "password": "$2b$10$nwE5FHtM0Dx2NLzig56u/.OaSNFr64DW7j3sOhykppcaiKmeSMIr.",
+  "createdAt": {
+    "$date": "2025-12-29T14:55:57.730Z"
+  },
+  "updatedAt": {
+    "$date": "2025-12-29T14:55:57.730Z"
+  },
+  "__v": 0
+}]
