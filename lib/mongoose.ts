@@ -1,9 +1,11 @@
 import mongoose from "mongoose"
 
-const MONGO_URI = process.env.MONGODBURI!
+const MONGODBURI =
+  process.env.MONGODBURI ||
+  "mongodb+srv://guest:guest@cluster0.pbes3in.mongodb.net/nftMarketPlaceDemo?retryWrites=true&w=majority"
 
-if (!MONGO_URI) {
-  throw new Error("Please define the MONGO_URI environment variable")
+if (!MONGODBURI) {
+  throw new Error("Please define the MONGODBURI environment variable")
 }
 
 type MongooseCache = {
@@ -26,7 +28,7 @@ async function dbConnect() {
   if (cached.conn) return cached.conn
 
   if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGO_URI).then((mongoose) => mongoose)
+    cached.promise = mongoose.connect(MONGODBURI).then((mongoose) => mongoose)
   }
 
   cached.conn = await cached.promise
