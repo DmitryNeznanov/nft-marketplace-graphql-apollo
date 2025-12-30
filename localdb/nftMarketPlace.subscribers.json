@@ -1,0 +1,78 @@
+[{
+  "_id": {
+    "$oid": "686d0b18559964d74588caed"
+  },
+  "email": "test@gmail.com",
+  "createdAt": {
+    "$date": "2025-07-08T12:12:08.269Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T12:12:08.269Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686d0d68559964d74588cb08"
+  },
+  "email": "tessat@gmail.com",
+  "createdAt": {
+    "$date": "2025-07-08T12:22:00.665Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T12:22:00.665Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686d0f6e559964d74588cb0a"
+  },
+  "email": "a@gmail.com",
+  "createdAt": {
+    "$date": "2025-07-08T12:30:38.235Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T12:30:38.235Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686d1007559964d74588cb13"
+  },
+  "email": "fsddfs@gmail.com",
+  "createdAt": {
+    "$date": "2025-07-08T12:33:11.747Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T12:33:11.747Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686d10ca559964d74588cb16"
+  },
+  "email": "sdfshjkl@gmail.com",
+  "createdAt": {
+    "$date": "2025-07-08T12:36:26.216Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T12:36:26.216Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686d10e0559964d74588cb19"
+  },
+  "email": "resultData@gmail.com",
+  "createdAt": {
+    "$date": "2025-07-08T12:36:48.444Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T12:36:48.444Z"
+  },
+  "__v": 0
+}]

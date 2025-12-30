@@ -4,7 +4,7 @@ import { GET_ACCOUNT_BY_ID } from "@/graphql/client/account/getAccountById"
 import jwt, { JwtPayload } from "jsonwebtoken"
 import HeaderContent from "./HeaderContent"
 
-const JWT_SECRET = process.env.JWT_SECRET || "your_secret"
+const JWT_SECRET = process.env.JWT_SECRET || "JWTPlaceholder"
 
 export default async function Header() {
   const token = (await cookies()).get("token")?.value

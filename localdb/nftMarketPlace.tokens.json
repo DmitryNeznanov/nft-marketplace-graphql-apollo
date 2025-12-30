@@ -1,0 +1,16 @@
+[{
+  "_id": {
+    "$oid": "6952967e59758ae61ac31eb8"
+  },
+  "accountId": {
+    "$oid": "6952967d59758ae61ac31eb5"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2OTUyOTY3ZDU5NzU4YWU2MWFjMzFlYjUiLCJpYXQiOjE3NjcwMjAxNTgsImV4cCI6MTc2NzEwNjU1OH0.mH_m1CRwGJSicciUcoxeJeS7ZUd-E2Icvnu49uHyDRk",
+  "expiresAt": {
+    "$date": "2025-12-30T14:55:58.233Z"
+  },
+  "createdAt": {
+    "$date": "2025-12-29T14:55:58.234Z"
+  },
+  "__v": 0
+}]
