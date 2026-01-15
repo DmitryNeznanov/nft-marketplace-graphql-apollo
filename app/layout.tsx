@@ -6,6 +6,7 @@ import Header from "@/app/components/header/Header"
 import ApolloProviderWrapper from "./providers/ApolloProviderWrapper"
 import { MeProvider } from "./providers/MeProvider"
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 const workSans = Work_Sans({
   variable: "--font-work-sans",
   subsets: ["latin"],
@@ -40,6 +41,7 @@ export default function RootLayout({
           </MeProvider>
         </ApolloProviderWrapper>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
