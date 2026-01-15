@@ -16,6 +16,7 @@
     "@apollo/client": "^3.13.8",
     "@apollo/server": "^4.12.2",
     "@as-integrations/next": "^3.2.0",
+    "@vercel/analytics": "^1.6.1",
     "bcryptjs": "^3.0.2",
     "graphql": "^16.11.0",
     "graphql-tag": "^2.12.6",
@@ -37,7 +38,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
-    "npm": "^10.9.2",
+    "npm": "^11.7.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
