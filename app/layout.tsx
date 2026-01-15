@@ -5,7 +5,7 @@ import Footer from "@/app/components/footer/Footer"
 import Header from "@/app/components/header/Header"
 import ApolloProviderWrapper from "./providers/ApolloProviderWrapper"
 import { MeProvider } from "./providers/MeProvider"
-
+import { Analytics } from "@vercel/analytics/next"
 const workSans = Work_Sans({
   variable: "--font-work-sans",
   subsets: ["latin"],
@@ -39,6 +39,7 @@ export default function RootLayout({
             </div>
           </MeProvider>
         </ApolloProviderWrapper>
+        <Analytics />
       </body>
     </html>
   )
